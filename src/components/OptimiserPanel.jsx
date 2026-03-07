@@ -325,6 +325,36 @@ export default function OptimiserPanel() {
     const enriched = enrichRunners(parsed);
     const ranked   = rankCombinations(enriched);
     setResults({ ranked, enriched, fieldSize: parsed.length });
+
+    // Save results to results/latest-run.json via Vite dev server middleware
+    const payload = {
+      race:       selectedRace,
+      timestamp:  new Date().toISOString(),
+      fieldSize:  parsed.length,
+      runners: enriched.map(r => ({
+        gatePosition: r.gatePosition,
+        horseName:    r.horseName,
+        decimalOdds:  r.decimalOdds,
+        pWin:         +r.pWin.toFixed(6),
+        pPlace:       +r.pPlace.toFixed(6),
+        spPoints:     +(r.decimalOdds - 1).toFixed(2),
+      })),
+      combinations: ranked.map(c => ({
+        rank:      c.rank,
+        gates:     c.runners.map(r => r.gatePosition),
+        horses:    c.runners.map(r => r.horseName),
+        ev:        +c.ev.toFixed(4),
+        evSp:      +c.evSp.toFixed(4),
+        evWin:     +c.evWin.toFixed(4),
+        evJackpot: +c.evJackpot.toFixed(4),
+        pJackpot:  +c.pJackpot.toFixed(6),
+      })),
+    };
+    fetch('/api/save-results', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify(payload),
+    }).catch(() => {/* silently ignore in production */});
   };
 
   const filledCount = runners.filter(r => r.gate && r.odds).length;
