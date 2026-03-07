@@ -1373,6 +1373,228 @@ export const historicalData = {
     ],
   },
 
+  // ─── 2019 – 14 March (Thursday / St Patrick's Day) ──────────────────────────
+  2019: {
+    date: "14 March 2019",
+    races: [
+      {
+        raceName: "Turners Novices' Chase",
+        fieldSize: 10,
+        top3: [
+          { gatePosition:  2, horseName: "Defi Du Seuil",     sp:  4.0  },
+          { gatePosition:  4, horseName: "Lostintranslation", sp:  5.0  },
+          { gatePosition:  5, horseName: "Mengli Khan",       sp: 10.0  },
+        ],
+        field: [
+          { gatePosition:  1, horseName: "Capeland",          sp: 29.0,  finishPosition:  8 },
+          { gatePosition:  2, horseName: "Defi Du Seuil",     sp:  4.0,  finishPosition:  1 },
+          { gatePosition:  3, horseName: "Kildisart",         sp: 10.0,  finishPosition:  4 },
+          { gatePosition:  4, horseName: "Lostintranslation", sp:  5.0,  finishPosition:  2 },
+          { gatePosition:  5, horseName: "Mengli Khan",       sp: 10.0,  finishPosition:  3 },
+          { gatePosition:  6, horseName: "Real Steel",        sp:  7.5,  finishPosition:  6 },
+          { gatePosition:  7, horseName: "Vinndication",      sp:  6.5,  finishPosition:  5 },
+          { gatePosition:  8, horseName: "Voix Du Reve",      sp: 10.0,  finishPosition: null }, // UR
+          { gatePosition:  9, horseName: "Castafiore",        sp: 34.0,  finishPosition:  7 },
+          { gatePosition: 10, horseName: "Pravalaguna",       sp: 15.0,  finishPosition:  9 },
+        ],
+      },
+      {
+        raceName: "Pertemps Final",
+        fieldSize: 24,
+        top3: [
+          { gatePosition:  3, horseName: "Sire Du Berlais", sp:  5.0  },
+          { gatePosition: 19, horseName: "Tobefair",        sp: 41.0  },
+          { gatePosition: 11, horseName: "Not Many Left",   sp: 17.0  },
+        ],
+        field: [
+          { gatePosition:  1, horseName: "Walk To Freedom",    sp: 17.0,  finishPosition: null }, // PU
+          { gatePosition:  2, horseName: "A Toi Phil",         sp: 21.0,  finishPosition:  5 },
+          { gatePosition:  3, horseName: "Sire Du Berlais",    sp:  5.0,  finishPosition:  1 },
+          { gatePosition:  4, horseName: "Boyhood",            sp: 26.0,  finishPosition: 15 },
+          { gatePosition:  5, horseName: "Padleyourowncanoe",  sp: 51.0,  finishPosition:  8 },
+          { gatePosition:  6, horseName: "First Assignment",   sp:  8.5,  finishPosition:  9 },
+          { gatePosition:  7, horseName: "Eminent Poet",       sp: 67.0,  finishPosition: 16 },
+          { gatePosition:  8, horseName: "Aaron Lad",          sp: 17.0,  finishPosition: 14 },
+          { gatePosition:  9, horseName: "Culture De Sivola",  sp: 41.0,  finishPosition: null }, // PU
+          { gatePosition: 10, horseName: "Black Mischief",     sp: 51.0,  finishPosition: 11 },
+          { gatePosition: 11, horseName: "Not Many Left",      sp: 17.0,  finishPosition:  3 },
+          { gatePosition: 12, horseName: "Coole Cody",         sp: 34.0,  finishPosition: 17 },
+          { gatePosition: 13, horseName: "Theclockisticking",  sp: 26.0,  finishPosition:  6 },
+          { gatePosition: 14, horseName: "Thermistocles",      sp: 10.0,  finishPosition:  7 },
+          { gatePosition: 15, horseName: "Flemcara",           sp: 15.0,  finishPosition: 10 },
+          { gatePosition: 16, horseName: "Cuneo",              sp: 13.0,  finishPosition:  4 },
+          { gatePosition: 17, horseName: "Oh Land Abloom",     sp: 67.0,  finishPosition: 13 },
+          { gatePosition: 18, horseName: "Wait For Me",        sp: 34.0,  finishPosition: null }, // UR
+          { gatePosition: 19, horseName: "Tobefair",           sp: 41.0,  finishPosition:  2 },
+          { gatePosition: 20, horseName: "Samburu Shujaa",     sp:  9.5,  finishPosition: 12 },
+          { gatePosition: 21, horseName: "Notwhatiam",         sp: 17.0,  finishPosition: null }, // PU
+          { gatePosition: 22, horseName: "Champers On Ice",    sp: 11.0,  finishPosition: null }, // PU
+          { gatePosition: 23, horseName: "Abolitionist",       sp: 21.0,  finishPosition: null }, // PU
+          { gatePosition: 24, horseName: "Aspen Colorado",     sp: 34.0,  finishPosition: 18 },
+        ],
+      },
+      {
+        raceName: "Ryanair Chase",
+        fieldSize: 12,
+        top3: [
+          { gatePosition:  6, horseName: "Frodon",          sp:  5.5  },
+          { gatePosition:  1, horseName: "Aso",             sp: 34.0  },
+          { gatePosition:  8, horseName: "Road To Respect", sp:  5.5  },
+        ],
+        field: [
+          { gatePosition:  1, horseName: "Aso",             sp: 34.0,  finishPosition:  2 },
+          { gatePosition:  2, horseName: "Balko Des Flos",  sp: 17.0,  finishPosition:  7 },
+          { gatePosition:  3, horseName: "Charbel",         sp: 41.0,  finishPosition: null }, // PU
+          { gatePosition:  4, horseName: "Coney Island",    sp: 26.0,  finishPosition:  6 },
+          { gatePosition:  5, horseName: "Footpad",         sp:  4.5,  finishPosition:  8 },
+          { gatePosition:  6, horseName: "Frodon",          sp:  5.5,  finishPosition:  1 },
+          { gatePosition:  7, horseName: "Monalee",         sp:  6.0,  finishPosition:  4 },
+          { gatePosition:  8, horseName: "Road To Respect", sp:  5.5,  finishPosition:  3 },
+          { gatePosition:  9, horseName: "Sub Lieutenant",  sp: 67.0,  finishPosition: null }, // PU
+          { gatePosition: 10, horseName: "Terrefort",       sp: 21.0,  finishPosition: null }, // PU
+          { gatePosition: 11, horseName: "The Storyteller", sp: 21.0,  finishPosition: null }, // PU
+          { gatePosition: 12, horseName: "Un De Sceaux",    sp:  6.0,  finishPosition:  5 },
+        ],
+      },
+      {
+        raceName: "Stayers' Hurdle",
+        fieldSize: 18,
+        top3: [
+          { gatePosition: 10, horseName: "Paisley Park",  sp:  2.375 },
+          { gatePosition: 12, horseName: "Sam Spinner",   sp: 34.0   },
+          { gatePosition:  5, horseName: "Faugheen",      sp:  5.0   },
+        ],
+        field: [
+          { gatePosition:  1, horseName: "Bacardys",        sp: 21.0,  finishPosition:  6 },
+          { gatePosition:  2, horseName: "Bapaume",         sp: 17.0,  finishPosition:  4 },
+          { gatePosition:  3, horseName: "Black Op",        sp: 15.0,  finishPosition: 12 },
+          { gatePosition:  4, horseName: "Coquin Mans",     sp:101.0,  finishPosition: 17 },
+          { gatePosition:  5, horseName: "Faugheen",        sp:  5.0,  finishPosition:  3 },
+          { gatePosition:  6, horseName: "Keeper Hill",     sp: 67.0,  finishPosition: 10 },
+          { gatePosition:  7, horseName: "Kilbricken Storm",sp: 17.0,  finishPosition: 11 },
+          { gatePosition:  8, horseName: "Man Of Plenty",   sp:201.0,  finishPosition: 16 },
+          { gatePosition:  9, horseName: "Nautical Nitwit", sp:101.0,  finishPosition: 18 },
+          { gatePosition: 10, horseName: "Paisley Park",    sp:  2.375,finishPosition:  1 },
+          { gatePosition: 11, horseName: "Petit Mouchoir",  sp: 26.0,  finishPosition: 14 },
+          { gatePosition: 12, horseName: "Sam Spinner",     sp: 34.0,  finishPosition:  2 },
+          { gatePosition: 13, horseName: "Supasundae",      sp: 10.0,  finishPosition:  7 },
+          { gatePosition: 14, horseName: "The Mighty Don",  sp: 67.0,  finishPosition:  8 },
+          { gatePosition: 15, horseName: "Top Notch",       sp: 13.0,  finishPosition: 15 },
+          { gatePosition: 16, horseName: "West Approach",   sp: 34.0,  finishPosition:  9 },
+          { gatePosition: 17, horseName: "Wholestone",      sp: 34.0,  finishPosition:  5 },
+          { gatePosition: 18, horseName: "Yanworth",        sp: 34.0,  finishPosition: 13 },
+        ],
+      },
+      {
+        raceName: "Plate Handicap Chase",
+        fieldSize: 22,
+        top3: [
+          { gatePosition: 12, horseName: "Siruh Du Lac",     sp:  5.5  },
+          { gatePosition:  1, horseName: "Janika",           sp:  4.0  },
+          { gatePosition:  3, horseName: "Spiritofthegames", sp:  7.0  },
+        ],
+        field: [
+          // NR: Ballyhill, Romain De Senam
+          { gatePosition:  1, horseName: "Janika",            sp:  4.0,  finishPosition:  2 },
+          { gatePosition:  2, horseName: "River Wylde",       sp: 11.0,  finishPosition: null }, // PU
+          { gatePosition:  3, horseName: "Spiritofthegames",  sp:  7.0,  finishPosition:  3 },
+          { gatePosition:  4, horseName: "Modus",             sp: 21.0,  finishPosition: 16 },
+          { gatePosition:  5, horseName: "Kalondra",          sp: 13.0,  finishPosition: null }, // PU
+          { gatePosition:  6, horseName: "Valseur Lido",      sp: 34.0,  finishPosition: 14 },
+          { gatePosition:  7, horseName: "Kauto Riko",        sp: 67.0,  finishPosition:  8 },
+          { gatePosition:  8, horseName: "Bigmartre",         sp: 41.0,  finishPosition: 12 },
+          { gatePosition:  9, horseName: "Polidam",           sp: 34.0,  finishPosition: 13 },
+          { gatePosition: 11, horseName: "Bouvreuil",         sp: 34.0,  finishPosition:  6 },
+          { gatePosition: 12, horseName: "Siruh Du Lac",      sp:  5.5,  finishPosition:  1 },
+          { gatePosition: 13, horseName: "Some Buckle",       sp: 67.0,  finishPosition:  9 },
+          { gatePosition: 14, horseName: "Templehills",       sp:101.0,  finishPosition: 10 },
+          { gatePosition: 15, horseName: "Doitforthevillage", sp: 17.0,  finishPosition: 11 },
+          { gatePosition: 16, horseName: "Voix D'Eau",        sp:101.0,  finishPosition: 15 },
+          { gatePosition: 17, horseName: "Testify",           sp: 34.0,  finishPosition: null }, // PU
+          { gatePosition: 18, horseName: "Gardefort",         sp: 29.0,  finishPosition: null }, // PU
+          { gatePosition: 19, horseName: "Azzerti",           sp: 21.0,  finishPosition:  7 },
+          { gatePosition: 21, horseName: "Eamon An Cnoic",    sp: 11.0,  finishPosition:  4 },
+          { gatePosition: 22, horseName: "Splash Of Ginge",   sp: 26.0,  finishPosition: 17 },
+          { gatePosition: 23, horseName: "King's Odyssey",    sp: 21.0,  finishPosition: null }, // F
+          { gatePosition: 24, horseName: "Didero Vallis",     sp: 17.0,  finishPosition:  5 },
+        ],
+      },
+      {
+        raceName: "Dawn Run Mares' Hurdle",
+        fieldSize: 22,
+        top3: [
+          { gatePosition: 16, horseName: "Eglantine Du Seuil", sp: 51.0  },
+          { gatePosition: 13, horseName: "Concertista",        sp: 67.0  },
+          { gatePosition:  9, horseName: "Tintangle",          sp: 41.0  },
+        ],
+        field: [
+          { gatePosition:  1, horseName: "Posh Trish",         sp:  4.0,  finishPosition:  8 },
+          { gatePosition:  2, horseName: "Queenohearts",       sp: 11.0,  finishPosition: 10 },
+          { gatePosition:  3, horseName: "Sancta Simona",      sp: 21.0,  finishPosition: null }, // PU
+          { gatePosition:  4, horseName: "Sinoria",            sp: 12.0,  finishPosition: 19 },
+          { gatePosition:  5, horseName: "Awayinthewest",      sp:101.0,  finishPosition: 18 },
+          { gatePosition:  6, horseName: "Court Maid",         sp:101.0,  finishPosition: 12 },
+          { gatePosition:  7, horseName: "Lust For Glory",     sp: 21.0,  finishPosition: 15 },
+          { gatePosition:  8, horseName: "Presidente Line",    sp:101.0,  finishPosition:  7 },
+          { gatePosition:  9, horseName: "Tintangle",          sp: 41.0,  finishPosition:  3 },
+          { gatePosition: 10, horseName: "Allez Dance",        sp: 41.0,  finishPosition: 17 },
+          { gatePosition: 11, horseName: "Black Tears",        sp: 26.0,  finishPosition:  4 },
+          { gatePosition: 12, horseName: "Buildmeupbuttercup", sp: 67.0,  finishPosition: 11 },
+          { gatePosition: 13, horseName: "Concertista",        sp: 67.0,  finishPosition:  2 },
+          { gatePosition: 14, horseName: "Dame Du Soir",       sp:101.0,  finishPosition: null }, // PU
+          { gatePosition: 15, horseName: "Diamond Gait",       sp:101.0,  finishPosition: 16 },
+          { gatePosition: 16, horseName: "Eglantine Du Seuil", sp: 51.0,  finishPosition:  1 },
+          { gatePosition: 17, horseName: "Elfile",             sp: 51.0,  finishPosition:  6 },
+          { gatePosition: 18, horseName: "Elusive Belle",      sp: 21.0,  finishPosition: 14 },
+          { gatePosition: 19, horseName: "Emily Moon",         sp: 26.0,  finishPosition: null }, // PU
+          { gatePosition: 20, horseName: "Epatante",           sp:  2.875,finishPosition:  9 },
+          { gatePosition: 21, horseName: "Indefatigable",      sp: 34.0,  finishPosition:  5 },
+          { gatePosition: 22, horseName: "My Sister Sarah",    sp:  7.5,  finishPosition: 13 },
+        ],
+      },
+      {
+        raceName: "Kim Muir",
+        fieldSize: 23,
+        top3: [
+          { gatePosition:  2, horseName: "Any Second Now",  sp:  7.0  },
+          { gatePosition:  8, horseName: "Kilfilum Cross",  sp:  8.0  },
+          { gatePosition:  3, horseName: "The Young Master",sp: 23.0  },
+        ],
+        field: [
+          // NR: Out Sam
+          { gatePosition:  1, horseName: "Livelovelaugh",    sp: 17.0,  finishPosition: 12 },
+          { gatePosition:  2, horseName: "Any Second Now",   sp:  7.0,  finishPosition:  1 },
+          { gatePosition:  3, horseName: "The Young Master", sp: 23.0,  finishPosition:  3 },
+          { gatePosition:  4, horseName: "Pearl Royale",     sp: 67.0,  finishPosition: null }, // PU
+          { gatePosition:  6, horseName: "Crievehill",       sp: 41.0,  finishPosition:  4 },
+          { gatePosition:  7, horseName: "Perfect Candidate",sp: 26.0,  finishPosition: null }, // PU
+          { gatePosition:  8, horseName: "Kilfilum Cross",   sp:  8.0,  finishPosition:  2 },
+          { gatePosition:  9, horseName: "Speaker Connolly", sp: 15.0,  finishPosition: null }, // UR
+          { gatePosition: 10, horseName: "Arkwrisht",        sp: 34.0,  finishPosition: null }, // F
+          { gatePosition: 11, horseName: "No Comment",       sp: 13.0,  finishPosition:  5 },
+          { gatePosition: 12, horseName: "Squouateur",       sp: 34.0,  finishPosition: null }, // PU
+          { gatePosition: 13, horseName: "Measureofmydreams",sp:  4.0,  finishPosition:  8 },
+          { gatePosition: 14, horseName: "Sumkindofking",    sp: 67.0,  finishPosition: 14 },
+          { gatePosition: 15, horseName: "Rogue Angel",      sp: 21.0,  finishPosition: 13 },
+          { gatePosition: 16, horseName: "Just A Sting",     sp: 17.0,  finishPosition: 10 },
+          { gatePosition: 17, horseName: "Ah Littleluck",    sp: 51.0,  finishPosition: 11 },
+          { gatePosition: 18, horseName: "Captain Chaos",    sp: 21.0,  finishPosition:  6 },
+          { gatePosition: 19, horseName: "Treackle Tart",    sp: 26.0,  finishPosition: 17 },
+          { gatePosition: 20, horseName: "Sky Pirate",       sp: 17.0,  finishPosition:  7 },
+          { gatePosition: 21, horseName: "Uhlan Bute",       sp: 51.0,  finishPosition: 16 },
+          { gatePosition: 22, horseName: "Touch Kick",       sp: 12.0,  finishPosition:  9 },
+          { gatePosition: 23, horseName: "Its All Guesswork",sp: 13.0,  finishPosition: 15 },
+          { gatePosition: 24, horseName: "Drumconnor Lad",   sp:101.0,  finishPosition: null }, // F
+        ],
+      },
+    ],
+    leaderboard: [
+      { name: "", score: 0 },
+      { name: "", score: 0 },
+      { name: "", score: 0 },
+    ],
+  },
+
 // ─── 2020 – 13 March ────────────────────────────────────────────────────────
   2020: {
     date: "13 March 2020",
