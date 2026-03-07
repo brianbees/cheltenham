@@ -780,63 +780,174 @@ export const historicalData = {
         raceName: "Triumph Hurdle",
         fieldSize: 12,
         top3: [
-          { gatePosition:  7, horseName: "Majborough",  sp:  7.0 },
-          { gatePosition:  6, horseName: "Kargese",     sp:  5.0 },
+          { gatePosition:  5, horseName: "Majborough",  sp:  7.0 },
+          { gatePosition: 14, horseName: "Kargese",     sp:  5.0 },
           { gatePosition: 10, horseName: "Salver",      sp: 11.0 },
+        ],
+        // Full field — cloth numbers, SPs and finish positions (source: official 2024 result)
+        field: [
+          { gatePosition:  1, horseName: "Bunting",          sp:  6.5,  finishPosition:  7 },
+          { gatePosition:  2, horseName: "Ethical Diamond",  sp: 26.0,  finishPosition: 10 },
+          { gatePosition:  3, horseName: "Highwind",         sp: 34.0,  finishPosition:  9 },
+          { gatePosition:  4, horseName: "Ithaca's Arrow",   sp: 151.0, finishPosition:  8 },
+          { gatePosition:  5, horseName: "Majborough",       sp:  7.0,  finishPosition:  1 },
+          { gatePosition:  6, horseName: "Mighty Bandit",    sp: 29.0,  finishPosition: null }, // PU
+          { gatePosition:  7, horseName: "Nurburgring",      sp:  7.0,  finishPosition:  4 },
+          { gatePosition:  9, horseName: "Salvator Mundi",   sp:  9.5,  finishPosition:  6 },
+          { gatePosition: 10, horseName: "Salver",           sp: 11.0,  finishPosition:  3 },
+          { gatePosition: 12, horseName: "Storm Heart",      sp:  4.5,  finishPosition:  5 },
+          { gatePosition: 13, horseName: "Fratas",           sp: 67.0,  finishPosition: null }, // PU
+          { gatePosition: 14, horseName: "Kargese",          sp:  5.0,  finishPosition:  2 },
         ],
       },
       {
         raceName: "County Hurdle",
-        fieldSize: null,
+        fieldSize: 23,
         top3: [
-          { gatePosition: null, horseName: "Absurde",        sp: 13.0 },
-          { gatePosition: null, horseName: "L'Eau Du Sud",   sp:  4.5 },
-          { gatePosition: null, horseName: "Pied Piper",     sp: 15.0 },
+          { gatePosition:  4, horseName: "Absurde",      sp: 13.0 },
+          { gatePosition: 15, horseName: "L'Eau Du Sud", sp:  4.5 },
+          { gatePosition:  2, horseName: "Pied Piper",   sp: 15.0 },
+        ],
+        field: [
+          { gatePosition:  1, horseName: "Hansard",          sp: 23.0,  finishPosition: 12 },
+          { gatePosition:  2, horseName: "Pied Piper",       sp: 15.0,  finishPosition:  3 },
+          { gatePosition:  3, horseName: "Zarak The Brave",  sp: 17.0,  finishPosition: 15 },
+          { gatePosition:  4, horseName: "Absurde",          sp: 13.0,  finishPosition:  1 },
+          { gatePosition:  5, horseName: "Zenta",            sp: 15.0,  finishPosition: 13 },
+          { gatePosition:  6, horseName: "King Of Kingsfield", sp: 8.5, finishPosition: 10 },
+          { gatePosition:  7, horseName: "Iberico Lord",     sp:  8.0,  finishPosition: null }, // PU
+          { gatePosition:  8, horseName: "Many Transitions", sp: 101.0, finishPosition: null }, // F
+          { gatePosition:  9, horseName: "Risk Belle",       sp: 13.0,  finishPosition:  7 },
+          { gatePosition: 10, horseName: "Magical Zoe",      sp:  9.0,  finishPosition:  4 },
+          { gatePosition: 11, horseName: "Encanto Bruno",    sp: 34.0,  finishPosition: null }, // PU
+          { gatePosition: 12, horseName: "Petit Tonnerre",   sp: 51.0,  finishPosition:  6 },
+          { gatePosition: 13, horseName: "Westport Cove",    sp: 51.0,  finishPosition: 11 },
+          { gatePosition: 14, horseName: "Bialystok",        sp: 17.0,  finishPosition: 17 },
+          { gatePosition: 15, horseName: "L'Eau Du Sud",     sp:  4.5,  finishPosition:  2 },
+          { gatePosition: 16, horseName: "Faivoir",          sp: 34.0,  finishPosition:  8 },
+          { gatePosition: 17, horseName: "So Scottish",      sp: 13.0,  finishPosition:  9 },
+          { gatePosition: 18, horseName: "By Your Side",     sp: 67.0,  finishPosition: 16 },
+          { gatePosition: 20, horseName: "Samui",            sp: 19.0,  finishPosition: null }, // UR
+          { gatePosition: 21, horseName: "Parramount",       sp: 67.0,  finishPosition: null }, // PU
+          { gatePosition: 23, horseName: "Rare Middleton",   sp: 81.0,  finishPosition: null }, // PU
+          { gatePosition: 24, horseName: "Afadil",           sp: 41.0,  finishPosition:  5 },
+          { gatePosition: 25, horseName: "Media Naranja",    sp: 81.0,  finishPosition: 14 },
         ],
       },
       {
         raceName: "Albert Bartlett",
-        fieldSize: null,
+        fieldSize: 13,
         top3: [
-          { gatePosition: null, horseName: "Stellar Story",  sp: 34.0 },
-          { gatePosition: null, horseName: "Jukebox Man",    sp: 19.0 },
-          { gatePosition: null, horseName: "Dancing City",   sp:  9.0 },
+          { gatePosition: 11, horseName: "Stellar Story",    sp: 34.0 },
+          { gatePosition: 12, horseName: "The Jukebox Man",  sp: 19.0 },
+          { gatePosition:  3, horseName: "Dancing City",     sp:  9.0 },
+        ],
+        field: [
+          { gatePosition:  1, horseName: "Answer To Kayf",       sp: 12.0, finishPosition:  8 },
+          { gatePosition:  2, horseName: "Captain Teague",       sp: 10.0, finishPosition:  9 },
+          { gatePosition:  3, horseName: "Dancing City",         sp:  9.0, finishPosition:  3 },
+          { gatePosition:  4, horseName: "Gidleigh Park",        sp:  9.0, finishPosition:  6 },
+          { gatePosition:  5, horseName: "High Class Hero",      sp:  9.5, finishPosition: 10 },
+          { gatePosition:  6, horseName: "Johnnywho",            sp: 26.0, finishPosition:  7 },
+          { gatePosition:  7, horseName: "Lecky Watson",         sp: 17.0, finishPosition:  5 },
+          { gatePosition:  8, horseName: "Search For Glory",     sp: 34.0, finishPosition: null }, // PU
+          { gatePosition:  9, horseName: "Readin Tommy Wrong",   sp:  3.0, finishPosition: null }, // PU
+          { gatePosition: 10, horseName: "Spread Boss Bill",     sp: 41.0, finishPosition:  4 },
+          { gatePosition: 11, horseName: "Stellar Story",        sp: 34.0, finishPosition:  1 },
+          { gatePosition: 12, horseName: "The Jukebox Man",      sp: 19.0, finishPosition:  2 },
+          { gatePosition: 13, horseName: "Chigorin",             sp: 51.0, finishPosition: 11 },
         ],
       },
       {
         raceName: "Gold Cup",
-        fieldSize: null,
+        fieldSize: 11,
         top3: [
-          { gatePosition: null, horseName: "Galopin Des Champs",  sp:  1.91 },
-          { gatePosition: null, horseName: "Gerri Colombe",       sp:  7.5  },
-          { gatePosition: null, horseName: "Corach Rambler",      sp: 15.0  },
+          { gatePosition:  4, horseName: "Galopin Des Champs", sp:  1.91 },
+          { gatePosition:  6, horseName: "Gerri Colombe",      sp:  7.5  },
+          { gatePosition:  2, horseName: "Corach Rambler",     sp: 15.0  },
+        ],
+        field: [
+          { gatePosition:  1, horseName: "Bravemansgame",    sp: 15.0, finishPosition:  5 },
+          { gatePosition:  2, horseName: "Corach Rambler",   sp: 15.0, finishPosition:  3 },
+          { gatePosition:  3, horseName: "Fastorslow",       sp:  9.0, finishPosition: null }, // UR
+          { gatePosition:  4, horseName: "Galopin Des Champs", sp: 1.91, finishPosition: 1 },
+          { gatePosition:  5, horseName: "Gentlemansgame",   sp: 26.0, finishPosition: null }, // PU
+          { gatePosition:  6, horseName: "Gerri Colombe",    sp:  7.5, finishPosition:  2 },
+          { gatePosition:  8, horseName: "Jungle Boogie",    sp: 17.0, finishPosition:  6 },
+          { gatePosition:  9, horseName: "L'Homme Presse",   sp: 17.0, finishPosition:  4 },
+          { gatePosition: 10, horseName: "Monkfish",         sp: 19.0, finishPosition: null }, // PU
+          { gatePosition: 11, horseName: "Nassalam",         sp: 34.0, finishPosition: null }, // PU
+          { gatePosition: 12, horseName: "The Real Whacker", sp: 41.0, finishPosition: null }, // PU
         ],
       },
       {
         raceName: "Hunters Chase",
-        fieldSize: null,
+        fieldSize: 12,
         top3: [
-          { gatePosition: null, horseName: "Sine Nomine",     sp:  9.0  },
-          { gatePosition: null, horseName: "Its On The Line", sp:  2.38 },
-          { gatePosition: null, horseName: "Time Leader",     sp: 51.0  },
+          { gatePosition: 10, horseName: "Sine Nomine",     sp:  9.0   },
+          { gatePosition:  4, horseName: "Its On The Line", sp:  2.375 },
+          { gatePosition: 11, horseName: "Time Leader",     sp: 51.0   },
+        ],
+        field: [
+          { gatePosition:  1, horseName: "D'jango",          sp: 126.0, finishPosition:  4 },
+          { gatePosition:  2, horseName: "Billaway",         sp: 12.0,  finishPosition:  7 },
+          { gatePosition:  3, horseName: "Spyglass Hill",    sp: 67.0,  finishPosition: null }, // PU
+          { gatePosition:  4, horseName: "Its On The Line",  sp:  2.375, finishPosition: 2 },
+          { gatePosition:  5, horseName: "Ferns Lock",       sp:  5.0,  finishPosition:  5 },
+          { gatePosition:  6, horseName: "Shantou Flyer",    sp: 34.0,  finishPosition: null }, // PU
+          { gatePosition:  7, horseName: "Premier Magic",    sp: 13.0,  finishPosition:  6 },
+          { gatePosition:  8, horseName: "Ramillies",        sp: 17.0,  finishPosition:  8 },
+          { gatePosition:  9, horseName: "Samcro",           sp: 26.0,  finishPosition:  9 },
+          { gatePosition: 10, horseName: "Sine Nomine",      sp:  9.0,  finishPosition:  1 },
+          { gatePosition: 11, horseName: "Time Leader",      sp: 51.0,  finishPosition:  3 },
+          { gatePosition: 12, horseName: "From The Heart",   sp: 201.0, finishPosition: 10 },
         ],
       },
       {
         raceName: "Mares Chase",
-        fieldSize: null,
+        fieldSize: 9,
         top3: [
-          { gatePosition: null, horseName: "Limerick Lace",  sp:  4.0  },
-          { gatePosition: null, horseName: "Dinoblue",       sp:  2.88 },
-          { gatePosition: null, horseName: "Marsh Wren",     sp: 29.0  },
+          { gatePosition: 6, horseName: "Limerick Lace", sp:  4.0   },
+          { gatePosition: 2, horseName: "Dinoblue",      sp:  2.875 },
+          { gatePosition: 8, horseName: "Marsh Wren",    sp: 29.0   },
+        ],
+        field: [
+          { gatePosition: 1, horseName: "Allegorie De Vassy", sp:  9.5,  finishPosition:  4 },
+          { gatePosition: 2, horseName: "Dinoblue",           sp:  2.875, finishPosition: 2 },
+          { gatePosition: 3, horseName: "Carole's Pass",      sp: 101.0, finishPosition: null }, // PU
+          { gatePosition: 4, horseName: "Harmonya Maker",     sp: 15.0,  finishPosition:  7 },
+          { gatePosition: 5, horseName: "Instit",             sp: 41.0,  finishPosition:  5 },
+          { gatePosition: 6, horseName: "Limerick Lace",      sp:  4.0,  finishPosition:  1 },
+          { gatePosition: 7, horseName: "Kelsoclene",         sp: 67.0,  finishPosition:  8 },
+          { gatePosition: 8, horseName: "Marsh Wren",         sp: 29.0,  finishPosition:  3 },
+          { gatePosition: 9, horseName: "Riviere D'etel",     sp: 17.0,  finishPosition:  6 },
         ],
       },
       {
         raceName: "Martin Pipe",
-        fieldSize: null,
+        fieldSize: 16,
         top3: [
-          { gatePosition: null, horseName: "Better Days Ahead",   sp:  6.0  },
-          { gatePosition: null, horseName: "Waterford Whispers",  sp:  4.33 },
-          { gatePosition: null, horseName: "Quai De Bourbon",     sp:  5.0  },
+          { gatePosition:  6, horseName: "Better Days Ahead",  sp:  6.0  },
+          { gatePosition: 13, horseName: "Waterford Whispers", sp:  4.33 },
+          { gatePosition:  5, horseName: "Quai De Bourbon",    sp:  5.0  },
+        ],
+        field: [
+          { gatePosition:  1, horseName: "Magic Tricks",        sp: 26.0, finishPosition:  8 },
+          { gatePosition:  4, horseName: "No Ordinary Joe",     sp: 13.0, finishPosition: 11 },
+          { gatePosition:  5, horseName: "Quai De Bourbon",     sp:  5.0, finishPosition:  3 },
+          { gatePosition:  6, horseName: "Better Days Ahead",   sp:  6.0, finishPosition:  1 },
+          { gatePosition:  7, horseName: "Hollow Games",        sp: 51.0, finishPosition: null }, // PU
+          { gatePosition:  8, horseName: "Sonigino",            sp: 21.0, finishPosition:  9 },
+          { gatePosition:  9, horseName: "Yeats Star",          sp: 26.0, finishPosition: 12 },
+          { gatePosition: 10, horseName: "Answer To Kayf",      sp: 11.0, finishPosition:  4 },
+          { gatePosition: 11, horseName: "Angels Breath",       sp: 67.0, finishPosition:  7 },
+          { gatePosition: 12, horseName: "Mel Monroe",          sp: 41.0, finishPosition: 14 },
+          { gatePosition: 13, horseName: "Waterford Whispers",  sp:  4.33, finishPosition: 2 },
+          { gatePosition: 14, horseName: "Sequestered",         sp: 26.0, finishPosition: 10 },
+          { gatePosition: 15, horseName: "Teddy Blue",          sp: 81.0, finishPosition: null }, // PU
+          { gatePosition: 16, horseName: "What's Up Darling",   sp: 15.0, finishPosition:  6 },
+          { gatePosition: 17, horseName: "Stuzzikini",          sp: 67.0, finishPosition: 13 },
+          { gatePosition: 20, horseName: "Ocastle Des Mottes",  sp:  8.0, finishPosition:  5 },
         ],
       },
     ],
