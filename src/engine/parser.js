@@ -43,6 +43,10 @@ const POSITION_RE   = /\((1st|2nd|3rd)\)/i;
 // Lines that are clearly column headers — skip them
 const HEADER_RE     = /^(no\.?|horse|sp|starting|trainer|jockey|race card|saddle)/i;
 
+// Lines that are source attributions, image captions, social links etc — skip them
+// e.g. "Sky Sports", "Racing Post", "+1", "Getty Images"
+const SKIP_LINE_RE  = /^(sky sports|racing post|getty|pa media|rte|bbc sport|itv racing|at the races|\+\d+)$/i;
+
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 /**
@@ -121,14 +125,26 @@ function isHeaderLine(line) {
 }
 
 /**
+ * isSkipLine(line) → boolean
+ * Returns true for source attributions and image captions that should be ignored.
+ */
+function isSkipLine(line) {
+  return SKIP_LINE_RE.test(line.trim());
+}
+
+/**
  * isRaceNameLine(line) → boolean
- * A race name line does not start with a digit and isn't a recognised header.
+ * A race name line does not start with a digit and isn't a recognised header or skip line.
+ * Must be at least 4 chars and contain a word longer than 2 chars (avoids "+1" etc).
  */
 function isRaceNameLine(line) {
   const t = line.trim();
-  if (!t || t.length < 3) return false;
+  if (!t || t.length < 4) return false;
   if (/^\d/.test(t)) return false;
   if (isHeaderLine(t)) return false;
+  if (isSkipLine(t)) return false;
+  // Must contain at least one word longer than 2 characters
+  if (!/[a-zA-Z]{3,}/.test(t)) return false;
   return true;
 }
 
@@ -162,6 +178,9 @@ export function parseRaceCardText(text) {
 
     if (!line) continue;
     if (isHeaderLine(line)) continue;
+
+    // ── Skip line (source attribution, image caption etc) ──
+    if (isSkipLine(line)) continue;
 
     // ── Race name line ──
     if (isRaceNameLine(line)) {
@@ -219,7 +238,12 @@ export function parseRaceCardText(text) {
     // Check for position annotation in the odds column OR anywhere on the full line
     const position = parsePosition(oddsCol) ?? parsePosition(line);
 
-    const runner = { gatePosition: gate, horseName, decimalOdds: finalOdds };
+    const runner = {
+      gatePosition: gate,
+      horseName,
+      decimalOdds: finalOdds,
+      finishPosition: position,   // null or 1/2/3 — stored per-runner for preview display
+    };
     current.runners.push(runner);
 
     // Record result slot if position annotated
@@ -238,10 +262,14 @@ export function parseRaceCardText(text) {
   }
 
   // Finalise each race: clean up the result array
+  // result is set when all 3 positions are known (for scorer); partial positions
+  // are still visible via runner.finishPosition on each runner.
   for (const race of races) {
-    const slots    = race._resultSlots;
-    const filled   = slots.filter(Boolean);
-    race.result    = filled.length === 3 ? filled : null;
+    const slots  = race._resultSlots;
+    const filled = slots.filter(Boolean);
+    race.result  = filled.length === 3 ? filled : null;
+    // Partial result: expose however many positions we did detect
+    race.partialResult = filled.length > 0 ? slots : null;
     delete race._resultSlots;
   }
 

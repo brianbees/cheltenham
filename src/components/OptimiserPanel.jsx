@@ -292,7 +292,7 @@ export default function OptimiserPanel() {
   };
 
   // ── Load race from RaceCardModal ──────────────────────────────────────
-  const handleLoadRace = useCallback(({ raceName, runners: parsed, result }) => {
+  const handleLoadRace = useCallback(({ raceName, runners: parsed, result, partialResult }) => {
     // Convert parsed runners to the row format used by the input table
     const rows = parsed.map(r => ({
       id:   Date.now() + Math.random(),
@@ -308,7 +308,8 @@ export default function OptimiserPanel() {
     setRunners(rows);
     setResults(null);
     setErrors([]);
-    setPastedResult(result || null);
+    // Use full result if available, fall back to partial (for display banner only)
+    setPastedResult(result || (partialResult ? partialResult.filter(Boolean) : null));
     // Match race name to known list (case-insensitive)
     const match = RACE_NAMES.find(
       n => n.toLowerCase() === raceName.toLowerCase()

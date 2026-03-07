@@ -24,11 +24,9 @@ const POS_BADGE = {
 };
 const POS_LABEL = { 1: '1st', 2: '2nd', 3: '3rd' };
 
-// Derive finish position for a runner within a parsed race's result array
-function finishPosition(runner, result) {
-  if (!result) return null;
-  const idx = result.findIndex(r => r.gatePosition === runner.gatePosition);
-  return idx === -1 ? null : idx + 1;
+// Derive finish position for a runner — now stored directly on the runner object
+function finishPosition(runner) {
+  return runner.finishPosition ?? null;
 }
 
 // Display decimal odds as fractional when it's a clean integer fraction
@@ -41,8 +39,10 @@ function oddsLabel(decimal) {
 
 // ── Parsed race preview card ──────────────────────────────────────────────────
 function ParsedRaceCard({ race, index, onLoad, totalRaces }) {
-  const hasResult  = race.result !== null;
+  const hasResult   = race.result !== null;
+  const hasPartial  = !hasResult && race.partialResult !== null;
   const hasWarnings = race.warnings.length > 0;
+  const posCount    = race.runners.filter(r => r.finishPosition !== null).length;
 
   return (
     <div className="border border-gray-700 rounded-xl overflow-hidden mb-4">
@@ -56,7 +56,12 @@ function ParsedRaceCard({ race, index, onLoad, totalRaces }) {
           </span>
           {hasResult && (
             <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-900 text-emerald-300 border border-emerald-700">
-              Result detected
+              Full result detected
+            </span>
+          )}
+          {hasPartial && (
+            <span className="text-xs px-2 py-0.5 rounded-full bg-blue-900 text-blue-300 border border-blue-700">
+              {posCount} position{posCount !== 1 ? 's' : ''} detected
             </span>
           )}
           {hasWarnings && (
@@ -90,7 +95,7 @@ function ParsedRaceCard({ race, index, onLoad, totalRaces }) {
             </thead>
             <tbody>
               {race.runners.map((r, i) => {
-                const pos = finishPosition(r, race.result);
+                const pos = finishPosition(r);
                 return (
                   <tr
                     key={i}
@@ -135,10 +140,10 @@ function ParsedRaceCard({ race, index, onLoad, totalRaces }) {
         </div>
       )}
 
-      {/* Result summary */}
+      {/* Result summary: full */}
       {hasResult && (
         <div className="border-t border-emerald-900/40 bg-emerald-950/20 px-4 py-2 flex gap-4 flex-wrap">
-          <span className="text-xs text-emerald-500 font-semibold">Top 3 detected:</span>
+          <span className="text-xs text-emerald-500 font-semibold">Full top 3 detected:</span>
           {race.result.map((r, i) => (
             <span key={i} className="text-xs text-emerald-300 font-mono">
               <span className={`font-bold px-1 py-0.5 rounded mr-1 ${POS_BADGE[i + 1]}`}>
@@ -147,6 +152,22 @@ function ParsedRaceCard({ race, index, onLoad, totalRaces }) {
               Gate {r.gatePosition} · {r.horseName} · {oddsLabel(r.sp)}
             </span>
           ))}
+        </div>
+      )}
+
+      {/* Result summary: partial */}
+      {hasPartial && (
+        <div className="border-t border-blue-900/40 bg-blue-950/20 px-4 py-2 flex gap-4 flex-wrap">
+          <span className="text-xs text-blue-400 font-semibold">Partial positions detected:</span>
+          {race.partialResult.map((r, i) => r ? (
+            <span key={i} className="text-xs text-blue-300 font-mono">
+              <span className={`font-bold px-1 py-0.5 rounded mr-1 ${POS_BADGE[i + 1]}`}>
+                {POS_LABEL[i + 1]}
+              </span>
+              Gate {r.gatePosition} · {r.horseName}
+            </span>
+          ) : null)}
+          <span className="text-xs text-blue-500">(scoring requires all 3)</span>
         </div>
       )}
     </div>
