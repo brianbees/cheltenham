@@ -107,11 +107,17 @@ function cleanHorseName(str) {
  * splitColumns(line) → string[]
  * Splits a line into columns.
  * Tries tab-splitting first (most copy-pasted tables use tabs).
+ * Then tries " - " delimiter (e.g. "15 - Tiger Roll (IRE) - 10/1").
  * Falls back to splitting on 2+ consecutive spaces.
  */
 function splitColumns(line) {
   if (line.includes('\t')) {
     return line.split('\t').map(s => s.trim()).filter(s => s.length > 0);
+  }
+  // " - " delimited: gate - name - odds  (Racing Post / copy-paste format)
+  if (/ - /.test(line)) {
+    const parts = line.split(' - ').map(s => s.trim()).filter(s => s.length > 0);
+    if (parts.length >= 3) return parts;
   }
   return line.split(/\s{2,}/).map(s => s.trim()).filter(s => s.length > 0);
 }

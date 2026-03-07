@@ -59,17 +59,24 @@ function CompositionBar({ shortRate, midRate, bigRate }) {
 }
 
 // ── Composition mini-badge for a single year ──────────────────────────────────
-function CompBadges({ composition }) {
+function classifySP(sp) {
+  if (sp <= 6.0)  return 'short';
+  if (sp <= 16.0) return 'mid';
+  return 'big';
+}
+
+function CompBadges({ top3 }) {
   const colours = { short: 'bg-emerald-700 text-emerald-100', mid: 'bg-amber-700 text-amber-100', big: 'bg-rose-700 text-rose-100' };
   return (
     <div className="flex gap-0.5">
-      {['short','mid','big'].map(k =>
-        Array.from({ length: composition[k] }).map((_, i) => (
-          <span key={`${k}${i}`} className={`text-xs px-1 rounded font-bold ${colours[k]}`}>
+      {top3.map((h, i) => {
+        const k = classifySP(h.sp);
+        return (
+          <span key={i} className={`text-xs px-1 rounded font-bold ${colours[k]}`}>
             {k === 'short' ? 'S' : k === 'mid' ? 'M' : 'B'}
           </span>
-        ))
-      )}
+        );
+      })}
     </div>
   );
 }
@@ -238,7 +245,7 @@ function RaceBacktestCard({ raceName }) {
                       {row.perfectScore.toFixed(1)}
                     </td>
                     <td className="px-3 py-2 text-center">
-                      <CompBadges composition={row.composition} />
+                      <CompBadges top3={row.top3} />
                     </td>
                     <td className="px-3 py-2 text-center">
                       <span className={`text-xs px-1.5 py-0.5 rounded font-medium ${COMPLETENESS_STYLES[row.completeness]}`}>
@@ -313,6 +320,20 @@ function SummaryBar({ summary }) {
           + complete pre-race field odds.
         </p>
       </div>
+      {summary.nextDataTarget && (
+        <div className="border-l border-amber-800 pl-6">
+          <span className="text-xs text-gray-500 uppercase tracking-wide block mb-1">Next data target</span>
+          <span className="text-amber-400 font-bold text-lg">{summary.nextDataTarget.year}</span>
+          <span className="text-gray-500 text-xs ml-2">{summary.nextDataTarget.date}</span>
+          <div className="text-xs text-gray-400 mt-0.5">
+            {summary.nextDataTarget.partial} race{summary.nextDataTarget.partial !== 1 ? 's' : ''} partial
+            {summary.nextDataTarget.spOnly > 0 && (
+              <span className="text-gray-600">, {summary.nextDataTarget.spOnly} SP-only</span>
+            )}
+            {' — add full field arrays to unlock Tier 2'}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -376,6 +397,7 @@ function YearOverviewTable() {
 
 // ── Page ──────────────────────────────────────────────────────────────────────
 const RACE_NAMES = [
+  // Friday (Gold Cup Day) races
   'Triumph Hurdle',
   'County Hurdle',
   'Albert Bartlett',
@@ -385,6 +407,14 @@ const RACE_NAMES = [
   'Mares Chase',
   'Martin Pipe',
   'Grand Annual',
+  // Thursday (St Patrick's Day) races — 2022 onwards
+  "Turners Novices' Chase",
+  'Pertemps Final',
+  'Ryanair Chase',
+  "Stayers' Hurdle",
+  'Plate Handicap Chase',
+  "Dawn Run Mares' Hurdle",
+  'Kim Muir',
 ];
 
 export default function BacktesterPanel() {

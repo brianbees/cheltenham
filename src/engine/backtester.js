@@ -27,6 +27,7 @@ import { historicalData, spToPoints, getPerfectScore } from '../data/historicalD
 // ── Constants ─────────────────────────────────────────────────────────────────
 
 const ALL_RACE_NAMES = [
+  // Friday (Gold Cup Day) races
   'Triumph Hurdle',
   'County Hurdle',
   'Albert Bartlett',
@@ -36,6 +37,14 @@ const ALL_RACE_NAMES = [
   'Mares Chase',
   'Martin Pipe',
   'Grand Annual',
+  // Thursday (St Patrick's Day) races — 2022 onwards
+  "Turners Novices' Chase",
+  'Pertemps Final',
+  'Ryanair Chase',
+  "Stayers' Hurdle",
+  'Plate Handicap Chase',
+  "Dawn Run Mares' Hurdle",
+  'Kim Muir',
 ];
 
 // SP thresholds for categorising placed horses
@@ -48,13 +57,27 @@ const SP_THRESHOLD_MID   = 16.0;  // ≤ 15/1 decimal — mid-price
 /**
  * getDataCompleteness(race)
  * Returns one of: 'FULL' | 'PARTIAL' | 'SP_ONLY' | 'MISSING'
+ *
+ * Tier 2 readiness (FULL) requires a complete pre-race field array — i.e. all
+ * runners with gate positions and SP values, not just the result top-3.
+ * Having gate positions only on the top-3 result entries is PARTIAL: useful
+ * context, but not sufficient to replay the Harville model against history.
  */
-function getDataCompleteness(race, yearData) {
+function getDataCompleteness(race) {
   if (!race) return 'MISSING';
   if (race.top3.some(h => h.sp === null)) return 'MISSING';
-  const gatesFilled  = race.top3.filter(h => h.gatePosition !== null).length;
-  const hasFieldSize = race.fieldSize !== null;
-  if (gatesFilled === 3 && hasFieldSize) return 'FULL';
+
+  // FULL: a field array exists with at least as many entries as top3,
+  //       every runner has a gate position, and fieldSize is known.
+  const hasField = Array.isArray(race.field) && race.field.length >= 3;
+  if (hasField && race.fieldSize !== null) {
+    const fieldGatesFilled = race.field.filter(r => r.gatePosition !== null).length;
+    if (fieldGatesFilled === race.field.length) return 'FULL';
+    return 'PARTIAL';
+  }
+
+  // No full field — check whether top-3 at least have gate positions
+  const gatesFilled = race.top3.filter(h => h.gatePosition !== null).length;
   if (gatesFilled > 0) return 'PARTIAL';
   return 'SP_ONLY';
 }
@@ -92,7 +115,7 @@ function analyseRaceYear(year, yearData, raceName) {
   const race        = yearData.races.find(
     r => r.raceName.toLowerCase() === raceName.toLowerCase()
   );
-  const completeness = getDataCompleteness(race, yearData);
+  const completeness = getDataCompleteness(race);
 
   if (completeness === 'MISSING' || !race) {
     return { year, raceName, completeness, available: false };
@@ -250,7 +273,21 @@ export function analyseAll() {
   const byRace = ALL_RACE_NAMES.map(analyseRace);
   const byYear = Object.keys(historicalData).map(y => analyseYear(Number(y)));
 
-  const availableYears = byYear.filter(y => y.available.length > 0);
+  // Next data target: the not-yet-full year with the most PARTIAL races,
+  // tiebroken by most recent year (best ROI to work on next).
+  const notYetFull = byYear
+    .filter(y => y.racesWithFullData === 0 && y.racesWithPartial > 0)
+    .sort((a, b) =>
+      b.racesWithPartial - a.racesWithPartial ||
+      b.year - a.year
+    );
+  const nextDataTarget = notYetFull.length > 0 ? {
+    year:       notYetFull[0].year,
+    date:       notYetFull[0].date,
+    partial:    notYetFull[0].racesWithPartial,
+    spOnly:     notYetFull[0].racesWithSpOnly,
+    totalRaces: notYetFull[0].racesWithPartial + notYetFull[0].racesWithSpOnly,
+  } : null;
 
   return {
     byRace,
@@ -267,6 +304,7 @@ export function analyseAll() {
       missingEntries:   byRace.reduce(
         (s, r) => s + r.years.filter(y => y.completeness === 'MISSING').length, 0
       ),
+      nextDataTarget,
     },
   };
 }

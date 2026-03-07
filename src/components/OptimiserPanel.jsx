@@ -15,7 +15,7 @@
  */
 
 import { useState, useCallback } from 'react';
-import { enrichRunners }    from '../engine/probability';
+import { enrichRunners, enrichRunnersHenery } from '../engine/probability';
 import { rankCombinations } from '../engine/optimiser';
 import { getRaceHistory }   from '../data/historicalData';
 import RaceCardModal        from './RaceCardModal';
@@ -263,7 +263,13 @@ function validateRunners(runners) {
 
 // ── Main component ────────────────────────────────────────────────────────────
 
-export default function OptimiserPanel() {
+const MODEL_META = {
+  harville: { label: 'Harville',       badge: 'bg-sky-950 text-sky-300 border border-sky-800' },
+  henery:   { label: 'Henery (α=1.1)', badge: 'bg-violet-950 text-violet-300 border border-violet-800' },
+};
+
+export default function OptimiserPanel({ model = 'harville' }) {
+  const meta = MODEL_META[model] ?? MODEL_META.harville;
   const [selectedRace, setSelectedRace] = useState(RACE_NAMES[0]);
   const [runners,      setRunners]      = useState(() => Array.from({ length: 6 }, BLANK_RUNNER));
   const [results,      setResults]      = useState(null);   // ranked combos
@@ -322,7 +328,8 @@ export default function OptimiserPanel() {
     const { errors: errs, parsed } = validateRunners(runners);
     if (errs.length > 0) { setErrors(errs); return; }
     setErrors([]);
-    const enriched = enrichRunners(parsed);
+    const enrichFn = model === 'henery' ? enrichRunnersHenery : enrichRunners;
+    const enriched = enrichFn(parsed);
     const ranked   = rankCombinations(enriched);
     setResults({ ranked, enriched, fieldSize: parsed.length });
 
@@ -369,6 +376,9 @@ export default function OptimiserPanel() {
         <p className="text-gray-400 mt-1 text-sm">
           Enter today's field · find the highest Expected Value combination
         </p>
+        <span className={`inline-block mt-2 text-xs font-semibold px-2.5 py-1 rounded-full ${meta.badge}`}>
+          Model: {meta.label}
+        </span>
       </div>
 
       {/* ── Input card ── */}
@@ -484,7 +494,7 @@ export default function OptimiserPanel() {
               <h2 className="text-base font-bold text-white">{selectedRace} — Ranked Combinations</h2>
               <p className="text-gray-500 text-xs mt-0.5">
                 {results.ranked.length} combinations · {results.fieldSize} runners
-                {raceClass && ` · ${raceClass.label}`}
+                {raceClass && ` · ${raceClass.label}`} · {meta.label}
               </p>
             </div>
             <div className="text-right">

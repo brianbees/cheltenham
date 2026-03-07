@@ -153,3 +153,77 @@ export function enrichRunners(runners) {
   return harvilleP3(removeOverround(runners));
 }
 
+// ─── Henery power model ───────────────────────────────────────────────────────
+
+// α > 1 down-weights outsider place probability relative to Harville,
+// correcting Harville's known overestimation of long-shot place chances.
+// Empirically calibrated for UK NH racing.
+const HENERY_ALPHA = 1.1;
+
+/**
+ * heneryP3(runners, alpha)
+ *
+ * Applies the Henery power correction before the Harville place formula.
+ * Each runner's normProb is raised to `alpha` and re-normalised, then the
+ * Harville formula is applied with those adjusted probabilities.
+ *
+ * Effect: outsiders get less P(Place) than Harville would assign; favourites
+ * get slightly more. Stored in normProb so pAllThreePlace uses correct probs.
+ *
+ * @param  {Array}   runners  – runners with normProb (from removeOverround)
+ * @param  {number}  alpha    – power exponent, default 1.1
+ * @returns {Array}            – runners with normProb (Henery-adjusted), pWin, pPlace
+ */
+export function heneryP3(runners, alpha = HENERY_ALPHA) {
+  const powered    = runners.map(r => Math.pow(r.normProb, alpha));
+  const poweredSum = powered.reduce((s, v) => s + v, 0);
+
+  // Overwrite normProb with Henery-adjusted value so pAllThreePlace
+  // automatically uses the correct probs when called from optimiser.js
+  const adjusted = runners.map((r, i) => ({
+    ...r,
+    normProb: powered[i] / poweredSum,
+  }));
+
+  const p = adjusted.map(r => r.normProb);
+  const n = adjusted.length;
+
+  return adjusted.map((runner, i) => {
+    const pi = p[i];
+
+    const p1 = pi;
+
+    let p2 = 0;
+    for (let j = 0; j < n; j++) {
+      if (j === i) continue;
+      p2 += p[j] * (pi / (1 - p[j]));
+    }
+
+    let p3 = 0;
+    for (let j = 0; j < n; j++) {
+      if (j === i) continue;
+      for (let k = 0; k < n; k++) {
+        if (k === i || k === j) continue;
+        const denom = 1 - p[j] - p[k];
+        if (denom <= 0) continue;
+        p3 += p[j] * (p[k] / (1 - p[j])) * (pi / denom);
+      }
+    }
+
+    return {
+      ...runner,
+      pWin:   p1,
+      pPlace: p1 + p2 + p3,
+    };
+  });
+}
+
+/**
+ * enrichRunnersHenery(runners)
+ *
+ * Single call: overround removal + Henery power correction + place probabilities.
+ */
+export function enrichRunnersHenery(runners) {
+  return heneryP3(removeOverround(runners));
+}
+
