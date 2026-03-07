@@ -18,6 +18,7 @@ import { useState, useCallback } from 'react';
 import { enrichRunners }    from '../engine/probability';
 import { rankCombinations } from '../engine/optimiser';
 import { getRaceHistory }   from '../data/historicalData';
+import RaceCardModal        from './RaceCardModal';
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
@@ -267,6 +268,8 @@ export default function OptimiserPanel() {
   const [runners,      setRunners]      = useState(() => Array.from({ length: 6 }, BLANK_RUNNER));
   const [results,      setResults]      = useState(null);   // ranked combos
   const [errors,       setErrors]       = useState([]);
+  const [showModal,    setShowModal]    = useState(false);
+  const [pastedResult, setPastedResult] = useState(null);  // result top3 if pasted data had positions
 
   const raceClass = getRaceClass(selectedRace);
 
@@ -285,7 +288,33 @@ export default function OptimiserPanel() {
     setRunners(Array.from({ length: 6 }, BLANK_RUNNER));
     setResults(null);
     setErrors([]);
+    setPastedResult(null);
   };
+
+  // ── Load race from RaceCardModal ──────────────────────────────────────
+  const handleLoadRace = useCallback(({ raceName, runners: parsed, result }) => {
+    // Convert parsed runners to the row format used by the input table
+    const rows = parsed.map(r => ({
+      id:   Date.now() + Math.random(),
+      gate: String(r.gatePosition),
+      name: r.horseName,
+      // Store odds as fractional string if it's a clean integer fraction, else decimal
+      odds: (() => {
+        const frac = r.decimalOdds - 1;
+        if (Number.isInteger(frac)) return `${frac}/1`;
+        return r.decimalOdds.toFixed(2);
+      })(),
+    }));
+    setRunners(rows);
+    setResults(null);
+    setErrors([]);
+    setPastedResult(result || null);
+    // Match race name to known list (case-insensitive)
+    const match = RACE_NAMES.find(
+      n => n.toLowerCase() === raceName.toLowerCase()
+    );
+    if (match) setSelectedRace(match);
+  }, []);
 
   // ── Optimise ──────────────────────────────────────────────────────────
   const handleOptimise = () => {
@@ -316,7 +345,15 @@ export default function OptimiserPanel() {
 
         {/* Card header: race selector */}
         <div className="bg-gray-900 px-4 py-3 flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 flex-wrap">
+            <button
+              onClick={() => setShowModal(true)}
+              className="px-3 py-1.5 rounded-lg text-xs font-semibold border border-gray-600
+                         text-gray-300 hover:border-emerald-500 hover:text-emerald-400
+                         transition-colors"
+            >
+              ⬆ Paste Race Card
+            </button>
             <label className="text-sm text-gray-400 font-medium">Race</label>
             <select
               value={selectedRace}
@@ -499,7 +536,32 @@ export default function OptimiserPanel() {
         </div>
       )}
 
+      {/* ── Pasted result notice ── */}
+      {pastedResult && (
+        <div className="max-w-4xl mx-auto mb-4 border border-emerald-800 rounded-xl bg-emerald-950/30 px-4 py-3">
+          <p className="text-emerald-400 text-xs font-semibold mb-1">Result loaded from paste:</p>
+          <div className="flex gap-4 flex-wrap">
+            {pastedResult.map((r, i) => (
+              <span key={i} className="text-xs font-mono text-emerald-300">
+                <span className={`font-bold px-1.5 py-0.5 rounded mr-1 ${
+                  ['bg-yellow-500 text-yellow-950','bg-gray-400 text-gray-900','bg-amber-700 text-amber-100'][i]
+                }`}>{['1st','2nd','3rd'][i]}</span>
+                Gate {r.gatePosition} · {r.horseName}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+
       <p className="text-center text-gray-700 text-xs py-6">Champion Tipster — optimiser</p>
+
+      {/* ── Race card modal ── */}
+      {showModal && (
+        <RaceCardModal
+          onClose={() => setShowModal(false)}
+          onLoadRace={handleLoadRace}
+        />
+      )}
     </div>
   );
 }

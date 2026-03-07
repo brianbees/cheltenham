@@ -469,6 +469,235 @@ export const historicalData = {
     ],
   },
 
+// ─── 2020 – 13 March ────────────────────────────────────────────────────────
+  2020: {
+    date: "13 March 2020",
+    races: [
+      {
+        raceName: "Triumph Hurdle",
+        fieldSize: null,
+        top3: [
+          { gatePosition: null, horseName: "Burning Victory",    sp: 13.0 },
+          { gatePosition: null, horseName: "Aspire Tower",       sp:  6.0 },
+          { gatePosition: null, horseName: "Allmankind",         sp:  4.5 },
+        ],
+      },
+      {
+        raceName: "County Hurdle",
+        fieldSize: null,
+        top3: [
+          { gatePosition: null, horseName: "Saint Roi",          sp:  6.5 },
+          { gatePosition: null, horseName: "Aramon",             sp:  9.0 },
+          { gatePosition: null, horseName: "Embittered",         sp: 15.0 },
+        ],
+      },
+      {
+        raceName: "Albert Bartlett",
+        fieldSize: null,
+        top3: [
+          { gatePosition: null, horseName: "Monkfish",           sp:  6.0 },
+          { gatePosition: null, horseName: "Latest Exhibition",  sp:  5.5 },
+          { gatePosition: null, horseName: "Fury Road",          sp:  6.0 },
+        ],
+      },
+      {
+        raceName: "Gold Cup",
+        fieldSize: null,
+        top3: [
+          { gatePosition: null, horseName: "Al Boum Photo",      sp:  4.33 },
+          { gatePosition: null, horseName: "Santini",            sp:  6.0  },
+          { gatePosition: null, horseName: "Lostintranslation",  sp: 11.0  },
+        ],
+      },
+      {
+        raceName: "Foxhunter Chase",
+        fieldSize: null,
+        top3: [
+          { gatePosition: null, horseName: "It Came To Pass",    sp: 67.0 },
+          { gatePosition: null, horseName: "Billaway",           sp:  3.75 },
+          { gatePosition: null, horseName: "Shantou Flyer",      sp:  4.0 },
+        ],
+      },
+      {
+        raceName: "Grand Annual",
+        fieldSize: null,
+        top3: [
+          { gatePosition: null, horseName: "Chosen Mate",        sp:  4.5 },
+          { gatePosition: null, horseName: "Eclair De Beaufeu",  sp:  7.5 },
+          { gatePosition: null, horseName: "Us And Them",        sp: 11.0 },
+        ],
+      },
+      {
+        raceName: "Martin Pipe",
+        fieldSize: null,
+        top3: [
+          { gatePosition: null, horseName: "Indefatigable",      sp: 26.0 },
+          { gatePosition: null, horseName: "Pileon",             sp: 10.0 },
+          { gatePosition: null, horseName: "Great White Shark",  sp: 41.0 },
+        ],
+      },
+    ],
+    leaderboard: [
+      { name: "", score: 0 },
+      { name: "", score: 0 },
+      { name: "", score: 0 },
+    ],
+  },
+
+  // ─── 2021 – 19 March ────────────────────────────────────────────────────────
+  2021: {
+    date: "19 March 2021",
+    races: [
+      {
+        raceName: "Triumph Hurdle",
+        fieldSize: null,
+        top3: [
+          { gatePosition: null, horseName: "Quilixios",          sp:  3.0 },
+          { gatePosition: null, horseName: "Adagio",             sp: 11.0 },
+          { gatePosition: null, horseName: "Haut En Couleurs",   sp: 21.0 },
+        ],
+      },
+      {
+        raceName: "County Hurdle",
+        fieldSize: null,
+        top3: [
+          { gatePosition: null, horseName: "Belfast Banter",     sp: 34.0 },
+          { gatePosition: null, horseName: "Petit Mouchoir",     sp: 23.0 },
+          { gatePosition: null, horseName: "Milkwood",           sp: 29.0 },
+        ],
+      },
+      {
+        raceName: "Albert Bartlett",
+        fieldSize: null,
+        top3: [
+          { gatePosition: null, horseName: "Vanillier",          sp: 15.0 },
+          { gatePosition: null, horseName: "Oscar Elite",        sp: 41.0 },
+          { gatePosition: null, horseName: "Streets Of Doyen",   sp: 11.0 },
+        ],
+      },
+      {
+        raceName: "Gold Cup",
+        fieldSize: null,
+        top3: [
+          { gatePosition: null, horseName: "Minella Indo",       sp: 10.0 },
+          { gatePosition: null, horseName: "A Plus Tard",        sp:  4.33 },
+          { gatePosition: null, horseName: "Al Boum Photo",      sp:  3.25 },
+        ],
+      },
+      {
+        raceName: "Hunters Chase",
+        fieldSize: null,
+        top3: [
+          { gatePosition: null, horseName: "Porlock Bay",        sp: 17.0 },
+          { gatePosition: null, horseName: "Billaway",           sp:  3.0 },
+          { gatePosition: null, horseName: "Staker Wallace",     sp: 10.0 },
+        ],
+      },
+      {
+        raceName: "Mares Chase",
+        fieldSize: null,
+        top3: [
+          { gatePosition: null, horseName: "Colreevy",           sp:  3.25 },
+          { gatePosition: null, horseName: "Elimay",             sp:  2.2  },
+          { gatePosition: null, horseName: "Shattered Love",     sp:  7.0  },
+        ],
+      },
+      {
+        raceName: "Martin Pipe",
+        fieldSize: null,
+        top3: [
+          { gatePosition: null, horseName: "Galopin Des Champs", sp:  9.0 },
+          { gatePosition: null, horseName: "Langer Dan",         sp:  7.5 },
+          { gatePosition: null, horseName: "Floueur",            sp: 34.0 },
+        ],
+      },
+    ],
+    leaderboard: [
+      { name: "", score: 0 },
+      { name: "", score: 0 },
+      { name: "", score: 0 },
+    ],
+  },
+
+  // ─── 2022 – 18 March ────────────────────────────────────────────────────────
+  2022: {
+    date: "18 March 2022",
+    races: [
+      {
+        raceName: "Triumph Hurdle",
+        fieldSize: null,
+        top3: [
+          { gatePosition: null, horseName: "Vauban",             sp:  2.5  },
+          { gatePosition: null, horseName: "Fil Dor",            sp:  6.5  },
+          { gatePosition: null, horseName: "Pied Piper",         sp:  4.5  },
+        ],
+      },
+      {
+        raceName: "County Hurdle",
+        fieldSize: null,
+        top3: [
+          { gatePosition: null, horseName: "State Man",          sp:  3.75 },
+          { gatePosition: null, horseName: "First Street",       sp: 17.0  },
+          { gatePosition: null, horseName: "Colonel Mustard",    sp:  7.5  },
+        ],
+      },
+      {
+        raceName: "Albert Bartlett",
+        fieldSize: null,
+        top3: [
+          { gatePosition: null, horseName: "The Nice Guy",       sp: 19.0 },
+          { gatePosition: null, horseName: "Minella Cocooner",   sp:  5.5 },
+          { gatePosition: null, horseName: "Bardenstown Lad",    sp: 21.0 },
+        ],
+      },
+      {
+        raceName: "Gold Cup",
+        fieldSize: null,
+        top3: [
+          { gatePosition: null, horseName: "A Plus Tard",        sp:  4.0 },
+          { gatePosition: null, horseName: "Minella Indo",       sp:  8.0 },
+          { gatePosition: null, horseName: "Protektorat",        sp: 11.0 },
+        ],
+      },
+      {
+        raceName: "Hunters Chase",
+        fieldSize: null,
+        top3: [
+          { gatePosition: null, horseName: "Billaway",           sp:  2.625 },
+          { gatePosition: null, horseName: "Winged Leader",      sp:  5.5   },
+          { gatePosition: null, horseName: "Mighty Stowaway",    sp: 34.0   },
+        ],
+      },
+      {
+        raceName: "Mares Chase",
+        fieldSize: null,
+        top3: [
+          { gatePosition: null, horseName: "Elimay",             sp:  3.25 },
+          { gatePosition: null, horseName: "Pink Legend",        sp: 34.0  },
+          { gatePosition: null, horseName: "Scarlet And Dove",   sp: 29.0  },
+        ],
+      },
+      {
+        raceName: "Martin Pipe",
+        fieldSize: null,
+        top3: [
+          { gatePosition: null, horseName: "Banbridge",          sp: 13.0 },
+          { gatePosition: null, horseName: "Cobblers Dream",     sp: 13.0 },
+          { gatePosition: null, horseName: "Hollow Games",       sp:  5.5 },
+        ],
+      },
+    ],
+    leaderboard: [
+      { name: "", score: 0 },
+      { name: "", score: 0 },
+      { name: "", score: 0 },
+    ],
+  },
+
+
+
+
+
   // ─── 2023 – 17 March ────────────────────────────────────────────────────────
   2023: {
     date: "17 March 2023",
@@ -549,11 +778,11 @@ export const historicalData = {
     races: [
       {
         raceName: "Triumph Hurdle",
-        fieldSize: null,
+        fieldSize: 12,
         top3: [
-          { gatePosition: null, horseName: "Majborough",  sp:  7.0 },
-          { gatePosition: null, horseName: "Kargese",     sp:  5.0 },
-          { gatePosition: null, horseName: "Salver",      sp: 11.0 },
+          { gatePosition:  7, horseName: "Majborough",  sp:  7.0 },
+          { gatePosition:  6, horseName: "Kargese",     sp:  5.0 },
+          { gatePosition: 10, horseName: "Salver",      sp: 11.0 },
         ],
       },
       {
