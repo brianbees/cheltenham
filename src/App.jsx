@@ -9,8 +9,9 @@
 
 import { Routes, Route, NavLink } from 'react-router-dom';
 import HistoricalDisplay from './components/HistoricalDisplay';
-import RaceHistoryPanel from './components/RaceHistoryPanel';
-import OptimiserPanel  from './components/OptimiserPanel';
+import RaceHistoryPanel  from './components/RaceHistoryPanel';
+import OptimiserPanel   from './components/OptimiserPanel';
+import BacktesterPanel  from './components/BacktesterPanel';
 
 // NavLink receives an isActive boolean from react-router-dom and applies
 // the appropriate class so the current page link is highlighted.
@@ -43,6 +44,12 @@ function NavBar() {
       >
         Optimiser
       </NavLink>
+      <NavLink
+        to="/backtester"
+        className={({ isActive }) => (isActive ? active : inactive)}
+      >
+        Backtester
+      </NavLink>
     </nav>
   );
 }
@@ -55,6 +62,7 @@ export default function App() {
         <Route path="/" element={<HistoricalDisplay />} />
         <Route path="/race-history" element={<RaceHistoryPanel />} />
         <Route path="/optimiser" element={<OptimiserPanel />} />
+        <Route path="/backtester" element={<BacktesterPanel />} />
       </Routes>
     </div>
   );
