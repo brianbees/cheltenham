@@ -570,7 +570,7 @@ export const historicalData = {
         raceName: "Albert Bartlett",
         fieldSize: 16,
         top3: [
-          { gatePosition: 17, horseName: "Vanillier",          sp: 15.0 },
+          { gatePosition:  1, horseName: "Vanillier",          sp: 15.0 },
           { gatePosition: 10, horseName: "Oscar Elite",        sp: 41.0 },
           { gatePosition: 13, horseName: "Streets Of Doyen",   sp: 11.0 },
         ],
@@ -579,8 +579,8 @@ export const historicalData = {
         raceName: "Gold Cup",
         fieldSize: 12,
         top3: [
-          { gatePosition:  4, horseName: "Minella Indo",       sp: 10.0 },
-          { gatePosition: 11, horseName: "A Plus Tard",        sp:  4.33 },
+          { gatePosition:  5, horseName: "Minella Indo",       sp: 10.0 },
+          { gatePosition:  2, horseName: "A Plus Tard",        sp:  4.33 },
           { gatePosition:  1, horseName: "Al Boum Photo",      sp:  3.25 },
         ],
       },
@@ -588,9 +588,9 @@ export const historicalData = {
         raceName: "Hunters Chase",
         fieldSize: 18,
         top3: [
-          { gatePosition: 21, horseName: "Porlock Bay",        sp: 17.0 },
-          { gatePosition:  6, horseName: "Billaway",           sp:  3.0 },
-          { gatePosition: 20, horseName: "Staker Wallace",     sp: 15.0 },
+          { gatePosition:  1, horseName: "Porlock Bay",        sp: 17.0 },
+          { gatePosition:  2, horseName: "Billaway",           sp:  3.0 },
+          { gatePosition: null, horseName: "Staker Wallace",     sp: 10.0 },
         ],
       },
       {
