@@ -50,7 +50,7 @@ function fmtOdds(decimal) {
 
 // ── ModelResult sub-component ─────────────────────────────────────────────────
 
-function ModelResult({ label, combo, fmtOdds, accent = 'emerald' }) {
+function ModelResult({ label, combo, fmtOdds, accent = 'emerald', originalOdds = {} }) {
   const gateColor = accent === 'blue'
     ? 'bg-blue-600 text-white'
     : 'bg-emerald-600 text-white';
@@ -67,15 +67,27 @@ function ModelResult({ label, combo, fmtOdds, accent = 'emerald' }) {
         <span className={`text-xs uppercase tracking-wider font-semibold ${labelColor}`}>{label}</span>
         <span className={`font-mono font-bold text-sm ${evColor}`}>EV {combo.ev.toFixed(2)}</span>
       </div>
-      {combo.runners.map((r, i) => (
-        <div key={i} className="flex items-center gap-2">
-          <span className={`text-xs font-bold px-2 py-0.5 rounded shrink-0 ${gateColor}`}>
-            Gate {r.gatePosition}
-          </span>
-          <span className="text-gray-800 text-sm font-medium flex-1 min-w-0">{r.horseName}</span>
-          <span className="text-gray-400 text-xs font-mono shrink-0">{fmtOdds(r.decimalOdds)}</span>
-        </div>
-      ))}
+      {combo.runners.map((r, i) => {
+        const orig = originalOdds[r.gatePosition];
+        const moved = orig && Math.abs(r.decimalOdds - orig) > 0.05;
+        const shortened = moved && r.decimalOdds < orig;
+        const drifted   = moved && r.decimalOdds > orig;
+        return (
+          <div key={i} className="flex items-center gap-2">
+            <span className={`text-xs font-bold px-2 py-0.5 rounded shrink-0 ${gateColor}`}>
+              Gate {r.gatePosition}
+            </span>
+            <span className="text-gray-800 text-sm font-medium flex-1 min-w-0">{r.horseName}</span>
+            <span className="text-gray-400 text-xs font-mono shrink-0">{fmtOdds(r.decimalOdds)}</span>
+            {shortened && (
+              <span className="text-emerald-600 text-xs font-bold shrink-0" title={`Shortened from ${fmtOdds(orig)}`}>▼</span>
+            )}
+            {drifted && (
+              <span className="text-amber-500 text-xs font-bold shrink-0" title={`Drifted from ${fmtOdds(orig)}`}>▲</span>
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 }
@@ -189,10 +201,11 @@ function RaceCard({ race, data, onPaste, onSave, onClear }) {
     setText('');
   };
 
-  const combo       = data?.combo       ?? null;
-  const comboHenery  = data?.comboHenery ?? null;
-  const runners      = data?.runners     ?? null;
-  const savedAt      = data?.savedAt     ?? null;
+  const combo        = data?.combo        ?? null;
+  const comboHenery  = data?.comboHenery  ?? null;
+  const runners      = data?.runners      ?? null;
+  const savedAt      = data?.savedAt      ?? null;
+  const originalOdds = data?.originalOdds ?? {};
 
   // Are both models suggesting the same gates?
   const sameAsHarville = combo && comboHenery &&
@@ -316,11 +329,11 @@ function RaceCard({ race, data, onPaste, onSave, onClear }) {
         <div className="px-4 py-3 space-y-3">
 
           {/* Harville model */}
-          <ModelResult label="Harville" combo={combo} fmtOdds={fmtOdds} />
+          <ModelResult label="Harville" combo={combo} fmtOdds={fmtOdds} originalOdds={originalOdds} />
 
           {/* Henery model — only show separately when it disagrees */}
           {!sameAsHarville && comboHenery && (
-            <ModelResult label="Henery" combo={comboHenery} fmtOdds={fmtOdds} accent="blue" />
+            <ModelResult label="Henery" combo={comboHenery} fmtOdds={fmtOdds} accent="blue" originalOdds={originalOdds} />
           )}
           {sameAsHarville && (
             <p className="text-xs text-gray-400 italic">Both models agree ✓</p>
@@ -382,6 +395,7 @@ export default function RaceDayPanel() {
             ...results,
             runners: entry.runners,
             savedAt: entry.savedAt ? new Date(entry.savedAt) : null,
+            originalOdds: entry.originalOdds ?? null,
           };
         }
       }
@@ -397,6 +411,7 @@ export default function RaceDayPanel() {
         slim[name] = {
           runners: entry.runners,
           savedAt: entry.savedAt?.toISOString() ?? null,
+          originalOdds: entry.originalOdds ?? null,
         };
       }
       localStorage.setItem(LS_KEY, JSON.stringify(slim));
@@ -412,10 +427,16 @@ export default function RaceDayPanel() {
   const handlePaste = (raceName, runners) => {
     const results = computeRaceResults(runners);
     if (!results) return;
-    setRaceData(prev => ({
-      ...prev,
-      [raceName]: { runners, combo: results.combo, comboHenery: results.comboHenery, enriched: results.enriched, ranked: results.ranked, savedAt: prev[raceName]?.savedAt ?? null },
-    }));
+    setRaceData(prev => {
+      // On first paste, record the baseline odds. On re-paste, keep the original.
+      const existing = prev[raceName];
+      const originalOdds = existing?.originalOdds ??
+        Object.fromEntries(runners.map(r => [r.gatePosition, r.decimalOdds]));
+      return {
+        ...prev,
+        [raceName]: { runners, combo: results.combo, comboHenery: results.comboHenery, enriched: results.enriched, ranked: results.ranked, savedAt: existing?.savedAt ?? null, originalOdds },
+      };
+    });
   };
 
   const handleSaved = (raceName, time) => {
