@@ -196,45 +196,49 @@ function RaceCard({ race, data, onPaste, onSave, onClear }) {
     <div className="border border-gray-200 rounded-xl overflow-hidden shadow-sm bg-white">
 
       {/* ── Header ── */}
-      <div className="bg-gray-50 border-b border-gray-200 px-4 py-3 flex items-center justify-between gap-2 flex-wrap">
-        <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-emerald-600 font-mono text-sm font-bold w-14 shrink-0">{race.time}</span>
-          <span className="text-gray-900 font-semibold text-sm">{race.name}</span>
-          {raceClass && (
+      <div className="bg-gray-50 border-b border-gray-200 px-4 py-3 space-y-2">
+        {/* Row 1: time + name + buttons */}
+        <div className="flex items-center gap-2">
+          <span className="text-emerald-600 font-mono text-sm font-bold shrink-0">{race.time}</span>
+          <span className="text-gray-900 font-semibold text-sm flex-1 min-w-0 leading-snug">{race.name}</span>
+          <div className="flex items-center gap-1.5 shrink-0">
+            {runners && (
+              <button
+                onClick={onClear}
+                className="p-2 text-gray-400 hover:text-rose-500 transition-colors"
+                title="Clear"
+              >
+                ✕
+              </button>
+            )}
+            <button
+              onClick={handleShowHistory}
+              title="View save history"
+              className={`px-2 py-2 rounded border text-xs transition-colors ${
+                showHistory
+                  ? 'border-sky-400 text-sky-600 bg-sky-50'
+                  : 'border-gray-300 text-gray-400 hover:border-sky-400 hover:text-sky-500'
+              }`}
+            >
+              ⏱
+            </button>
+            <button
+              onClick={() => { setPasting(p => !p); setParseError(null); setText(''); }}
+              className="text-xs px-3 py-2 rounded border border-gray-300 text-gray-500
+                         hover:border-emerald-500 hover:text-emerald-600 transition-colors whitespace-nowrap"
+            >
+              {pasting ? 'Cancel' : runners ? '↻ Re-paste' : '⬆ Paste Card'}
+            </button>
+          </div>
+        </div>
+        {/* Row 2: race class badge */}
+        {raceClass && (
+          <div>
             <span className={`text-xs px-2 py-0.5 rounded-full ${raceClass.color}`}>
               {raceClass.label} · {raceClass.count}yr
             </span>
-          )}
-        </div>
-        <div className="flex items-center gap-2">
-          {runners && (
-            <button
-              onClick={onClear}
-              className="text-xs text-gray-400 hover:text-rose-500 transition-colors px-1"
-              title="Clear"
-            >
-              ✕
-            </button>
-          )}
-          <button
-            onClick={handleShowHistory}
-            title="View save history"
-            className={`text-xs px-2 py-1 rounded border transition-colors ${
-              showHistory
-                ? 'border-sky-400 text-sky-600 bg-sky-50'
-                : 'border-gray-300 text-gray-400 hover:border-sky-400 hover:text-sky-500'
-            }`}
-          >
-            ⏱
-          </button>
-          <button
-            onClick={() => { setPasting(p => !p); setParseError(null); setText(''); }}
-            className="text-xs px-3 py-1 rounded border border-gray-300 text-gray-500
-                       hover:border-emerald-500 hover:text-emerald-600 transition-colors"
-          >
-            {pasting ? 'Cancel' : runners ? '↻ Re-paste' : '⬆ Paste Card'}
-          </button>
-        </div>
+          </div>
+        )}
       </div>
 
       {/* ── History dropdown ── */}
@@ -303,25 +307,22 @@ function RaceCard({ race, data, onPaste, onSave, onClear }) {
       {/* ── Result ── */}
       {!pasting && combo && (
         <div className="px-4 py-3">
-          <div className="flex items-start gap-3 flex-wrap">
-            <span className="text-xs text-gray-400 uppercase tracking-wider pt-0.5 shrink-0">Best bet</span>
-            <div className="flex items-center gap-2 flex-wrap flex-1">
+          <div className="space-y-2">
+            <div className="flex items-center justify-between gap-2">
+              <span className="text-xs text-gray-400 uppercase tracking-wider">Best bet</span>
+              <span className="text-emerald-600 font-mono font-bold text-sm">EV {combo.ev.toFixed(2)}</span>
+            </div>
+            <div className="space-y-1.5">
               {combo.runners.map((r, i) => (
-                <div key={i} className="flex items-center gap-1.5">
-                  <span className="bg-emerald-600 text-white text-xs font-bold px-2 py-0.5 rounded">
+                <div key={i} className="flex items-center gap-2">
+                  <span className="bg-emerald-600 text-white text-xs font-bold px-2 py-0.5 rounded shrink-0">
                     Gate {r.gatePosition}
                   </span>
-                  <span className="text-gray-800 text-sm font-medium">{r.horseName}</span>
-                  <span className="text-gray-400 text-xs font-mono">{fmtOdds(r.decimalOdds)}</span>
-                  {i < combo.runners.length - 1 && (
-                    <span className="text-gray-300 text-xs">+</span>
-                  )}
+                  <span className="text-gray-800 text-sm font-medium flex-1 min-w-0">{r.horseName}</span>
+                  <span className="text-gray-400 text-xs font-mono shrink-0">{fmtOdds(r.decimalOdds)}</span>
                 </div>
               ))}
             </div>
-            <span className="text-emerald-600 font-mono font-bold text-sm shrink-0">
-              EV {combo.ev.toFixed(2)}
-            </span>
           </div>
           <div className="mt-2 flex items-center justify-between gap-3 flex-wrap">
             <span className="text-xs text-gray-400">
@@ -499,14 +500,14 @@ export default function RaceDayPanel() {
 
       {/* ── Progress bar ── */}
       <div className="max-w-5xl mx-auto mb-5">
-        <div className="flex items-center justify-between text-xs text-gray-400 mb-1">
-          <span>{loaded} of {schedule.length} races loaded</span>
-          <div className="flex items-center gap-3">
+        <div className="flex items-center justify-between gap-2 flex-wrap text-xs text-gray-400 mb-1">
+          <span className="shrink-0">{loaded} of {schedule.length} races loaded</span>
+          <div className="flex items-center gap-2 flex-wrap">
             {restoreMsg && <span className="text-emerald-600">{restoreMsg}</span>}
             <button
               onClick={handleRestore}
               disabled={restoring}
-              className="px-3 py-1 rounded border border-gray-300 text-gray-500
+              className="px-3 py-1.5 rounded border border-gray-300 text-gray-500
                          hover:border-emerald-500 hover:text-emerald-600
                          disabled:opacity-40 transition-colors"
             >

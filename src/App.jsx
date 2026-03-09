@@ -7,6 +7,7 @@
  *   /race-history  → RaceHistoryPanel  (per-race character analysis)
  */
 
+import { useState } from 'react';
 import { Routes, Route, NavLink } from 'react-router-dom';
 import HistoricalDisplay from './components/HistoricalDisplay';
 import RaceHistoryPanel  from './components/RaceHistoryPanel';
@@ -17,74 +18,68 @@ import HelpPanel           from './components/HelpPanel';
 import ResultsTablePanel   from './components/ResultsTablePanel';
 import RaceDayPanel        from './components/RaceDayPanel';
 
-// NavLink receives an isActive boolean from react-router-dom and applies
-// the appropriate class so the current page link is highlighted.
+const NAV_LINKS = [
+  { to: '/',                end: true,  label: 'Historical Data' },
+  { to: '/race-history',   end: false, label: 'Race History' },
+  { to: '/optimiser',      end: true,  label: 'Optimiser' },
+  { to: '/optimiser/henery', end: false, label: 'Optimiser (Henery)' },
+  { to: '/backtester',     end: false, label: 'Backtester' },
+  { to: '/race-coverage',  end: false, label: 'Race Coverage' },
+  { to: '/results-table',  end: false, label: 'Results Table' },
+  { to: '/race-day',       end: false, label: 'Race Day' },
+  { to: '/help',           end: false, label: 'Help' },
+];
+
 function NavBar() {
-  const base = 'px-4 py-2 rounded text-sm font-medium transition-colors';
-  const active = `${base} bg-gray-800 text-emerald-400`;
+  const [open, setOpen] = useState(false);
+  const base    = 'px-4 py-2 rounded text-sm font-medium transition-colors';
+  const active   = `${base} bg-gray-800 text-emerald-400`;
   const inactive = `${base} text-gray-400 hover:text-gray-100 hover:bg-gray-800`;
+  const mobileActive   = 'block px-4 py-3 text-sm font-medium text-emerald-400 bg-gray-800 rounded';
+  const mobileInactive = 'block px-4 py-3 text-sm font-medium text-gray-300 hover:bg-gray-800 hover:text-white rounded';
 
   return (
-    <nav className="bg-gray-900 border-b border-gray-800 px-4 py-3 flex items-center gap-2">
-      <span className="text-emerald-400 font-bold text-base mr-4 tracking-tight">
-        Champion Tipster
-      </span>
-      <NavLink
-        to="/"
-        end
-        className={({ isActive }) => (isActive ? active : inactive)}
-      >
-        Historical Data
-      </NavLink>
-      <NavLink
-        to="/race-history"
-        className={({ isActive }) => (isActive ? active : inactive)}
-      >
-        Race History
-      </NavLink>
-      <NavLink
-        to="/optimiser"
-        end
-        className={({ isActive }) => (isActive ? active : inactive)}
-      >
-        Optimiser
-      </NavLink>
-      <NavLink
-        to="/optimiser/henery"
-        className={({ isActive }) => (isActive ? active : inactive)}
-      >
-        Optimiser (Henery)
-      </NavLink>
-      <NavLink
-        to="/backtester"
-        className={({ isActive }) => (isActive ? active : inactive)}
-      >
-        Backtester
-      </NavLink>
-      <NavLink
-        to="/race-coverage"
-        className={({ isActive }) => (isActive ? active : inactive)}
-      >
-        Race Coverage
-      </NavLink>
-      <NavLink
-        to="/results-table"
-        className={({ isActive }) => (isActive ? active : inactive)}
-      >
-        Results Table
-      </NavLink>
-      <NavLink
-        to="/race-day"
-        className={({ isActive }) => (isActive ? active : inactive)}
-      >
-        Race Day
-      </NavLink>
-      <NavLink
-        to="/help"
-        className={({ isActive }) => (isActive ? active : inactive)}
-      >
-        Help
-      </NavLink>
+    <nav className="bg-gray-900 border-b border-gray-800">
+      <div className="px-4 py-3 flex items-center justify-between">
+        <span className="text-emerald-400 font-bold text-base tracking-tight">
+          Champion Tipster
+        </span>
+
+        {/* Desktop links */}
+        <div className="hidden md:flex items-center gap-1 flex-wrap">
+          {NAV_LINKS.map(({ to, end, label }) => (
+            <NavLink key={to} to={to} end={end}
+              className={({ isActive }) => isActive ? active : inactive}>
+              {label}
+            </NavLink>
+          ))}
+        </div>
+
+        {/* Hamburger */}
+        <button
+          onClick={() => setOpen(o => !o)}
+          className="md:hidden p-2 rounded text-gray-400 hover:text-white hover:bg-gray-800 transition-colors"
+          aria-label="Menu"
+        >
+          {open
+            ? <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12"/></svg>
+            : <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16"/></svg>
+          }
+        </button>
+      </div>
+
+      {/* Mobile dropdown */}
+      {open && (
+        <div className="md:hidden border-t border-gray-800 px-2 pb-3 space-y-1">
+          {NAV_LINKS.map(({ to, end, label }) => (
+            <NavLink key={to} to={to} end={end}
+              onClick={() => setOpen(false)}
+              className={({ isActive }) => isActive ? mobileActive : mobileInactive}>
+              {label}
+            </NavLink>
+          ))}
+        </div>
+      )}
     </nav>
   );
 }
