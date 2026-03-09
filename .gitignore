@@ -23,10 +23,5 @@ import_mares_novices.py
 check_names.py
 export_data.py
 
-# Misc local files
-*.zip
-*.jpg
-*.csv
-parsed_missing.csv
-historicalData_export.csv
-datafromvscode*
+# Archive of throwaway scripts and data files
+_archive/
