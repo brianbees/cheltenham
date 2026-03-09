@@ -157,8 +157,28 @@ export function enrichRunners(runners) {
 
 // α > 1 down-weights outsider place probability relative to Harville,
 // correcting Harville's known overestimation of long-shot place chances.
-// Empirically calibrated for UK NH racing.
-const HENERY_ALPHA = 1.1;
+// The correction grows with field size: a 5-runner novice chase barely needs
+// it; a 30-runner county handicap needs it strongly.
+//
+// Scale: α = 1.0 + 0.004 × fieldSize, clamped to [1.0, 1.2]
+//   ≤  5 runners → ~1.02  (near-Harville)
+//    8 runners → ~1.03
+//   15 runners → ~1.06
+//   20 runners → ~1.08
+//   25 runners → ~1.10  (previous fixed value)
+//   30 runners → ~1.12
+//   ≥ 50 runners → 1.20  (cap)
+//
+// When alpha is supplied explicitly (e.g. from the Optimiser UI), that value
+// takes precedence over the automatic scaling.
+
+/**
+ * heneryAlpha(fieldSize)
+ * Returns the appropriate Henery α for a given field size.
+ */
+export function heneryAlpha(fieldSize) {
+  return Math.min(1.2, Math.max(1.0, 1.0 + 0.004 * fieldSize));
+}
 
 /**
  * heneryP3(runners, alpha)
@@ -171,10 +191,10 @@ const HENERY_ALPHA = 1.1;
  * get slightly more. Stored in normProb so pAllThreePlace uses correct probs.
  *
  * @param  {Array}   runners  – runners with normProb (from removeOverround)
- * @param  {number}  alpha    – power exponent, default 1.1
+ * @param  {number}  alpha    – power exponent; defaults to field-size-scaled value
  * @returns {Array}            – runners with normProb (Henery-adjusted), pWin, pPlace
  */
-export function heneryP3(runners, alpha = HENERY_ALPHA) {
+export function heneryP3(runners, alpha = heneryAlpha(runners.length)) {
   const powered    = runners.map(r => Math.pow(r.normProb, alpha));
   const poweredSum = powered.reduce((s, v) => s + v, 0);
 
