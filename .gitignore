@@ -6,4 +6,27 @@ dist/
 *.log
 npm-debug.log*
 .DS_Store
+
+# Local results (file-based save, not for version control)
 results/
+
+# Upload script contains real Supabase keys when filled in
+upload_to_supabase.mjs
+
+# Backup data files
+src/data/*.backup_*.js
+src/data/*.bak_*
+
+# Throwaway scripts
+arkle_check.py
+import_mares_novices.py
+check_names.py
+export_data.py
+
+# Misc local files
+*.zip
+*.jpg
+*.csv
+parsed_missing.csv
+historicalData_export.csv
+datafromvscode*
