@@ -84,4 +84,15 @@ function saveResultsPlugin() {
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), saveResultsPlugin()],
+  build: {
+    chunkSizeWarningLimit: 1000,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'historical-data': ['./src/data/historicalData.js'],
+          'react-vendor':    ['react', 'react-dom', 'react-router-dom'],
+        },
+      },
+    },
+  },
 })
