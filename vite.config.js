@@ -3,8 +3,15 @@ import react                                 from '@vitejs/plugin-react'
 import { writeFileSync, mkdirSync, readdirSync, readFileSync } from 'fs'
 import { resolve, dirname }                  from 'path'
 import { fileURLToPath }                     from 'url'
+import { execSync }                          from 'child_process'
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+
+// Build number = total git commit count (increases with every push/deploy)
+let buildNumber = 0;
+try {
+  buildNumber = parseInt(execSync('git rev-list --count HEAD').toString().trim(), 10);
+} catch {}
 
 /**
  * saveResultsPlugin
@@ -84,6 +91,9 @@ function saveResultsPlugin() {
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), saveResultsPlugin()],
+  define: {
+    __BUILD_NUMBER__: buildNumber,
+  },
   build: {
     chunkSizeWarningLimit: 1000,
     rollupOptions: {

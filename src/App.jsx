@@ -47,6 +47,9 @@ function NavBar() {
         <span className="text-emerald-400 font-bold text-base tracking-tight">
           Champion Tipster
         </span>
+        <span className="text-gray-600 text-xs font-mono hidden sm:inline ml-1">
+          v{__BUILD_NUMBER__}
+        </span>
 
         {/* Desktop links */}
         <div className="hidden md:flex items-center gap-1 flex-wrap">
