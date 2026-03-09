@@ -8,7 +8,7 @@
 
 import { useState, useEffect } from 'react';
 import { parseRaceCardText } from '../engine/parser';
-import { enrichRunners }     from '../engine/probability';
+import { enrichRunners, enrichRunnersHenery } from '../engine/probability';
 import { rankCombinations }  from '../engine/optimiser';
 import { getRaceHistory }    from '../data/historicalData';
 import { FESTIVAL_DAYS }     from '../data/schedule';
@@ -29,9 +29,16 @@ function getRaceClass(raceName, dataName) {
 
 function computeRaceResults(runners) {
   if (!runners || runners.length < 3) return null;
-  const enriched = enrichRunners(runners);
-  const ranked   = rankCombinations(enriched);
-  return { combo: ranked[0] ?? null, enriched, ranked };
+  const enriched       = enrichRunners(runners);
+  const ranked         = rankCombinations(enriched);
+  const enrichedHenery = enrichRunnersHenery(runners);
+  const rankedHenery   = rankCombinations(enrichedHenery);
+  return {
+    combo:        ranked[0]        ?? null,
+    comboHenery:  rankedHenery[0]  ?? null,
+    enriched,
+    ranked,
+  };
 }
 
 function fmtOdds(decimal) {
@@ -39,6 +46,38 @@ function fmtOdds(decimal) {
   const frac = decimal - 1;
   if (Number.isInteger(frac) && frac > 0) return `${frac}/1`;
   return decimal.toFixed(2);
+}
+
+// ── ModelResult sub-component ─────────────────────────────────────────────────
+
+function ModelResult({ label, combo, fmtOdds, accent = 'emerald' }) {
+  const gateColor = accent === 'blue'
+    ? 'bg-blue-600 text-white'
+    : 'bg-emerald-600 text-white';
+  const evColor = accent === 'blue'
+    ? 'text-blue-600'
+    : 'text-emerald-600';
+  const labelColor = accent === 'blue'
+    ? 'text-blue-500'
+    : 'text-gray-400';
+
+  return (
+    <div className="space-y-1.5">
+      <div className="flex items-center justify-between gap-2">
+        <span className={`text-xs uppercase tracking-wider font-semibold ${labelColor}`}>{label}</span>
+        <span className={`font-mono font-bold text-sm ${evColor}`}>EV {combo.ev.toFixed(2)}</span>
+      </div>
+      {combo.runners.map((r, i) => (
+        <div key={i} className="flex items-center gap-2">
+          <span className={`text-xs font-bold px-2 py-0.5 rounded shrink-0 ${gateColor}`}>
+            Gate {r.gatePosition}
+          </span>
+          <span className="text-gray-800 text-sm font-medium flex-1 min-w-0">{r.horseName}</span>
+          <span className="text-gray-400 text-xs font-mono shrink-0">{fmtOdds(r.decimalOdds)}</span>
+        </div>
+      ))}
+    </div>
+  );
 }
 
 // ── RaceCard (per-race widget) ────────────────────────────────────────────────
@@ -150,9 +189,15 @@ function RaceCard({ race, data, onPaste, onSave, onClear }) {
     setText('');
   };
 
-  const combo   = data?.combo   ?? null;
-  const runners = data?.runners ?? null;
-  const savedAt = data?.savedAt ?? null;
+  const combo       = data?.combo       ?? null;
+  const comboHenery  = data?.comboHenery ?? null;
+  const runners      = data?.runners     ?? null;
+  const savedAt      = data?.savedAt     ?? null;
+
+  // Are both models suggesting the same gates?
+  const sameAsHarville = combo && comboHenery &&
+    [...combo.runners.map(r => r.gatePosition)].sort().join() ===
+    [...comboHenery.runners.map(r => r.gatePosition)].sort().join();
 
   return (
     <div className="border border-gray-200 rounded-xl overflow-hidden shadow-sm bg-white">
@@ -268,24 +313,18 @@ function RaceCard({ race, data, onPaste, onSave, onClear }) {
 
       {/* ── Result ── */}
       {!pasting && combo && (
-        <div className="px-4 py-3">
-          <div className="space-y-2">
-            <div className="flex items-center justify-between gap-2">
-              <span className="text-xs text-gray-400 uppercase tracking-wider">Best bet</span>
-              <span className="text-emerald-600 font-mono font-bold text-sm">EV {combo.ev.toFixed(2)}</span>
-            </div>
-            <div className="space-y-1.5">
-              {combo.runners.map((r, i) => (
-                <div key={i} className="flex items-center gap-2">
-                  <span className="bg-emerald-600 text-white text-xs font-bold px-2 py-0.5 rounded shrink-0">
-                    Gate {r.gatePosition}
-                  </span>
-                  <span className="text-gray-800 text-sm font-medium flex-1 min-w-0">{r.horseName}</span>
-                  <span className="text-gray-400 text-xs font-mono shrink-0">{fmtOdds(r.decimalOdds)}</span>
-                </div>
-              ))}
-            </div>
-          </div>
+        <div className="px-4 py-3 space-y-3">
+
+          {/* Harville model */}
+          <ModelResult label="Harville" combo={combo} fmtOdds={fmtOdds} />
+
+          {/* Henery model — only show separately when it disagrees */}
+          {!sameAsHarville && comboHenery && (
+            <ModelResult label="Henery" combo={comboHenery} fmtOdds={fmtOdds} accent="blue" />
+          )}
+          {sameAsHarville && (
+            <p className="text-xs text-gray-400 italic">Both models agree ✓</p>
+          )}
           <div className="mt-2 flex items-center justify-between gap-3 flex-wrap">
             <span className="text-xs text-gray-400">
               {runners.length} runners · {(runners.length * (runners.length - 1) * (runners.length - 2) / 6).toFixed(0)} combos evaluated
