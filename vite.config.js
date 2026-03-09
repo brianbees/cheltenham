@@ -3,15 +3,17 @@ import react                                 from '@vitejs/plugin-react'
 import { writeFileSync, mkdirSync, readdirSync, readFileSync } from 'fs'
 import { resolve, dirname }                  from 'path'
 import { fileURLToPath }                     from 'url'
-import { execSync }                          from 'child_process'
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-// Build number = total git commit count (increases with every push/deploy)
-let buildNumber = 0;
-try {
-  buildNumber = parseInt(execSync('git rev-list --count HEAD').toString().trim(), 10);
-} catch {}
+// Build label — injected at build time, always changes on every deployment.
+// Format: "9 Mar 26 14:32" (UTC)
+const buildDate = new Date();
+const BUILD_LABEL = JSON.stringify(
+  buildDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: '2-digit', timeZone: 'UTC' }) +
+  ' ' +
+  buildDate.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' })
+);
 
 /**
  * saveResultsPlugin
@@ -92,7 +94,7 @@ function saveResultsPlugin() {
 export default defineConfig({
   plugins: [react(), saveResultsPlugin()],
   define: {
-    __BUILD_NUMBER__: buildNumber,
+    __BUILD_LABEL__: BUILD_LABEL,
   },
   build: {
     chunkSizeWarningLimit: 1000,

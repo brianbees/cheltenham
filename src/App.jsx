@@ -49,7 +49,7 @@ function NavBar() {
             Champion Tipster
           </span>
           <span className="text-emerald-400 font-bold text-base tracking-tight font-mono">
-            v{__BUILD_NUMBER__}
+            v{__BUILD_LABEL__}
           </span>
         </div>
 
