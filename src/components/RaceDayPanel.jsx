@@ -148,11 +148,15 @@ function RaceCard({ race, data, onPaste, onSave, onClear }) {
       })),
     };
     try {
-      await fetch('/api/save-results', {
+      const resp = await fetch('/api/save-results', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
         body:    JSON.stringify(payload),
       });
+      if (!resp.ok) {
+        const err = await resp.json().catch(() => ({}));
+        throw new Error(err.error || `HTTP ${resp.status}`);
+      }
       onSave(now);
     } catch {
       setSaveError('Save failed');
