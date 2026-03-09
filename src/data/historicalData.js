@@ -18397,6 +18397,45 @@ export const historicalData = {
 
 };
 
+// ─── Runtime results registry ─────────────────────────────────────────────────
+// Entries added via AddResultsPanel are stored here for the current session.
+// Call loadRuntimeResults() once at app start to restore from localStorage.
+
+const _runtime = []; // { year, raceName, fieldSize, top3 }
+
+export function loadRuntimeResults() {
+  try {
+    const stored = localStorage.getItem('runtimeResults_v1');
+    if (!stored) return;
+    const entries = JSON.parse(stored);
+    _runtime.length = 0;
+    _runtime.push(...entries);
+  } catch {}
+}
+
+export function addRuntimeResult(entry) {
+  const idx = _runtime.findIndex(
+    e => e.year === entry.year && e.raceName.toLowerCase() === entry.raceName.toLowerCase()
+  );
+  if (idx >= 0) _runtime.splice(idx, 1);
+  _runtime.push(entry);
+  try { localStorage.setItem('runtimeResults_v1', JSON.stringify(_runtime)); } catch {}
+}
+
+export function removeRuntimeResult(year, raceName) {
+  const idx = _runtime.findIndex(
+    e => e.year === year && e.raceName.toLowerCase() === raceName.toLowerCase()
+  );
+  if (idx >= 0) {
+    _runtime.splice(idx, 1);
+    try { localStorage.setItem('runtimeResults_v1', JSON.stringify(_runtime)); } catch {}
+  }
+}
+
+export function getRuntimeResults() {
+  return [..._runtime];
+}
+
 // ─── Derived helpers ──────────────────────────────────────────────────────────
 
 /**
@@ -18426,7 +18465,7 @@ export function getPerfectScore(race) {
  * that race appears in the historical data. Useful for race-character analysis.
  */
 export function getRaceHistory(raceName) {
-  return Object.entries(historicalData).map(([year, yearData]) => {
+  const staticEntries = Object.entries(historicalData).map(([year, yearData]) => {
     const race = yearData.races.find(
       (r) => r.raceName.toLowerCase() === raceName.toLowerCase()
     );
@@ -18439,6 +18478,19 @@ export function getRaceHistory(raceName) {
       perfectScore: getPerfectScore(race),
     };
   }).filter(Boolean);
+
+  // Merge in any runtime entries (e.g. current festival results)
+  const staticYears = new Set(staticEntries.map(e => e.year));
+  const runtimeEntries = _runtime
+    .filter(e => e.raceName.toLowerCase() === raceName.toLowerCase() && !staticYears.has(e.year))
+    .map(e => ({
+      year: e.year,
+      top3: e.top3,
+      spTotal: e.top3.reduce((sum, h) => sum + spToPoints(h.sp), 0),
+      perfectScore: e.top3.reduce((sum, h) => sum + spToPoints(h.sp), 0) + 10 + 25,
+    }));
+
+  return [...staticEntries, ...runtimeEntries].sort((a, b) => a.year - b.year);
 }
 
 /**

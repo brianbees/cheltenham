@@ -7,27 +7,30 @@
  *   /race-history  → RaceHistoryPanel  (per-race character analysis)
  */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Routes, Route, NavLink } from 'react-router-dom';
-import HistoricalDisplay from './components/HistoricalDisplay';
-import RaceHistoryPanel  from './components/RaceHistoryPanel';
-import OptimiserPanel   from './components/OptimiserPanel';
+import HistoricalDisplay  from './components/HistoricalDisplay';
+import RaceHistoryPanel   from './components/RaceHistoryPanel';
+import OptimiserPanel     from './components/OptimiserPanel';
 import BacktesterPanel    from './components/BacktesterPanel';
-import RaceCoveragePanel   from './components/RaceCoveragePanel';
-import HelpPanel           from './components/HelpPanel';
-import ResultsTablePanel   from './components/ResultsTablePanel';
-import RaceDayPanel        from './components/RaceDayPanel';
+import RaceCoveragePanel  from './components/RaceCoveragePanel';
+import HelpPanel          from './components/HelpPanel';
+import ResultsTablePanel  from './components/ResultsTablePanel';
+import RaceDayPanel       from './components/RaceDayPanel';
+import AddResultsPanel    from './components/AddResultsPanel';
+import { loadRuntimeResults } from './data/historicalData';
 
 const NAV_LINKS = [
-  { to: '/',                end: true,  label: 'Historical Data' },
-  { to: '/race-history',   end: false, label: 'Race History' },
-  { to: '/optimiser',      end: true,  label: 'Optimiser' },
+  { to: '/',                  end: true,  label: 'Historical Data' },
+  { to: '/race-history',     end: false, label: 'Race History' },
+  { to: '/optimiser',        end: true,  label: 'Optimiser' },
   { to: '/optimiser/henery', end: false, label: 'Optimiser (Henery)' },
-  { to: '/backtester',     end: false, label: 'Backtester' },
-  { to: '/race-coverage',  end: false, label: 'Race Coverage' },
-  { to: '/results-table',  end: false, label: 'Results Table' },
-  { to: '/race-day',       end: false, label: 'Race Day' },
-  { to: '/help',           end: false, label: 'Help' },
+  { to: '/backtester',       end: false, label: 'Backtester' },
+  { to: '/race-coverage',    end: false, label: 'Race Coverage' },
+  { to: '/results-table',    end: false, label: 'Results Table' },
+  { to: '/race-day',         end: false, label: 'Race Day' },
+  { to: '/add-results',      end: false, label: 'Add Results' },
+  { to: '/help',             end: false, label: 'Help' },
 ];
 
 function NavBar() {
@@ -85,6 +88,9 @@ function NavBar() {
 }
 
 export default function App() {
+  // Load any runtime results (entered via Add Results page) from localStorage
+  useEffect(() => { loadRuntimeResults(); }, []);
+
   return (
     <div className="dark min-h-screen bg-gray-950">
       <NavBar />
@@ -97,6 +103,7 @@ export default function App() {
         <Route path="/race-coverage" element={<RaceCoveragePanel />} />
         <Route path="/results-table" element={<ResultsTablePanel />} />
         <Route path="/race-day" element={<RaceDayPanel />} />
+        <Route path="/add-results" element={<AddResultsPanel />} />
         <Route path="/help" element={<HelpPanel />} />
       </Routes>
     </div>
