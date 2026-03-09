@@ -44,12 +44,14 @@ function NavBar() {
   return (
     <nav className="bg-gray-900 border-b border-gray-800">
       <div className="px-4 py-3 flex items-center justify-between">
-        <span className="text-emerald-400 font-bold text-base tracking-tight">
-          Champion Tipster
-        </span>
-        <span className="text-gray-600 text-xs font-mono hidden sm:inline ml-1">
-          v{__BUILD_NUMBER__}
-        </span>
+        <div className="flex items-center gap-2">
+          <span className="text-emerald-400 font-bold text-base tracking-tight">
+            Champion Tipster
+          </span>
+          <span className="text-gray-500 text-xs font-mono">
+            v{__BUILD_NUMBER__}
+          </span>
+        </div>
 
         {/* Desktop links */}
         <div className="hidden md:flex items-center gap-1 flex-wrap">
