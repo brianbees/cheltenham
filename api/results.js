@@ -1,0 +1,34 @@
+import { createClient } from '@supabase/supabase-js';
+
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_ANON_KEY
+);
+
+export default async function handler(req, res) {
+  if (req.method !== 'GET') {
+    res.status(405).json({ error: 'Method Not Allowed' });
+    return;
+  }
+  try {
+    const { data, error } = await supabase
+      .from('results')
+      .select('id, race, timestamp, field_size, runners')
+      .order('timestamp', { ascending: false });
+
+    if (error) throw error;
+
+    // Normalise to the same shape the frontend already expects
+    const entries = data.map(row => ({
+      file:      String(row.id),
+      race:      row.race,
+      timestamp: row.timestamp,
+      fieldSize: row.field_size,
+      runners:   row.runners,
+    }));
+
+    res.status(200).json(entries);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}

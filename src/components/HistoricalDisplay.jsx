@@ -198,10 +198,10 @@ export default function HistoricalDisplay() {
                 >
                   <td className="px-4 py-3 text-gray-300">{yearData.year}</td>
                   <td className="px-4 py-3 font-medium text-gray-100">
-                    {winner.name}
+                    {winner ? winner.name : <span className="text-gray-600 italic">No data</span>}
                   </td>
                   <td className="px-4 py-3 text-right font-bold text-emerald-400">
-                    {winner.score}
+                    {winner ? winner.score : '—'}
                   </td>
                   <td className="px-4 py-3 text-right text-gray-500">
                     {yearData.theoreticalMax.toFixed(1)}

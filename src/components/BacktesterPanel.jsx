@@ -13,8 +13,19 @@
  */
 
 import { useState } from 'react';
-import { analyseRace, analyseYear, analyseAll } from '../engine/backtester';
+import { analyseRace, analyseYear, analyseAll, RACE_CATEGORY } from '../engine/backtester';
 import { historicalData } from '../data/historicalData';
+
+// ── Race category styles ─────────────────────────────────────────────────────
+const CAT_STYLES = {
+  'Grade 1 Championship': 'bg-yellow-950 text-yellow-300 border border-yellow-700',
+  'Novice':               'bg-blue-950 text-blue-300 border border-blue-800',
+  'Handicap':             'bg-orange-950 text-orange-300 border border-orange-800',
+  'Mares':                'bg-pink-950 text-pink-300 border border-pink-800',
+  'Specialist':           'bg-gray-800 text-gray-300 border border-gray-600',
+  'Historical':           'bg-stone-900 text-stone-400 border border-stone-700',
+  'Other':                'bg-gray-800 text-gray-500 border border-gray-700',
+};
 
 // ── Classification styles ──────────────────────────────────────────────────────
 const CLS_STYLES = {
@@ -109,6 +120,9 @@ function RaceBacktestCard({ raceName }) {
       <div className="bg-gray-900 px-4 py-3 flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-3 flex-wrap">
           <h2 className="text-base font-bold text-white">{raceName}</h2>
+          <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${CAT_STYLES[data.category] || CAT_STYLES['Other']}`}>
+            {data.category}
+          </span>
           <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${cls.badge}`}>
             {agg.classification} Race
           </span>
@@ -417,9 +431,32 @@ const RACE_NAMES = [
   'Kim Muir',
 ];
 
+const CATEGORY_ORDER = [
+  'Grade 1 Championship',
+  'Novice',
+  'Handicap',
+  'Mares',
+  'Specialist',
+  'Historical',
+];
+
 export default function BacktesterPanel() {
   const { summary } = analyseAll();
-  const [view, setView] = useState('by-race');  // 'by-race' | 'by-year'
+  const [view, setView]         = useState('by-race');   // 'by-race' | 'by-year'
+  const [activeCategory, setActiveCategory] = useState('All');
+
+  const allCategories = ['All', ...CATEGORY_ORDER];
+
+  // Races to show, filtered by category
+  const filteredRaces = activeCategory === 'All'
+    ? RACE_NAMES
+    : RACE_NAMES.filter(name => (RACE_CATEGORY[name] || 'Other') === activeCategory);
+
+  // Group races by category for the grouped view
+  const grouped = CATEGORY_ORDER.map(cat => ({
+    cat,
+    races: RACE_NAMES.filter(name => (RACE_CATEGORY[name] || 'Other') === cat),
+  })).filter(g => g.races.length > 0);
 
   return (
     <div className="min-h-screen bg-gray-950 text-gray-100 p-4 font-sans">
@@ -435,14 +472,13 @@ export default function BacktesterPanel() {
       {/* ── Summary bar ── */}
       <SummaryBar summary={summary} />
 
-      {/* ── View toggle ── */}
-      <div className="max-w-5xl mx-auto mb-6 flex gap-2">
+      {/* ── View toggle + category filter ── */}
+      <div className="max-w-5xl mx-auto mb-6 flex flex-wrap items-center gap-2">
+        {/* View mode */}
         <button
           onClick={() => setView('by-race')}
           className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-            view === 'by-race'
-              ? 'bg-gray-800 text-emerald-400'
-              : 'text-gray-500 hover:text-gray-300'
+            view === 'by-race' ? 'bg-gray-800 text-emerald-400' : 'text-gray-500 hover:text-gray-300'
           }`}
         >
           By Race
@@ -450,23 +486,60 @@ export default function BacktesterPanel() {
         <button
           onClick={() => setView('by-year')}
           className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-            view === 'by-year'
-              ? 'bg-gray-800 text-emerald-400'
-              : 'text-gray-500 hover:text-gray-300'
+            view === 'by-year' ? 'bg-gray-800 text-emerald-400' : 'text-gray-500 hover:text-gray-300'
           }`}
         >
           By Year
         </button>
+
+        {/* Category filter — only shown in by-race view */}
+        {view === 'by-race' && (
+          <>
+            <div className="w-px h-6 bg-gray-700 mx-1" />
+            {allCategories.map(cat => (
+              <button
+                key={cat}
+                onClick={() => setActiveCategory(cat)}
+                className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-colors ${
+                  activeCategory === cat
+                    ? cat === 'All'
+                      ? 'bg-gray-700 text-white'
+                      : (CAT_STYLES[cat] || 'bg-gray-700 text-white')
+                    : 'text-gray-500 hover:text-gray-300 border border-gray-800'
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </>
+        )}
       </div>
 
       {/* ── Content ── */}
       <div className="max-w-5xl mx-auto">
-        {view === 'by-race' ? (
-          RACE_NAMES.map(name => (
+        {view === 'by-year' ? (
+          <YearOverviewTable />
+        ) : activeCategory !== 'All' ? (
+          // Filtered: flat list of matching races
+          filteredRaces.map(name => (
             <RaceBacktestCard key={name} raceName={name} />
           ))
         ) : (
-          <YearOverviewTable />
+          // All: grouped by category with section headers
+          grouped.map(({ cat, races }) => (
+            <div key={cat} className="mb-8">
+              <div className="flex items-center gap-3 mb-3">
+                <span className={`text-xs font-bold px-3 py-1 rounded-full ${CAT_STYLES[cat] || CAT_STYLES['Other']}`}>
+                  {cat}
+                </span>
+                <span className="text-gray-600 text-xs">{races.length} race{races.length !== 1 ? 's' : ''}</span>
+                <div className="flex-1 border-t border-gray-800" />
+              </div>
+              {races.map(name => (
+                <RaceBacktestCard key={name} raceName={name} />
+              ))}
+            </div>
+          ))
         )}
       </div>
 

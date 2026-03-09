@@ -1,8 +1,8 @@
-import { defineConfig }          from 'vite'
-import react                     from '@vitejs/plugin-react'
-import { writeFileSync, mkdirSync } from 'fs'
-import { resolve, dirname }      from 'path'
-import { fileURLToPath }         from 'url'
+import { defineConfig }                       from 'vite'
+import react                                 from '@vitejs/plugin-react'
+import { writeFileSync, mkdirSync, readdirSync, readFileSync } from 'fs'
+import { resolve, dirname }                  from 'path'
+import { fileURLToPath }                     from 'url'
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -51,6 +51,31 @@ function saveResultsPlugin() {
             res.end(JSON.stringify({ ok: false, error: err.message }));
           }
         });
+      });
+
+      // GET /api/results — list all saved result files (newest first)
+      server.middlewares.use('/api/results', (req, res) => {
+        if (req.method !== 'GET') { res.statusCode = 405; res.end(); return; }
+        try {
+          const resultsDir = resolve(__dirname, 'results');
+          mkdirSync(resultsDir, { recursive: true });
+          const files = readdirSync(resultsDir)
+            .filter(f => f.endsWith('.json') && f !== 'latest-run.json')
+            .sort()
+            .reverse();   // newest first
+          const entries = files.map(f => {
+            try {
+              const raw  = readFileSync(resolve(resultsDir, f), 'utf-8');
+              const data = JSON.parse(raw);
+              return { file: f, race: data.race, timestamp: data.timestamp, fieldSize: data.fieldSize, runners: data.runners };
+            } catch { return null; }
+          }).filter(Boolean);
+          res.setHeader('Content-Type', 'application/json');
+          res.end(JSON.stringify(entries));
+        } catch (err) {
+          res.statusCode = 500;
+          res.end(JSON.stringify({ error: err.message }));
+        }
       });
     },
   };

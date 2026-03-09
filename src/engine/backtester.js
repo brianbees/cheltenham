@@ -26,31 +26,94 @@ import { historicalData, spToPoints, getPerfectScore } from '../data/historicalD
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
-const ALL_RACE_NAMES = [
-  // Friday (Gold Cup Day) races
-  'Triumph Hurdle',
-  'County Hurdle',
-  'Albert Bartlett',
+export const ALL_RACE_NAMES = [
+  // Grade 1 Championship
   'Gold Cup',
-  'Foxhunter Chase',
-  'Hunters Chase',
-  'Mares Chase',
-  'Martin Pipe',
-  'Grand Annual',
-  // Thursday (St Patrick's Day) races — 2022 onwards
-  "Turners Novices' Chase",
-  'Pertemps Final',
+  'Champion Hurdle',
+  'Queen Mother Champion Chase',
   'Ryanair Chase',
   "Stayers' Hurdle",
+  'Triumph Hurdle',
+  // Novice
+  'Supreme Novices Hurdle',
+  'Arkle Challenge Trophy',
+  'Ballymore Novices Hurdle',
+  'Brown Advisory Novices Chase',
+  "Turners Novices' Chase",
+  'Albert Bartlett',
+  // Handicap
+  'County Hurdle',
+  'Coral Cup',
+  'Pertemps Final',
+  'Grand Annual',
   'Plate Handicap Chase',
+  'Ultima Handicap Chase',
+  'Fred Winter Juvenile Hurdle',
+  // Mares
   "Dawn Run Mares' Hurdle",
+  'Mares Chase',
+  "Mares' Novices' Hurdle",
+  // Specialist / Amateur
+  'Foxhunter Chase',
+  'Hunters Chase',
   'Kim Muir',
+  'Martin Pipe',
+  'National Hunt Chase',
+  'Cross Country Chase',
+  // Bumper
+  'Champion Bumper',
+  // Historical (discontinued)
+  'Cathcart Challenge Cup',
+  'Mildmay Chase',
+  'Novice Handicap Chase',
 ];
 
 // SP thresholds for categorising placed horses
 const SP_THRESHOLD_SHORT = 6.0;   // ≤ 5/1 decimal  — short-priced / favourite band
 const SP_THRESHOLD_MID   = 16.0;  // ≤ 15/1 decimal — mid-price
                                    // > 15/1          — big-price / outsider
+
+// Race category map — keyed by raceName, drives category badge in UI
+export const RACE_CATEGORY = {
+  // Grade 1 Championship
+  'Gold Cup':                     'Grade 1 Championship',
+  'Champion Hurdle':              'Grade 1 Championship',
+  'Queen Mother Champion Chase':  'Grade 1 Championship',
+  'Ryanair Chase':                'Grade 1 Championship',
+  "Stayers' Hurdle":              'Grade 1 Championship',
+  'Triumph Hurdle':               'Grade 1 Championship',
+  // Novice
+  'Supreme Novices Hurdle':       'Novice',
+  'Arkle Challenge Trophy':       'Novice',
+  'Ballymore Novices Hurdle':     'Novice',
+  'Brown Advisory Novices Chase': 'Novice',
+  "Turners Novices' Chase":       'Novice',
+  'Albert Bartlett':              'Novice',
+  // Handicap
+  'County Hurdle':                'Handicap',
+  'Coral Cup':                    'Handicap',
+  'Pertemps Final':               'Handicap',
+  'Grand Annual':                 'Handicap',
+  'Plate Handicap Chase':         'Handicap',
+  'Ultima Handicap Chase':        'Handicap',
+  'Fred Winter Juvenile Hurdle':  'Handicap',
+  // Mares
+  "Dawn Run Mares' Hurdle":       'Mares',
+  'Mares Chase':                  'Mares',
+  "Mares' Novices' Hurdle":       'Mares',
+  // Specialist / Amateur
+  'Foxhunter Chase':              'Specialist',
+  'Hunters Chase':                'Specialist',
+  'Kim Muir':                     'Specialist',
+  'Martin Pipe':                  'Specialist',
+  'National Hunt Chase':          'Specialist',
+  'Cross Country Chase':          'Specialist',
+  'Champion Bumper':              'Specialist',
+  // Historical
+  'Cathcart Challenge Cup':       'Historical',
+  'Mildmay Chase':                'Historical',
+  'Novice Handicap Chase':        'Historical',
+};
 
 // ── Data completeness detection ───────────────────────────────────────────────
 
@@ -208,6 +271,7 @@ export function analyseRace(raceName) {
 
   return {
     raceName,
+    category: RACE_CATEGORY[raceName] || 'Other',
     years,
     available: true,
     aggregates: {

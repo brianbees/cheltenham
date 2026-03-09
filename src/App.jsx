@@ -15,6 +15,7 @@ import BacktesterPanel    from './components/BacktesterPanel';
 import RaceCoveragePanel   from './components/RaceCoveragePanel';
 import HelpPanel           from './components/HelpPanel';
 import ResultsTablePanel   from './components/ResultsTablePanel';
+import RaceDayPanel        from './components/RaceDayPanel';
 
 // NavLink receives an isActive boolean from react-router-dom and applies
 // the appropriate class so the current page link is highlighted.
@@ -73,6 +74,12 @@ function NavBar() {
         Results Table
       </NavLink>
       <NavLink
+        to="/race-day"
+        className={({ isActive }) => (isActive ? active : inactive)}
+      >
+        Race Day
+      </NavLink>
+      <NavLink
         to="/help"
         className={({ isActive }) => (isActive ? active : inactive)}
       >
@@ -94,6 +101,7 @@ export default function App() {
         <Route path="/backtester" element={<BacktesterPanel />} />
         <Route path="/race-coverage" element={<RaceCoveragePanel />} />
         <Route path="/results-table" element={<ResultsTablePanel />} />
+        <Route path="/race-day" element={<RaceDayPanel />} />
         <Route path="/help" element={<HelpPanel />} />
       </Routes>
     </div>

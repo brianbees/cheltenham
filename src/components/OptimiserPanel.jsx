@@ -18,21 +18,12 @@ import { useState, useCallback } from 'react';
 import { enrichRunners, enrichRunnersHenery } from '../engine/probability';
 import { rankCombinations } from '../engine/optimiser';
 import { getRaceHistory }   from '../data/historicalData';
+import { ALL_RACE_NAMES }   from '../engine/backtester';
 import RaceCardModal        from './RaceCardModal';
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
-const RACE_NAMES = [
-  'Triumph Hurdle',
-  'County Hurdle',
-  'Albert Bartlett',
-  'Gold Cup',
-  'Foxhunter Chase',
-  'Hunters Chase',
-  'Mares Chase',
-  'Martin Pipe',
-  'Grand Annual',
-];
+const RACE_NAMES = ALL_RACE_NAMES;
 
 const BLANK_RUNNER = () => ({ id: Date.now() + Math.random(), gate: '', name: '', odds: '' });
 
