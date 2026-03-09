@@ -414,7 +414,7 @@ export default function RaceDayPanel() {
     if (!results) return;
     setRaceData(prev => ({
       ...prev,
-      [raceName]: { runners, combo: results.combo, enriched: results.enriched, ranked: results.ranked, savedAt: prev[raceName]?.savedAt ?? null },
+      [raceName]: { runners, combo: results.combo, comboHenery: results.comboHenery, enriched: results.enriched, ranked: results.ranked, savedAt: prev[raceName]?.savedAt ?? null },
     }));
   };
 
@@ -455,10 +455,11 @@ export default function RaceDayPanel() {
         if (!results) continue;
         updates[race.name] = {
           runners,
-          combo:    results.combo,
-          enriched: results.enriched,
-          ranked:   results.ranked,
-          savedAt:  entry.timestamp ? new Date(entry.timestamp) : null,
+          combo:        results.combo,
+          comboHenery:  results.comboHenery,
+          enriched:     results.enriched,
+          ranked:       results.ranked,
+          savedAt:      entry.timestamp ? new Date(entry.timestamp) : null,
         };
         count++;
       }
