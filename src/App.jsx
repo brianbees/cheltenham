@@ -48,7 +48,7 @@ function NavBar() {
           <span className="text-emerald-400 font-bold text-base tracking-tight">
             Champion Tipster
           </span>
-          <span className="text-emerald-400 text-sm font-mono">
+          <span className="text-emerald-400 font-bold text-base tracking-tight font-mono">
             v{__BUILD_NUMBER__}
           </span>
         </div>
