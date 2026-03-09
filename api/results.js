@@ -9,6 +9,12 @@ export default async function handler(req, res) {
     return;
   }
 
+  // Show first 40 chars of URL so we can see what value is actually stored
+  if (!url.startsWith('https://') || !url.includes('.supabase.co')) {
+    res.status(500).json({ error: 'Bad URL format', urlPreview: url.slice(0, 60) });
+    return;
+  }
+
   let supabase;
   try {
     supabase = createClient(url, key);
