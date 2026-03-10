@@ -27,45 +27,38 @@ import { historicalData, spToPoints, getPerfectScore } from '../data/historicalD
 // ── Constants ─────────────────────────────────────────────────────────────────
 
 export const ALL_RACE_NAMES = [
-  // Grade 1 Championship
-  'Gold Cup',
-  'Champion Hurdle',
-  'Queen Mother Champion Chase',
-  'Ryanair Chase',
-  "Stayers' Hurdle",
-  'Triumph Hurdle',
-  // Novice
-  'Supreme Novices Hurdle',
+  'Albert Bartlett',
   'Arkle Challenge Trophy',
   'Ballymore Novices Hurdle',
   'Brown Advisory Novices Chase',
-  "Turners Novices' Chase",
-  'Albert Bartlett',
-  // Handicap
-  'County Hurdle',
+  'Cathcart Challenge Cup',
+  'Champion Bumper',
+  'Champion Hurdle',
   'Coral Cup',
-  'Pertemps Final',
-  'Grand Annual',
-  'Plate Handicap Chase',
-  'Ultima Handicap Chase',
-  'Fred Winter Juvenile Hurdle',
-  // Mares
+  'County Hurdle',
+  'Cross Country Chase',
   "Dawn Run Mares' Hurdle",
-  'Mares Chase',
-  "Mares' Novices' Hurdle",
-  // Specialist / Amateur
   'Foxhunter Chase',
+  'Fred Winter Juvenile Hurdle',
+  'Gold Cup',
+  'Grand Annual',
   'Hunters Chase',
   'Kim Muir',
+  'Mares Chase',
+  "Mares' Novices' Hurdle",
   'Martin Pipe',
-  'National Hunt Chase',
-  'Cross Country Chase',
-  // Bumper
-  'Champion Bumper',
-  // Historical (discontinued)
-  'Cathcart Challenge Cup',
   'Mildmay Chase',
+  'National Hunt Chase',
   'Novice Handicap Chase',
+  'Pertemps Final',
+  'Plate Handicap Chase',
+  'Queen Mother Champion Chase',
+  'Ryanair Chase',
+  "Stayers' Hurdle",
+  'Supreme Novices Hurdle',
+  'Triumph Hurdle',
+  "Turners Novices' Chase",
+  'Ultima Handicap Chase',
 ];
 
 // SP thresholds for categorising placed horses

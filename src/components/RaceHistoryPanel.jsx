@@ -12,20 +12,9 @@
  */
 
 import { getRaceHistory, spToPoints } from '../data/historicalData';
+import { ALL_RACE_NAMES }             from '../engine/backtester';
 
-// The full list of race names exactly as stored in historicalData.js.
-// This is the only fixed value in the file — everything else is derived.
-const RACE_NAMES = [
-  'Triumph Hurdle',
-  'County Hurdle',
-  'Albert Bartlett',
-  'Gold Cup',
-  'Foxhunter Chase',
-  'Hunters Chase',
-  'Mares Chase',
-  'Martin Pipe',
-  'Grand Annual',
-];
+const RACE_NAMES = ALL_RACE_NAMES;
 
 // ── Classification thresholds (per spec) ─────────────────────────────────────
 function classifyRace(avgSpTotal) {
