@@ -191,24 +191,19 @@ function RaceCard({ race, data, onPaste, onSave, onClear }) {
 
   const raceClass = getRaceClass(race.name, race.dataName);
 
-  const [rawDebug, setRawDebug] = useState(null);
-
   const handleParse = (rawText) => {
     const src = rawText ?? textareaRef.current?.value ?? '';
     setParseError(null);
-    setRawDebug(null);
     if (!src.trim()) return;
 
     const { races } = parseRaceCardText(src);
     const r = races?.[0];
 
     if (!r || r.runners.length === 0) {
-      setRawDebug(src.slice(0, 300));
-      setParseError('No runners found — see raw text below.');
+      setParseError('No runners found — check format matches Sporting Life em-dash style.');
       return;
     }
     if (r.runners.length < 3) {
-      setRawDebug(src.slice(0, 300));
       setParseError(`Only ${r.runners.length} runner(s) found — need at least 3.`);
       return;
     }
@@ -369,12 +364,7 @@ function RaceCard({ race, data, onPaste, onSave, onClear }) {
                        resize-y placeholder-gray-400"
           />
           {parseError && (
-            <div className="space-y-1">
-              <p className="text-rose-600 text-xs">{parseError}</p>
-              {rawDebug && (
-                <pre className="text-xs bg-gray-100 border border-gray-200 rounded p-2 overflow-auto max-h-32 text-gray-600 whitespace-pre-wrap break-all">{rawDebug}</pre>
-              )}
-            </div>
+            <p className="text-rose-600 text-xs">{parseError}</p>
           )}
           <button
             onClick={() => handleParse()}
@@ -486,6 +476,62 @@ export default function RaceDayPanel() {
   const schedule = FESTIVAL_DAYS[activeDay] ?? [];
   const loaded   = schedule.filter(r => raceData[r.name]).length;
 
+  // Match a parsed race name to a schedule entry (case-insensitive, partial word match)
+  const matchScheduleRace = (parsedName) => {
+    const norm = s => s.toLowerCase().replace(/[^a-z0-9]/g, ' ').replace(/\s+/g, ' ').trim();
+    const pn = norm(parsedName);
+    // Exact match first
+    let found = schedule.find(r => norm(r.name) === pn || norm(r.dataName || r.name) === pn);
+    if (found) return found;
+    // Partial: every word in the parsed name appears in the schedule name
+    const words = pn.split(' ').filter(w => w.length > 3);
+    found = schedule.find(r => {
+      const sn = norm(r.name);
+      return words.length > 0 && words.every(w => sn.includes(w));
+    });
+    return found ?? null;
+  };
+
+  const [pasteAll,    setPasteAll]    = useState(false);
+  const [pasteAllMsg, setPasteAllMsg] = useState(null);
+  const multiRef = useRef(null);
+
+  const handleMultiPaste = (rawText) => {
+    const src = rawText ?? multiRef.current?.value ?? '';
+    setPasteAllMsg(null);
+    if (!src.trim()) return;
+    const { races: parsed } = parseRaceCardText(src);
+    if (!parsed?.length) { setPasteAllMsg({ error: 'No races found — check the text.' }); return; }
+    let matched = 0;
+    setRaceData(prev => {
+      const next = { ...prev };
+      for (const pr of parsed) {
+        if (!pr.runners?.length) continue;
+        const schedRace = matchScheduleRace(pr.raceName);
+        if (!schedRace) continue;
+        const results = computeRaceResults(pr.runners);
+        if (!results) continue;
+        const existing = next[schedRace.name];
+        const originalOdds = existing?.originalOdds ??
+          Object.fromEntries(pr.runners.map(r => [r.gatePosition, r.decimalOdds]));
+        next[schedRace.name] = {
+          runners: pr.runners, combo: results.combo, comboHenery: results.comboHenery,
+          enriched: results.enriched, ranked: results.ranked,
+          savedAt: existing?.savedAt ?? null, originalOdds,
+        };
+        matched++;
+      }
+      return next;
+    });
+    if (matched > 0) {
+      setPasteAllMsg({ ok: `${matched} race${matched !== 1 ? 's' : ''} loaded ✓` });
+      setPasteAll(false);
+      if (multiRef.current) multiRef.current.value = '';
+    } else {
+      setPasteAllMsg({ error: 'No races matched the schedule — check race names.' });
+    }
+  };
+
   const handlePaste = (raceName, runners) => {
     const results = computeRaceResults(runners);
     if (!results) return;
@@ -564,7 +610,43 @@ export default function RaceDayPanel() {
         <p className="text-gray-500 mt-1 text-sm">
           Paste each race card · results compute automatically · all races on one page
         </p>
+        <button
+          onClick={() => { setPasteAll(p => !p); setPasteAllMsg(null); if (multiRef.current) multiRef.current.value = ''; }}
+          className={`mt-3 px-5 py-2 rounded-lg text-sm font-semibold border transition-colors ${
+            pasteAll
+              ? 'bg-emerald-600 text-white border-emerald-600'
+              : 'bg-white text-emerald-600 border-emerald-500 hover:bg-emerald-50'
+          }`}
+        >
+          {pasteAll ? 'Cancel' : '📋 Paste All Races'}
+        </button>
       </div>
+
+      {/* ── Paste All area ── */}
+      {pasteAll && (
+        <div className="max-w-5xl mx-auto mb-5 bg-white border border-emerald-200 rounded-xl p-4 space-y-3">
+          <p className="text-xs text-gray-500">Paste the full day's card — all races at once. Needs race name headers, e.g. <span className="font-mono">13:20 — Supreme Novices' Hurdle</span></p>
+          <textarea
+            ref={multiRef}
+            onPaste={() => setTimeout(() => { const v = multiRef.current?.value ?? ''; if (v.trim()) handleMultiPaste(v); }, 0)}
+            placeholder={"13:20 — Supreme Novices' Hurdle\n8 Old Park Star — 2/1\n11 Talk The Talk — 4/1\n...\n\n14:00 — Arkle Chase\n3 Kopek Des Bordes — 11/8\n..."}
+            className="w-full h-48 bg-gray-50 border border-gray-300 rounded px-3 py-2
+                       text-sm text-gray-800 font-mono focus:outline-none focus:border-emerald-500
+                       resize-y placeholder-gray-400"
+          />
+          {pasteAllMsg && (
+            pasteAllMsg.ok
+              ? <p className="text-emerald-600 text-sm font-semibold">{pasteAllMsg.ok}</p>
+              : <p className="text-rose-600 text-sm">{pasteAllMsg.error}</p>
+          )}
+          <button
+            onClick={() => handleMultiPaste()}
+            className="px-4 py-1.5 rounded bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold transition-colors"
+          >
+            Parse &amp; Load All →
+          </button>
+        </div>
+      )}
 
       {/* ── Day selector ── */}
       <div className="max-w-5xl mx-auto mb-5 flex gap-2 justify-center flex-wrap">
