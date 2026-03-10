@@ -148,20 +148,54 @@ function isSkipLine(line) {
 
 /**
  * isRaceNameLine(line) → boolean
- * A race name line does not start with a digit (unless it's a time like "13:20 — Race Name")
- * and isn't a recognised header or skip line.
+ * A race name line does not start with a digit (unless it's a time like "13:20 — Race Name"
+ * or "13:20 Race Name") and isn't a recognised header or skip line.
  */
 function isRaceNameLine(line) {
   const t = line.trim();
   if (!t || t.length < 4) return false;
-  // Time-prefixed race name: "13:20 — Supreme Novices' Hurdle"
-  if (/^\d{1,2}:\d{2}\s*\u2014/.test(t)) return true;
+  // Time-prefixed race name: "13:20 — Race Name" OR "13:20 Race Name" (no em-dash)
+  if (/^\d{1,2}:\d{2}[\s\u2014]/.test(t)) return true;
   if (/^\d/.test(t)) return false;
   if (isHeaderLine(t)) return false;
   if (isSkipLine(t)) return false;
   // Must contain at least one word longer than 2 characters
   if (!/[a-zA-Z]{3,}/.test(t)) return false;
   return true;
+}
+
+/**
+ * isConcatenatedLine(line) → boolean
+ * Detects a Sporting Life mobile line where all runners are run together with no
+ * separators: "#HorseSP8Old Park Star2/111Talk The Talk4/1...sportinglife"
+ * Signal: 3 or more fractional odds in a single line.
+ */
+function isConcatenatedLine(line) {
+  return (line.match(/\d+\/\d+/g) || []).length >= 3;
+}
+
+/**
+ * splitConcatenatedRunners(line) → string[]
+ * Splits a concatenated runner line into tab-separated "gate\tname\todds" strings.
+ * Strips #HorseSP prefix and trailing "sportinglife" attribution.
+ * NR horses (no odds) are naturally skipped — no match found.
+ */
+function splitConcatenatedRunners(line) {
+  const cleaned = line
+    .replace(/^#HorseSP\s*/i, '')
+    .replace(/sportinglife.*$/i, '')
+    .trim();
+  const entries = [];
+  // Non-greedy denominator + lookahead: stops the denominator from consuming
+  // the first digit(s) of the next gate number.
+  // e.g. "2/1" in "2/111Talk" → denominator "1", lookahead sees "11T" ✓
+  // e.g. "13/8" in "13/84Lulamba" → denominator "8", lookahead sees "4L" ✓
+  const re = /(\d{1,2})([A-Za-z][A-Za-z\s''\u2019\u2018\-\.&]*?)(\d+\/\d+?)(?=\d{1,2}[A-Za-z]|$)/g;
+  let m;
+  while ((m = re.exec(cleaned)) !== null) {
+    entries.push(`${m[1]}\t${m[2].trim()}\t${m[3]}`);
+  }
+  return entries;
 }
 
 // ─── Main export ──────────────────────────────────────────────────────────────
@@ -245,10 +279,24 @@ export function parseRaceCardText(text) {
     if (isSkipLine(line)) continue;
     if (NR_LINE_RE.test(line)) continue;  // e.g. "(5 Mambonumberfive — NR)"
 
+    // ── Concatenated runner line (Sporting Life mobile: all runners on one line) ──
+    if (isConcatenatedLine(line)) {
+      const entries = splitConcatenatedRunners(line);
+      for (const entry of entries) {
+        const cols = entry.split('\t');
+        const gate = parseInt(cols[0], 10);
+        const horseName = cleanHorseName(cols[1]);
+        const decimalOdds = parseOdds(cols[2]);
+        if (isNaN(gate) || gate < 1 || !horseName || decimalOdds === null) continue;
+        current.runners.push({ gatePosition: gate, horseName, decimalOdds });
+      }
+      continue;
+    }
+
     // ── Race name line ──
     if (isRaceNameLine(line)) {
-      // Strip time prefix: "13:20 — Supreme Novices' Hurdle" → "Supreme Novices' Hurdle"
-      const timePrefixed = line.match(/^\d{1,2}:\d{2}\s*\u2014\s*(.+)/);
+      // Strip time prefix: "13:20 — Race Name" or "13:20 Race Name"
+      const timePrefixed = line.match(/^\d{1,2}:\d{2}\s*(?:\u2014\s*)?(.+)/);
       const raceName = timePrefixed ? timePrefixed[1].trim() : line;
       // Only start a new race block if the current one has runners,
       // or if it still has the default name (avoid orphan empty blocks)
