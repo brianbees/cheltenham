@@ -180,11 +180,12 @@ function RaceCard({ race, data, onPaste, onSave, onClear }) {
 
   const raceClass = getRaceClass(race.name, race.dataName);
 
-  const handleParse = () => {
+  const handleParse = (rawText) => {
+    const src = rawText ?? text;
     setParseError(null);
-    if (!text.trim()) return;
+    if (!src.trim()) return;
 
-    const { races } = parseRaceCardText(text);
+    const { races } = parseRaceCardText(src);
     const r = races?.[0];
 
     if (!r || r.runners.length === 0) {
@@ -199,6 +200,21 @@ function RaceCard({ race, data, onPaste, onSave, onClear }) {
     onPaste(r.runners);
     setPasting(false);
     setText('');
+  };
+
+  const handleClipboardPaste = async () => {
+    setParseError(null);
+    try {
+      const clipText = await navigator.clipboard.readText();
+      if (!clipText?.trim()) {
+        setParseError('Clipboard is empty — copy the race card text first.');
+        return;
+      }
+      handleParse(clipText);
+    } catch {
+      // Permission denied or API unavailable — fall back to textarea
+      setParseError('Could not read clipboard — please paste manually into the box below.');
+    }
   };
 
   const combo        = data?.combo        ?? null;
@@ -301,20 +317,28 @@ function RaceCard({ race, data, onPaste, onSave, onClear }) {
       {/* ── Paste area ── */}
       {pasting && (
         <div className="bg-gray-50 px-4 py-3 border-b border-gray-200 space-y-2">
+          {/* Clipboard API button — most reliable on mobile (Android/iOS) */}
+          <button
+            onClick={handleClipboardPaste}
+            className="w-full py-2.5 rounded bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800
+                       text-white text-sm font-semibold transition-colors flex items-center justify-center gap-2"
+          >
+            📋 Paste from clipboard
+          </button>
+          <p className="text-xs text-gray-400 text-center">— or type / paste manually below —</p>
           <textarea
             value={text}
             onChange={e => setText(e.target.value)}
             placeholder={'Paste race card text here…\n\nFormat: gate  horse name  odds\ne.g.\n1  Big Buck\'s  5/1\n2  Kauto Star  2/1'}
-            className="w-full h-40 bg-white border border-gray-300 rounded px-3 py-2
+            className="w-full h-36 bg-white border border-gray-300 rounded px-3 py-2
                        text-sm text-gray-800 font-mono focus:outline-none focus:border-emerald-500
                        resize-y placeholder-gray-400"
-            autoFocus
           />
           {parseError && (
             <p className="text-rose-600 text-xs">{parseError}</p>
           )}
           <button
-            onClick={handleParse}
+            onClick={() => handleParse()}
             disabled={!text.trim()}
             className="px-4 py-1.5 rounded bg-emerald-600 hover:bg-emerald-700
                        text-white text-sm font-semibold disabled:opacity-40 transition-colors"
