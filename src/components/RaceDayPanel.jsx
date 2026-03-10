@@ -6,7 +6,7 @@
  * All top-3 gate combos visible on one page.
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { parseRaceCardText } from '../engine/parser';
 import { enrichRunners, enrichRunnersHenery } from '../engine/probability';
 import { rankCombinations }  from '../engine/optimiser';
@@ -103,6 +103,7 @@ function RaceCard({ race, data, onPaste, onSave, onClear }) {
   const [showHistory,    setShowHistory]    = useState(false);
   const [historyEntries, setHistoryEntries] = useState(null);   // null = not yet loaded
   const [loadingHistory, setLoadingHistory] = useState(false);
+  const textareaRef = useRef(null);
 
   const handleShowHistory = async () => {
     if (showHistory) { setShowHistory(false); return; }
@@ -204,8 +205,9 @@ function RaceCard({ race, data, onPaste, onSave, onClear }) {
 
   const handleClipboardPaste = async () => {
     setParseError(null);
-    // Some Android browsers (Samsung Internet) don't support clipboard.readText
     if (!navigator.clipboard?.readText) {
+      // API not available (Samsung Internet etc) — focus textarea so user can long-press paste
+      textareaRef.current?.focus();
       setParseError('Tap the box below, long-press, then choose Paste.');
       return;
     }
@@ -215,19 +217,23 @@ function RaceCard({ race, data, onPaste, onSave, onClear }) {
         setParseError('Clipboard is empty — copy the race card text first.');
         return;
       }
+      // Show the text in the box so user can see what was read, then auto-parse
+      setText(clipText);
       handleParse(clipText);
     } catch {
+      textareaRef.current?.focus();
       setParseError('Clipboard access denied — tap the box below, long-press, then choose Paste.');
     }
   };
 
-  // Auto-parse when the user pastes via the context menu (Android long-press → Paste)
-  const handleTextareaPaste = (e) => {
-    const pasted = e.clipboardData?.getData('text');
-    if (pasted?.trim()) {
-      e.preventDefault();
-      handleParse(pasted);
-    }
+  // When the user long-press-pastes into the textarea: don't intercept, let the
+  // browser insert the text, then read it from the DOM after React's next tick.
+  const handleTextareaPaste = () => {
+    setTimeout(() => {
+      const val = textareaRef.current?.value ?? '';
+      setText(val);
+      if (val.trim()) handleParse(val);
+    }, 0);
   };
 
   const combo        = data?.combo        ?? null;
@@ -340,6 +346,7 @@ function RaceCard({ race, data, onPaste, onSave, onClear }) {
           </button>
           <p className="text-xs text-gray-400 text-center">— or type / paste manually below —</p>
           <textarea
+            ref={textareaRef}
             value={text}
             onChange={e => setText(e.target.value)}
             onPaste={handleTextareaPaste}
