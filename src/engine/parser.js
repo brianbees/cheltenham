@@ -162,8 +162,54 @@ function isRaceNameLine(line) {
  * @param  {string}  text  – raw pasted text from a race card or results sheet
  * @returns {{ races: Array }}
  */
+/**
+ * detectOneFieldPerLine(lines) → boolean
+ * Returns true if the data looks like gate / name / odds each on their own line
+ * e.g.:  "1\nBaron Noir\n28/1\n2\nEachtotheirown\n40/1\n..."
+ */
+function detectOneFieldPerLine(lines) {
+  const nonEmpty = lines.map(l => l.trim()).filter(Boolean);
+  if (nonEmpty.length < 6) return false;
+  // Check triplet pattern: digit, non-digit, odds
+  let matches = 0;
+  for (let i = 0; i + 2 < nonEmpty.length; i += 3) {
+    const isGate  = /^\d{1,2}$/.test(nonEmpty[i]);
+    const hasOdds = FRAC_ODDS_RE.test(nonEmpty[i + 2]) || parseDecimalOdds(nonEmpty[i + 2]) !== null;
+    if (isGate && hasOdds) matches++;
+  }
+  return matches >= 2;
+}
+
+/**
+ * mergeOneFieldPerLine(lines) → string[]
+ * Collapses triplet-per-line format into single-line "gate  name  odds" entries.
+ */
+function mergeOneFieldPerLine(lines) {
+  const nonEmpty = lines.map(l => l.trim()).filter(Boolean);
+  const merged = [];
+  let i = 0;
+  while (i < nonEmpty.length) {
+    const a = nonEmpty[i];
+    // If this looks like a gate number and we have two more lines, merge them
+    if (/^\d{1,2}$/.test(a) && i + 2 < nonEmpty.length) {
+      merged.push(`${a}\t${nonEmpty[i + 1]}\t${nonEmpty[i + 2]}`);
+      i += 3;
+    } else {
+      merged.push(a);
+      i++;
+    }
+  }
+  return merged;
+}
+
 export function parseRaceCardText(text) {
-  const lines = text.split(/\r?\n/);
+  let lines = text.split(/\r?\n/);
+
+  // Pre-process: if each field is on its own line (mobile copy-paste format),
+  // collapse triplets into single-line "gate  name  odds" entries
+  if (detectOneFieldPerLine(lines)) {
+    lines = mergeOneFieldPerLine(lines);
+  }
 
   // We accumulate races here; start with a default unnamed race
   const races   = [];
