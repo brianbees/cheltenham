@@ -551,6 +551,60 @@ export default function RaceDayPanel() {
     setRaceData(prev => ({ ...prev, [raceName]: { ...prev[raceName], savedAt: time } }));
   };
 
+  const [savingAll,    setSavingAll]    = useState(false);
+  const [saveAllMsg,   setSaveAllMsg]   = useState(null);
+
+  const handleSaveAll = async () => {
+    const unsaved = schedule.filter(r => raceData[r.name] && !raceData[r.name].savedAt);
+    if (!unsaved.length) { setSaveAllMsg({ ok: 'All loaded races already saved.' }); return; }
+    setSavingAll(true);
+    setSaveAllMsg(null);
+    let saved = 0;
+    const now = new Date();
+    for (const race of unsaved) {
+      const d = raceData[race.name];
+      const payload = {
+        race:      race.dataName || race.name,
+        timestamp: now.toISOString(),
+        fieldSize: d.runners.length,
+        runners: d.enriched.map(r => ({
+          gatePosition: r.gatePosition,
+          horseName:    r.horseName,
+          decimalOdds:  r.decimalOdds,
+          pWin:         +r.pWin.toFixed(6),
+          pPlace:       +r.pPlace.toFixed(6),
+          spPoints:     +(r.decimalOdds - 1).toFixed(2),
+        })),
+        combinations: d.ranked.map(c => ({
+          rank:      c.rank,
+          gates:     c.runners.map(r => r.gatePosition),
+          horses:    c.runners.map(r => r.horseName),
+          ev:        +c.ev.toFixed(4),
+          evSp:      +c.evSp.toFixed(4),
+          evWin:     +c.evWin.toFixed(4),
+          evJackpot: +c.evJackpot.toFixed(4),
+          pJackpot:  +c.pJackpot.toFixed(6),
+        })),
+      };
+      try {
+        const resp = await fetch('/api/save-results', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        if (resp.ok) {
+          handleSaved(race.name, now);
+          saved++;
+        }
+      } catch { /* skip failed races */ }
+    }
+    setSavingAll(false);
+    setSaveAllMsg(saved > 0
+      ? { ok: `${saved} race${saved !== 1 ? 's' : ''} saved ✓` }
+      : { error: 'Save failed — check connection.' }
+    );
+  };
+
   const handleClear = (raceName) => {
     setRaceData(prev => {
       const next = { ...prev };
@@ -671,6 +725,11 @@ export default function RaceDayPanel() {
           <span className="shrink-0">{loaded} of {schedule.length} races loaded</span>
           <div className="flex items-center gap-2 flex-wrap">
             {restoreMsg && <span className="text-emerald-600">{restoreMsg}</span>}
+            {saveAllMsg && (
+              saveAllMsg.ok
+                ? <span className="text-emerald-600">{saveAllMsg.ok}</span>
+                : <span className="text-rose-500">{saveAllMsg.error}</span>
+            )}
             <button
               onClick={handleRestore}
               disabled={restoring}
@@ -680,6 +739,16 @@ export default function RaceDayPanel() {
             >
               {restoring ? 'Restoring…' : '↩ Restore saved'}
             </button>
+            {loaded > 0 && (
+              <button
+                onClick={handleSaveAll}
+                disabled={savingAll}
+                className="px-3 py-1.5 rounded border border-emerald-400 text-emerald-600
+                           hover:bg-emerald-50 disabled:opacity-40 transition-colors font-semibold"
+              >
+                {savingAll ? 'Saving…' : '💾 Save All'}
+              </button>
+            )}
             {loaded === schedule.length && loaded > 0 && (
               <span className="text-emerald-600 font-semibold">All races loaded ✓</span>
             )}
