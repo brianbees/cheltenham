@@ -42,7 +42,7 @@ export const FESTIVAL_DAYS = {
     { time: '14:40', name: 'Mares Chase' },
     { time: '15:20', name: "Albert Bartlett Novices' Hurdle",      dataName: 'Albert Bartlett' },
     { time: '16:00', name: 'Gold Cup' },
-    { time: '16:40', name: "St James's Place Hunters' Chase",      dataName: 'Foxhunter Chase' },
+    { time: '16:40', name: "St James's Place Hunters' Chase",      dataName: 'Hunters Chase' },
     { time: '17:20', name: 'Martin Pipe Handicap Hurdle',          dataName: 'Martin Pipe' },
   ],
 };
