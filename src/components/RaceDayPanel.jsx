@@ -743,7 +743,7 @@ export default function RaceDayPanel() {
           <p className="text-xs text-gray-500">Paste the full day's card — all races at once. Needs race name headers, e.g. <span className="font-mono">13:20 — Supreme Novices' Hurdle</span></p>
           <textarea
             ref={multiRef}
-            onPaste={() => setTimeout(() => { const v = multiRef.current?.value ?? ''; if (v.trim()) handleMultiPaste(v); }, 0)}
+
             placeholder={"13:20 — Supreme Novices' Hurdle\n8 Old Park Star — 2/1\n11 Talk The Talk — 4/1\n...\n\n14:00 — Arkle Chase\n3 Kopek Des Bordes — 11/8\n..."}
             className="w-full h-48 bg-gray-50 border border-gray-300 rounded px-3 py-2
                        text-sm text-gray-800 font-mono focus:outline-none focus:border-emerald-500
