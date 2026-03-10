@@ -204,6 +204,11 @@ function RaceCard({ race, data, onPaste, onSave, onClear }) {
 
   const handleClipboardPaste = async () => {
     setParseError(null);
+    // Some Android browsers (Samsung Internet) don't support clipboard.readText
+    if (!navigator.clipboard?.readText) {
+      setParseError('Tap the box below, long-press, then choose Paste.');
+      return;
+    }
     try {
       const clipText = await navigator.clipboard.readText();
       if (!clipText?.trim()) {
@@ -212,8 +217,16 @@ function RaceCard({ race, data, onPaste, onSave, onClear }) {
       }
       handleParse(clipText);
     } catch {
-      // Permission denied or API unavailable — fall back to textarea
-      setParseError('Could not read clipboard — please paste manually into the box below.');
+      setParseError('Clipboard access denied — tap the box below, long-press, then choose Paste.');
+    }
+  };
+
+  // Auto-parse when the user pastes via the context menu (Android long-press → Paste)
+  const handleTextareaPaste = (e) => {
+    const pasted = e.clipboardData?.getData('text');
+    if (pasted?.trim()) {
+      e.preventDefault();
+      handleParse(pasted);
     }
   };
 
@@ -329,6 +342,7 @@ function RaceCard({ race, data, onPaste, onSave, onClear }) {
           <textarea
             value={text}
             onChange={e => setText(e.target.value)}
+            onPaste={handleTextareaPaste}
             placeholder={'Paste race card text here…\n\nFormat: gate  horse name  odds\ne.g.\n1  Big Buck\'s  5/1\n2  Kauto Star  2/1'}
             className="w-full h-36 bg-white border border-gray-300 rounded px-3 py-2
                        text-sm text-gray-800 font-mono focus:outline-none focus:border-emerald-500
