@@ -41,11 +41,12 @@ const COUNTRY_RE    = /\s*\((FR|IRE|GB|USA|GER|NZ|AUS|CZE|ITA|SPA|POL|CHI|ARG)\)
 const POSITION_RE   = /\((1st|2nd|3rd)\)/i;
 
 // Lines that are clearly column headers — skip them
-const HEADER_RE     = /^(no\.?|horse|sp|starting|trainer|jockey|race card|saddle)/i;
+// Also matches "#\tHorse\tSP" (Sporting Life desktop table header)
+const HEADER_RE     = /^(no\.?|#|horse|sp|starting|trainer|jockey|race card|saddle)/i;
 
 // Lines that are source attributions, image captions, social links etc — skip them
-// e.g. "Sky Sports", "Racing Post", "+1", "Getty Images"
-const SKIP_LINE_RE  = /^(sky sports|racing post|getty|pa media|rte|bbc sport|itv racing|at the races|\+\d+)$/i;
+// e.g. "Sky Sports", "Racing Post", "+1", "Getty Images", "sportinglife"
+const SKIP_LINE_RE  = /^(sky sports|racing post|getty|pa media|rte|bbc sport|itv racing|at the races|sportinglife|\+\d+)$/i;
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -64,6 +65,22 @@ function parseFractionalOdds(str) {
 }
 
 /**
+ * parseDateOdds(str) → decimal number | null
+ * Handles Sporting Life copy-paste artefact where odds appear as dates:
+ * "02-Jan" = 2/1 (denominator = month number), "13-Feb" = 13/2, "15-Feb" = 15/2 etc.
+ */
+const DATE_ODDS_RE = /^(\d{1,2})-(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)$/i;
+const MONTH_NUM = { jan:1, feb:2, mar:3, apr:4, may:5, jun:6, jul:7, aug:8, sep:9, oct:10, nov:11, dec:12 };
+function parseDateOdds(str) {
+  const m = DATE_ODDS_RE.exec(str.trim());
+  if (!m) return null;
+  const num = parseInt(m[1], 10);
+  const den = MONTH_NUM[m[2].toLowerCase()];
+  if (!den || isNaN(num) || num < 1) return null;
+  return num / den + 1;
+}
+
+/**
  * parseDecimalOdds(str) → decimal number | null
  * Handles plain decimal inputs like "11.0" or "4.50".
  */
@@ -75,10 +92,10 @@ function parseDecimalOdds(str) {
 
 /**
  * parseOdds(str) → decimal number | null
- * Tries fractional first, then decimal.
+ * Tries fractional first, then date-format (02-Jan = 2/1), then decimal.
  */
 function parseOdds(str) {
-  return parseFractionalOdds(str) ?? parseDecimalOdds(str);
+  return parseFractionalOdds(str) ?? parseDateOdds(str) ?? parseDecimalOdds(str);
 }
 
 /**
