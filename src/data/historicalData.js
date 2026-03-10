@@ -2001,7 +2001,7 @@ export const historicalData = {
         fieldSize: 7,
         top3: [
           { gatePosition:  8, horseName: "Well Chief (GER)"                        , sp:    1.3,  jockey: "Timmy Murphy",  trainer: "M C Pipe" },
-          { gatePosition:  8, horseName: "Well Chief (GER)"                  , sp:    4.5,  jockey: "Timmy Murphy",  trainer: "M C Pipe" },
+          { gatePosition:  8, horseName: "Well Chief (GER)", sp: 4.5,  jockey: "Timmy Murphy",  trainer: "M C Pipe" },
           { gatePosition:  6, horseName: "Oneway I (IRE)"                          , sp:    1.1,  jockey: "Graham Lee",  trainer: "Mark Rimell" },
         ],
         field: [
@@ -2018,7 +2018,7 @@ export const historicalData = {
         fieldSize: 7,
         top3: [
           { gatePosition:  1, horseName: "Baracouda (FR)"                         , sp:    2.2,  jockey: "A P McCoy",  trainer: "F Doumen" },
-          { gatePosition:  1, horseName: "Baracouda (FR)"                    , sp:    2.2,  jockey: "A P McCoy",  trainer: "F Doumen" },
+          { gatePosition:  1, horseName: "Baracouda (FR)", sp: 2.2,  jockey: "A P McCoy",  trainer: "F Doumen" },
           { gatePosition: 11, horseName: "Westender (FR)"                         , sp:   34.0,  jockey: "Tom Scudamore",  trainer: "M C Pipe" },
         ],
         field: [
@@ -2180,7 +2180,7 @@ export const historicalData = {
         fieldSize: 11,
         top3: [
           { gatePosition:  5, horseName: "Luzcadou (FR)"                          , sp:    1.1,  jockey: "Alan O'Keeffe",  trainer: "Ferdy Murphy" },
-          { gatePosition:  5, horseName: "Luzcadou (FR)"                     , sp:   23.0,  jockey: "Alan O'Keeffe",  trainer: "Ferdy Murphy" },
+          { gatePosition:  5, horseName: "Luzcadou (FR)", sp: 23,  jockey: "Alan O'Keeffe",  trainer: "Ferdy Murphy" },
           { gatePosition: 12, horseName: "Mrs Be (IRE)"                            , sp:    1.1,  jockey: "Miss P",  trainer: "Gundry Grant Cann" },
         ],
         field: [
@@ -2381,7 +2381,7 @@ export const historicalData = {
         fieldSize: 32,
         top3: [
           { gatePosition: 10, horseName: "Silvertown"                            , sp:    1.2,  jockey: "R Walsh",  trainer: "Paul Nicholls" },
-          { gatePosition: 10, horseName: "Silvertown"                            , sp:    7.0,  jockey: "R Walsh",  trainer: "Paul Nicholls" },
+          { gatePosition: 27, horseName: "Stance", sp: 12,  jockey: "D J Casey",  trainer: "Gary Moore" },
           { gatePosition:  2, horseName: "Buena Vista (IRE)", sp: 15,  jockey: "Timmy Murphy",  trainer: "M C Pipe" },
         ],
         field: [
@@ -3161,7 +3161,7 @@ export const historicalData = {
         top3: [
           { gatePosition: 20, horseName: "Wichita Lineman (IRE)"             , sp:    2.4,  jockey: "A P McCoy",  trainer: "Jonjo O'Neill" },
           { gatePosition:  1, horseName: "Air Force One (GER)"                     , sp:   26.0,  jockey: "Noel Fehily",  trainer: "Charlie Mann" },
-          { gatePosition:  1, horseName: "Air Force One (GER)"               , sp:   26.0,  jockey: "Noel Fehily",  trainer: "Charlie Mann" },
+          { gatePosition:  9, horseName: "Itsa Legend", sp: 101,  jockey: "Robert Thornton",  trainer: "Alan King" },
         ],
         field: [
           { gatePosition:  1, horseName: "Air Force One (GER)"               , sp:   26.0,  finishPosition:  2,  jockey: "Noel Fehily",  trainer: "Charlie Mann" },
@@ -3221,7 +3221,7 @@ export const historicalData = {
         fieldSize: 20,
         top3: [
           { gatePosition: 10, horseName: "Drombeag (IRE)"                          , sp:   21.0,  jockey: "Mr J T McNamara",  trainer: "Jonjo O'Neill" },
-          { gatePosition: 10, horseName: "Drombeag (IRE)"                    , sp:   21.0,  jockey: "Mr J T McNamara",  trainer: "Jonjo O'Neill" },
+          { gatePosition: 24, horseName: "Whyso Mayo (IRE)", sp: 3,  jockey: "Mr D Murphy",  trainer: "Raymond Hurley" },
           { gatePosition: 24, horseName: "Whyso Mayo (IRE)"                  , sp:    3.0,  jockey: "Mr D Murphy",  trainer: "Raymond Hurley" },
         ],
         field: [
@@ -3842,7 +3842,7 @@ export const historicalData = {
         fieldSize: 18,
         top3: [
           { gatePosition: 11, horseName: "Nenuphar Collonges (FR)"                , sp:   10.0,  jockey: "Robert Thornton",  trainer: "Alan King" },
-          { gatePosition: 11, horseName: "Nenuphar Collonges (FR)"           , sp:   10.0,  jockey: "Robert Thornton",  trainer: "Alan King" },
+          { gatePosition: 18, horseName: "Liskennett (IRE)", sp: 17,  jockey: "Niall P Madden",  trainer: "C Byrnes" },
           { gatePosition: 15, horseName: "The Tother One (IRE)", sp: 5.5,  jockey: "Sam Thomas",  trainer: "Paul Nicholls" },
         ],
         field: [
@@ -5394,7 +5394,7 @@ export const historicalData = {
         top3: [
           { gatePosition: 24, horseName: "Pigeon Island"                     , sp:   17.0,  jockey: "Paddy Brennan",  trainer: "Nigel Twiston-Davies" },
           { gatePosition:  1, horseName: "French Opera"                      , sp:   11.0,  jockey: "David Bass",  trainer: "Nicky Henderson" },
-          { gatePosition:  1, horseName: "French Opera"                      , sp:   11.0,  jockey: "David Bass",  trainer: "Nicky Henderson" },
+          { gatePosition:  7, horseName: "Consigliere (FR)", sp: 17,  jockey: "Tom Scudamore",  trainer: "David Pipe" },
         ],
         field: [
           { gatePosition:  1, horseName: "French Opera"                      , sp:   11.0,  finishPosition:  2,  jockey: "David Bass",  trainer: "Nicky Henderson" },
@@ -7384,7 +7384,7 @@ export const historicalData = {
         top3: [
           { gatePosition: 24, horseName: "Ted Veale (IRE)"                         , sp:   11.0,  jockey: "B J Cooper",  trainer: "A J Martin" },
           { gatePosition: 10, horseName: "Tennis Cap (FR)", sp: 12,  jockey: "D J Casey",  trainer: "W P Mullins" },
-          { gatePosition: 10, horseName: "Tennis Cap (FR)"                        , sp:   12.0,  jockey: "D J Casey",  trainer: "W P Mullins" },
+          { gatePosition: 22, horseName: "Manyriverstocross (IRE)", sp: 26,  jockey: "Wayne Hutchinson",  trainer: "Alan King" },
         ],
         field: [
           { gatePosition:  1, horseName: "Brampour (IRE)"                    , sp:   51.0,  finishPosition: 21,  jockey: "James Cowley",  trainer: "Paul Nicholls" },
@@ -8018,7 +8018,7 @@ export const historicalData = {
         top3: [
           { gatePosition: 15, horseName: "Tiger Roll (IRE)"                        , sp:   11.0,  jockey: "Davy Russell",  trainer: "Gordon Elliott" },
           { gatePosition:  9, horseName: "Kentucky Hyden (IRE)", sp: 21,  jockey: "David Bass",  trainer: "Nicky Henderson" },
-          { gatePosition:  9, horseName: "Kentucky Hyden (IRE)"                    , sp:   21.0,  jockey: "David Bass",  trainer: "Nicky Henderson" },
+          { gatePosition:  8, horseName: "Guitar Pete (IRE)", sp: 8,  jockey: "Paul Carberry",  trainer: "D T Hughes" },
         ],
         field: [
           { gatePosition:  1, horseName: "Abbyssial (IRE)"                   , sp:    9.0,  finishPosition: null,  jockey: "R Walsh",  trainer: "W P Mullins" },
@@ -8731,9 +8731,9 @@ export const historicalData = {
         raceType: "Juvenile Hurdle - Grade 1 (Triumph, 4yo)",
         fieldSize: 15,
         top3: [
-          { gatePosition:  5, horseName: "Hargam (FR)"                      , sp:    3.0,  jockey: "Barry Geraghty",  trainer: "Nicky Henderson" },
+          { gatePosition: 12, horseName: "Peace And Co (FR)", sp: 3,  jockey: "Barry Geraghty",  trainer: "Nicky Henderson" },
           { gatePosition: 12, horseName: "Peace And Co (FR)"                 , sp:    3.0,  jockey: "Barry Geraghty",  trainer: "Nicky Henderson" },
-          { gatePosition:  5, horseName: "Hargam (FR)"                       , sp:    9.0,  jockey: "A P McCoy",  trainer: "Nicky Henderson" },
+          { gatePosition:  5, horseName: "Hargam (FR)", sp: 9,  jockey: "A P McCoy",  trainer: "Nicky Henderson" },
         ],
         field: [
           { gatePosition:  1, horseName: "Baraka De Thaix (FR)"              , sp:   41.0,  finishPosition: 14,  jockey: "Jacques Ricou",  trainer: "David Pipe" },
@@ -8823,7 +8823,7 @@ export const historicalData = {
         top3: [
           { gatePosition:  4, horseName: "Coneygree"                         , sp:    8.0,  jockey: "Nico de Boinville",  trainer: "Mark Bradstock" },
           { gatePosition:  5, horseName: "Djakadam (FR)"                          , sp:   11.0,  jockey: "R Walsh",  trainer: "W P Mullins" },
-          { gatePosition:  5, horseName: "Djakadam (FR)"                     , sp:   11.0,  jockey: "R Walsh",  trainer: "W P Mullins" },
+          { gatePosition: 14, horseName: "Road To Riches (IRE)", sp: 9,  jockey: "B J Cooper",  trainer: "Noel Meade" },
         ],
         field: [
           { gatePosition:  1, horseName: "Carlingford Lough"                 , sp:   12.0,  finishPosition:  9,  jockey: "A P McCoy",  trainer: "John E Kiely" },
@@ -8878,7 +8878,7 @@ export const historicalData = {
         raceType: "Conditional Jockeys Handicap Hurdle (Martin Pipe)",
         fieldSize: 19,
         top3: [
-          { gatePosition:  3, horseName: "Jolly's Cracked It (FR)"                    , sp:    6.0,  jockey: "David Mullins",  trainer: "W P Mullins" },
+          { gatePosition: 21, horseName: "Killultagh Vic (IRE)", sp: 8,  jockey: "L P Dempsey",  trainer: "W P Mullins" },
           { gatePosition:  1, horseName: "Le Mercurey (FR)", sp: 9,  jockey: "Sean Bowen",  trainer: "Paul Nicholls" },
           { gatePosition:  9, horseName: "Roi Des Francs (FR)", sp: 4,  jockey: "David Mullins",  trainer: "W P Mullins" },
         ],
@@ -8910,7 +8910,7 @@ export const historicalData = {
         top3: [
           { gatePosition: 11, horseName: "Next Sensation (IRE)"              , sp:   17.0,  jockey: "Tom Scudamore",  trainer: "Michael Scudamore" },
           { gatePosition:  7, horseName: "Eastlake (IRE)"                    , sp:   13.0,  jockey: "Paul Carberry",  trainer: "Jonjo O'Neill" },
-          { gatePosition: 11, horseName: "Next Sensation (IRE)"                          , sp:   21.0,  jockey: "Nick Scholfield",  trainer: "Paul Nicholls" },
+          { gatePosition:  6, horseName: "Croco Bay (IRE)", sp: 15,  jockey: "Kielan Woods",  trainer: "Ben Case" },
         ],
         field: [
           { gatePosition:  1, horseName: "Roalco De Farges"                  , sp:   21.0,  finishPosition: 11,  jockey: "Andrew J McNamara",  trainer: "John Joseph Hanlon" },
@@ -9569,7 +9569,7 @@ export const historicalData = {
         raceType: "Conditional Jockeys Handicap Hurdle (Martin Pipe)",
         fieldSize: 20,
         top3: [
-          { gatePosition: 16, horseName: "Flying Angel (IRE)"                      , sp:   15.0,  jockey: "Jack Sherwood",  trainer: "Paul Nicholls" },
+          { gatePosition: 11, horseName: "Ibis Du Rheu (FR)", sp: 15,  jockey: "Jack Sherwood",  trainer: "Paul Nicholls" },
           { gatePosition: 16, horseName: "Flying Angel (IRE)", sp: 9,  jockey: "Ryan Hatch",  trainer: "Nigel Twiston-Davies" },
           { gatePosition: 21, horseName: "Sky Khan", sp: 51,  jockey: "Derek Fox",  trainer: "Lucinda Russell" },
         ],
@@ -10046,7 +10046,7 @@ export const historicalData = {
         top3: [
           { gatePosition:  9, horseName: "Penhill"                           , sp:   17.0,  jockey: "Paul Townend",  trainer: "W P Mullins" },
           { gatePosition:  8, horseName: "Monalee (IRE)", sp: 9,  jockey: "David Mullins",  trainer: "Henry De Bromhead" },
-          { gatePosition:  8, horseName: "Monalee (IRE)"                           , sp:    9.0,  jockey: "David Mullins",  trainer: "Henry De Bromhead" },
+          { gatePosition: 14, horseName: "Wholestone (IRE)", sp: 7.5,  jockey: "Daryl Jacob",  trainer: "Nigel Twiston-Davies" },
         ],
         field: [
           { gatePosition:  1, horseName: "Ami Desbois (FR)"                  , sp:   34.0,  finishPosition:  5,  jockey: "Kielan Woods",  trainer: "Graeme McPherson" },
@@ -10495,7 +10495,7 @@ export const historicalData = {
         fieldSize: 9,
         top3: [
           { gatePosition:  1, horseName: "Farclas (FR)"                           , sp:   10.0,  jockey: "Jack Kennedy",  trainer: "Gordon Elliott" },
-          { gatePosition:  1, horseName: "Farclas (FR)"                      , sp:   10.0,  jockey: "Jack Kennedy",  trainer: "Gordon Elliott" },
+          { gatePosition:  3, horseName: "Mr Adjudicator", sp: 9,  jockey: "Paul Townend",  trainer: "W P Mullins" },
           { gatePosition:  6, horseName: "Sayo", sp: 34,  jockey: "Danny Mullins",  trainer: "W P Mullins" },
         ],
         field: [
@@ -10516,7 +10516,7 @@ export const historicalData = {
         fieldSize: 24,
         top3: [
           { gatePosition: 21, horseName: "Mohaayed"                          , sp:   34.0,  jockey: "Bridget Andrews",  trainer: "Dan Skelton" },
-          { gatePosition: 21, horseName: "Mohaayed"                          , sp:   34.0,  jockey: "Bridget Andrews",  trainer: "Dan Skelton" },
+          { gatePosition:  9, horseName: "Remiluc (FR)", sp: 51,  jockey: "Harry Reed",  trainer: "Chris Gordon" },
           { gatePosition:  9, horseName: "Remiluc (FR)"                      , sp:   51.0,  jockey: "Harry Reed",  trainer: "Chris Gordon" },
         ],
         field: [
@@ -10826,7 +10826,7 @@ export const historicalData = {
         fieldSize: 13,
         top3: [
           { gatePosition:  2, horseName: "Laurina (FR)"                      , sp:    1.6,  jockey: "Paul Townend",  trainer: "W P Mullins" },
-          { gatePosition:  2, horseName: "Laurina (FR)"              , sp:    5.5,  jockey: "R Walsh",  trainer: "W P Mullins" },
+          { gatePosition:  1, horseName: "Cap Soleil (FR)", sp: 11,  jockey: "Paddy Brennan",  trainer: "Fergal O'Brien" },
           { gatePosition:  1, horseName: "Cap Soleil (FR)"                   , sp:   11.0,  jockey: "Paddy Brennan",  trainer: "Fergal O'Brien" },
         ],
         field: [
@@ -11303,7 +11303,7 @@ export const historicalData = {
         fieldSize: 21,
         top3: [
           { gatePosition: 16, horseName: "Eglantine Du Seuil (FR)"                , sp:   51.0,  jockey: "Noel Fehily",  trainer: "W P Mullins" },
-          { gatePosition: 16, horseName: "Eglantine Du Seuil (FR)"           , sp:   51.0,  jockey: "Noel Fehily",  trainer: "W P Mullins" },
+          { gatePosition: 15, horseName: "Stormy Ireland (FR)", sp: 8,  jockey: "Paul Townend",  trainer: "W P Mullins" },
           { gatePosition:  9, horseName: "Tintangle (IRE)", sp: 41,  jockey: "Jack Kennedy",  trainer: "Gordon Elliott" },
         ],
         field: [
@@ -11717,7 +11717,7 @@ export const historicalData = {
         fieldSize: 23,
         top3: [
           { gatePosition: 18, horseName: "Saint Roi (FR)"                         , sp:    6.5,  jockey: "Barry Geraghty",  trainer: "W P Mullins" },
-          { gatePosition: 18, horseName: "Saint Roi (FR)"                    , sp:    6.5,  jockey: "Barry Geraghty",  trainer: "W P Mullins" },
+          { gatePosition:  2, horseName: "Aramon (GER)", sp: 9,  jockey: "Paul Townend",  trainer: "W P Mullins" },
           { gatePosition:  3, horseName: "Embittered", sp: 15,  jockey: "Rachael Blackmore",  trainer: "Henry De Bromhead" },
         ],
         field: [
@@ -11831,7 +11831,7 @@ export const historicalData = {
         fieldSize: 16,
         top3: [
           { gatePosition: 10, horseName: "Chosen Mate (IRE)"                       , sp:    4.5,  jockey: "Davy Russell",  trainer: "Gordon Elliott" },
-          { gatePosition: 10, horseName: "Chosen Mate (IRE)"                 , sp:    4.5,  jockey: "Davy Russell",  trainer: "Gordon Elliott" },
+          { gatePosition:  8, horseName: "Eclair De Beaufeu (FR)", sp: 7.5,  jockey: "Sean O'Keeffe",  trainer: "Gordon Elliott" },
           { gatePosition:  9, horseName: "Us And Them (IRE)", sp: 11,  jockey: "J J Slevin",  trainer: "Joseph Patrick O'Brien" },
         ],
         field: [
@@ -11859,7 +11859,7 @@ export const historicalData = {
         fieldSize: 20,
         top3: [
           { gatePosition:  2, horseName: "Indefatigable (IRE)"                     , sp:   26.0,  jockey: "Rex Dingle",  trainer: "Paul Webber" },
-          { gatePosition:  2, horseName: "Indefatigable (IRE)"               , sp:   26.0,  jockey: "Rex Dingle",  trainer: "Paul Webber" },
+          { gatePosition: 10, horseName: "Big Blue", sp: 67,  jockey: "Luca Morgan",  trainer: "Ciaron Maher & David Eustace" },
           { gatePosition: 10, horseName: "Big Blue"                          , sp:   67.0,  jockey: "Luca Morgan",  trainer: "Ciaron Maher & David Eustace" },
         ],
         field: [
@@ -12520,7 +12520,7 @@ export const historicalData = {
         fieldSize: 19,
         top3: [
           { gatePosition:  5, horseName: "Galopin Des Champs (FR)"                , sp:    9.0,  jockey: "Sean O'Keeffe",  trainer: "W P Mullins" },
-          { gatePosition:  5, horseName: "Galopin Des Champs (FR)"           , sp:    9.0,  jockey: "Sean O'Keeffe",  trainer: "W P Mullins" },
+          { gatePosition: 22, horseName: "Langer Dan (IRE)", sp: 7.5,  jockey: "Lorcan Williams",  trainer: "Dan Skelton" },
           { gatePosition:  1, horseName: "Floueur (FR)", sp: 34,  jockey: "Paul O'Brien",  trainer: "Joseph Patrick O'Brien" },
         ],
         field: [
@@ -13201,7 +13201,7 @@ export const historicalData = {
         fieldSize: 24,
         top3: [
           { gatePosition: 11, horseName: "Banbridge (IRE)"                         , sp:   13.0,  jockey: "Mark McDonagh",  trainer: "Joseph Patrick O'Brien" },
-          { gatePosition: 11, horseName: "Banbridge (IRE)"                   , sp:   13.0,  jockey: "Mark McDonagh",  trainer: "Joseph Patrick O'Brien" },
+          { gatePosition: 15, horseName: "Cobblers Dream (IRE)", sp: 13,  jockey: "Jack Andrews",  trainer: "Ben Case" },
           { gatePosition: 18, horseName: "Hollow Games", sp: 5.5,  jockey: "Jordan Gainford",  trainer: "Gordon Elliott" },
         ],
         field: [
@@ -13693,7 +13693,7 @@ export const historicalData = {
         raceType: "Handicap Hurdle (County, 2m)",
         fieldSize: 23,
         top3: [
-          { gatePosition: 17, horseName: "Petit Tonnerre (FR)"                           , sp:   34.0,  jockey: "Bridget Andrews",  trainer: "Dan Skelton" },
+          { gatePosition: 23, horseName: "Faivoir (FR)", sp: 34,  jockey: "Bridget Andrews",  trainer: "Dan Skelton" },
           { gatePosition: 23, horseName: "Faivoir (FR)"                      , sp:   34.0,  jockey: "Bridget Andrews",  trainer: "Dan Skelton" },
           { gatePosition: 13, horseName: "Filey Bay"                         , sp:    7.0,  jockey: "Mark Walsh",  trainer: "Emmet Mullins" },
         ],
@@ -13750,7 +13750,7 @@ export const historicalData = {
         fieldSize: 13,
         top3: [
           { gatePosition:  6, horseName: "Galopin Des Champs (FR)"                , sp:    2.4,  jockey: "Paul Townend",  trainer: "W P Mullins" },
-          { gatePosition:  6, horseName: "Galopin Des Champs (FR)"           , sp:    2.4,  jockey: "Paul Townend",  trainer: "W P Mullins" },
+          { gatePosition:  3, horseName: "Bravemansgame (FR)", sp: 7,  jockey: "Harry Cobden",  trainer: "Paul Nicholls" },
           { gatePosition:  4, horseName: "Conflated (IRE)", sp: 23,  jockey: "Sam Ewing",  trainer: "Gordon Elliott" },
         ],
         field: [
@@ -13811,7 +13811,7 @@ export const historicalData = {
         top3: [
           { gatePosition:  3, horseName: "Impervious (IRE)"                        , sp:    2.9,  jockey: "Brian Hayes",  trainer: "C A Murphy" },
           { gatePosition:  1, horseName: "Allegorie De Vassy (FR)", sp: 2.6,  jockey: "Paul Townend",  trainer: "W P Mullins" },
-          { gatePosition:  1, horseName: "Allegorie De Vassy (FR)"                , sp:    2.6,  jockey: "Paul Townend",  trainer: "W P Mullins" },
+          { gatePosition:  8, horseName: "Pink Legend", sp: 34,  jockey: "Charlie Deutsch",  trainer: "Venetia Williams" },
         ],
         field: [
           { gatePosition:  1, horseName: "Allegorie De Vassy (FR)"           , sp:    2.6,  finishPosition:  2,  jockey: "Paul Townend",  trainer: "W P Mullins" },
@@ -13958,7 +13958,7 @@ export const historicalData = {
         fieldSize: 20,
         top3: [
           { gatePosition: 13, horseName: "Seddon (IRE)"                            , sp:   21.0,  jockey: "Ben Harvey",  trainer: "John C McConnell" },
-          { gatePosition: 13, horseName: "Seddon (IRE)"                      , sp:   21.0,  jockey: "Ben Harvey",  trainer: "John C McConnell" },
+          { gatePosition:  6, horseName: "Fugitif (FR)", sp: 12,  jockey: "Sean Bowen",  trainer: "Richard Hobson" },
           { gatePosition:  6, horseName: "Fugitif (FR)"                      , sp:   12.0,  jockey: "Sean Bowen",  trainer: "Richard Hobson" },
         ],
         field: [
@@ -14342,7 +14342,7 @@ export const historicalData = {
         fieldSize: 12,
         top3: [
           { gatePosition:  5, horseName: "Majborough (FR)"                        , sp:    7.0,  jockey: "Mark Walsh",  trainer: "W P Mullins" },
-          { gatePosition:  5, horseName: "Majborough (FR)"                   , sp:    7.0,  jockey: "Mark Walsh",  trainer: "W P Mullins" },
+          { gatePosition: 14, horseName: "Kargese (FR)", sp: 5,  jockey: "Danny Mullins",  trainer: "W P Mullins" },
           { gatePosition: 10, horseName: "Salver (FR)", sp: 11,  jockey: "Gavin Sheehan",  trainer: "Gary Moore" },
         ],
         field: [
@@ -14465,7 +14465,7 @@ export const historicalData = {
         raceType: "Mares Chase - Grade 2",
         fieldSize: 9,
         top3: [
-          { gatePosition:  6, horseName: "Instit (FR)"                     , sp:    4.0,  jockey: "Keith Donoghue",  trainer: "Gavin Cromwell" },
+          { gatePosition:  8, horseName: "Limerick Lace (IRE)", sp: 4,  jockey: "Keith Donoghue",  trainer: "Gavin Cromwell" },
           { gatePosition:  8, horseName: "Limerick Lace (IRE)"               , sp:    4.0,  jockey: "Keith Donoghue",  trainer: "Gavin Cromwell" },
           { gatePosition:  1, horseName: "Dinoblue (FR)"                     , sp:    2.9,  jockey: "Mark Walsh",  trainer: "W P Mullins" },
         ],
@@ -14487,7 +14487,7 @@ export const historicalData = {
         fieldSize: 15,
         top3: [
           { gatePosition:  6, horseName: "Better Days Ahead (IRE)"                 , sp:    6.0,  jockey: "Danny Gilligan",  trainer: "Gordon Elliott" },
-          { gatePosition:  6, horseName: "Better Days Ahead (IRE)"           , sp:    6.0,  jockey: "Danny Gilligan",  trainer: "Gordon Elliott" },
+          { gatePosition: 13, horseName: "Waterford Whispers (IRE)", sp: 4.3,  jockey: "Mike O'Connor",  trainer: "Henry De Bromhead" },
           { gatePosition:  5, horseName: "Quai De Bourbon (FR)", sp: 5,  jockey: "Michael O'Sullivan",  trainer: "W P Mullins" },
         ],
         field: [
@@ -14514,7 +14514,7 @@ export const historicalData = {
         fieldSize: 11,
         top3: [
           { gatePosition:  5, horseName: "Grey Dawning (IRE)"                      , sp:    3.5,  jockey: "Harry Skelton",  trainer: "Dan Skelton" },
-          { gatePosition:  5, horseName: "Grey Dawning (IRE)"                , sp:    3.5,  jockey: "Harry Skelton",  trainer: "Dan Skelton" },
+          { gatePosition:  4, horseName: "Ginny's Destiny (IRE)", sp: 6.5,  jockey: "Harry Cobden",  trainer: "Paul Nicholls" },
           { gatePosition:  2, horseName: "Djelo (FR)", sp: 26,  jockey: "Charlie Deutsch",  trainer: "Venetia Williams" },
         ],
         field: [
@@ -14594,7 +14594,7 @@ export const historicalData = {
         fieldSize: 12,
         top3: [
           { gatePosition: 13, horseName: "Teahupoo (FR)"                          , sp:    2.2,  jockey: "Jack Kennedy",  trainer: "Gordon Elliott" },
-          { gatePosition: 13, horseName: "Teahupoo (FR)"                     , sp:    2.2,  jockey: "Jack Kennedy",  trainer: "Gordon Elliott" },
+          { gatePosition:  6, horseName: "Flooring Porter (IRE)", sp: 10,  jockey: "Keith Donoghue",  trainer: "Gavin Cromwell" },
           { gatePosition:  7, horseName: "Home By The Lee (IRE)", sp: 17,  jockey: "J J Slevin",  trainer: "Joseph Patrick O'Brien" },
         ],
         field: [
@@ -14677,7 +14677,7 @@ export const historicalData = {
         top3: [
           { gatePosition:  1, horseName: "Inothewayurthinkin (IRE)"          , sp:    2.6,  jockey: "Mr Derek O'Connor",  trainer: "Gavin Cromwell" },
           { gatePosition: 19, horseName: "Git Maker (FR)"                         , sp:   29.0,  jockey: "Mr William Biddick",  trainer: "Jamie Snowden" },
-          { gatePosition: 19, horseName: "Git Maker (FR)"                    , sp:   29.0,  jockey: "Mr William Biddick",  trainer: "Jamie Snowden" },
+          { gatePosition: 21, horseName: "Whacker Clan (IRE)", sp: 9.5,  jockey: "Mr J L Gleeson",  trainer: "Henry De Bromhead" },
         ],
         field: [
           { gatePosition:  1, horseName: "Inothewayurthinkin (IRE)"          , sp:    2.6,  finishPosition:  1,  jockey: "Mr Derek O'Connor",  trainer: "Gavin Cromwell" },
@@ -15215,7 +15215,7 @@ export const historicalData = {
         top3: [
           { gatePosition:  3, horseName: "Caldwell Potter (FR)"                   , sp:    8.0,  jockey: "Harry Cobden",  trainer: "Paul Nicholls" },
           { gatePosition: 10, horseName: "Anyway (GER)", sp: 126,  jockey: "Darragh O'Keeffe",  trainer: "David Kenneth Budds" },
-          { gatePosition: 10, horseName: "Anyway (GER)"                            , sp:  126.0,  jockey: "Darragh O'Keeffe",  trainer: "David Kenneth Budds" },
+          { gatePosition:  9, horseName: "O'Moore Park (IRE)", sp: 67,  jockey: "Sean O'Keeffe",  trainer: "W P Mullins" },
         ],
         field: [
           { gatePosition:  1, horseName: "Springwell Bay"                    , sp:    7.5,  finishPosition: null,  jockey: "Jonjo O'Neill Jr",  trainer: "Jonjo & A J O'Neill" },
@@ -15279,7 +15279,7 @@ export const historicalData = {
         fieldSize: 9,
         top3: [
           { gatePosition:  3, horseName: "Fact To File (FR)"                      , sp:    2.5,  jockey: "Mark Walsh",  trainer: "W P Mullins" },
-          { gatePosition:  3, horseName: "Fact To File (FR)"                 , sp:    2.5,  jockey: "Mark Walsh",  trainer: "W P Mullins" },
+          { gatePosition:  5, horseName: "Heart Wood (FR)", sp: 19,  jockey: "Darragh O'Keeffe",  trainer: "Henry De Bromhead" },
           { gatePosition:  2, horseName: "Envoi Allen (FR)", sp: 13,  jockey: "Rachael Blackmore",  trainer: "Henry De Bromhead" },
         ],
         field: [
