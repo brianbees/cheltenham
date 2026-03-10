@@ -181,19 +181,25 @@ function RaceCard({ race, data, onPaste, onSave, onClear }) {
 
   const raceClass = getRaceClass(race.name, race.dataName);
 
+  const [rawDebug, setRawDebug] = useState(null);
+
   const handleParse = (rawText) => {
     const src = rawText ?? text;
     setParseError(null);
+    setRawDebug(null);
     if (!src.trim()) return;
 
     const { races } = parseRaceCardText(src);
     const r = races?.[0];
 
     if (!r || r.runners.length === 0) {
-      setParseError('No runners found — check the pasted text.');
+      // Show the first 300 chars of raw input so we can diagnose format issues
+      setRawDebug(src.slice(0, 300));
+      setParseError('No runners found — see raw text below.');
       return;
     }
     if (r.runners.length < 3) {
+      setRawDebug(src.slice(0, 300));
       setParseError(`Only ${r.runners.length} runner(s) found — need at least 3.`);
       return;
     }
@@ -356,7 +362,12 @@ function RaceCard({ race, data, onPaste, onSave, onClear }) {
                        resize-y placeholder-gray-400"
           />
           {parseError && (
-            <p className="text-rose-600 text-xs">{parseError}</p>
+            <div className="space-y-1">
+              <p className="text-rose-600 text-xs">{parseError}</p>
+              {rawDebug && (
+                <pre className="text-xs bg-gray-100 border border-gray-200 rounded p-2 overflow-auto max-h-32 text-gray-600 whitespace-pre-wrap break-all">{rawDebug}</pre>
+              )}
+            </div>
           )}
           <button
             onClick={() => handleParse()}
