@@ -96,7 +96,6 @@ function ModelResult({ label, combo, fmtOdds, accent = 'emerald', originalOdds =
 
 function RaceCard({ race, data, onPaste, onSave, onClear }) {
   const [pasting,        setPasting]        = useState(false);
-  const [text,           setText]           = useState('');
   const [parseError,     setParseError]     = useState(null);
   const [saving,         setSaving]         = useState(false);
   const [saveError,      setSaveError]      = useState(null);
@@ -184,7 +183,7 @@ function RaceCard({ race, data, onPaste, onSave, onClear }) {
   const [rawDebug, setRawDebug] = useState(null);
 
   const handleParse = (rawText) => {
-    const src = rawText ?? text;
+    const src = rawText ?? textareaRef.current?.value ?? '';
     setParseError(null);
     setRawDebug(null);
     if (!src.trim()) return;
@@ -193,7 +192,6 @@ function RaceCard({ race, data, onPaste, onSave, onClear }) {
     const r = races?.[0];
 
     if (!r || r.runners.length === 0) {
-      // Show the first 300 chars of raw input so we can diagnose format issues
       setRawDebug(src.slice(0, 300));
       setParseError('No runners found — see raw text below.');
       return;
@@ -206,7 +204,7 @@ function RaceCard({ race, data, onPaste, onSave, onClear }) {
 
     onPaste(r.runners);
     setPasting(false);
-    setText('');
+    if (textareaRef.current) textareaRef.current.value = '';
   };
 
   const handleClipboardPaste = async () => {
@@ -223,8 +221,8 @@ function RaceCard({ race, data, onPaste, onSave, onClear }) {
         setParseError('Clipboard is empty — copy the race card text first.');
         return;
       }
-      // Show the text in the box so user can see what was read, then auto-parse
-      setText(clipText);
+      // Put text into the uncontrolled textarea so user can see it, then parse
+      if (textareaRef.current) textareaRef.current.value = clipText;
       handleParse(clipText);
     } catch {
       textareaRef.current?.focus();
@@ -232,12 +230,11 @@ function RaceCard({ race, data, onPaste, onSave, onClear }) {
     }
   };
 
-  // When the user long-press-pastes into the textarea: don't intercept, let the
-  // browser insert the text, then read it from the DOM after React's next tick.
+  // When the user long-press-pastes into the textarea: let the browser insert
+  // text natively (no preventDefault), then read from the DOM after the event.
   const handleTextareaPaste = () => {
     setTimeout(() => {
       const val = textareaRef.current?.value ?? '';
-      setText(val);
       if (val.trim()) handleParse(val);
     }, 0);
   };
@@ -284,7 +281,7 @@ function RaceCard({ race, data, onPaste, onSave, onClear }) {
               ⏱
             </button>
             <button
-              onClick={() => { setPasting(p => !p); setParseError(null); setText(''); }}
+              onClick={() => { setPasting(p => !p); setParseError(null); if (textareaRef.current) textareaRef.current.value = ''; }}
               className="text-xs px-3 py-2 rounded border border-gray-300 text-gray-500
                          hover:border-emerald-500 hover:text-emerald-600 transition-colors whitespace-nowrap"
             >
@@ -353,8 +350,6 @@ function RaceCard({ race, data, onPaste, onSave, onClear }) {
           <p className="text-xs text-gray-400 text-center">— or type / paste manually below —</p>
           <textarea
             ref={textareaRef}
-            value={text}
-            onChange={e => setText(e.target.value)}
             onPaste={handleTextareaPaste}
             placeholder={'Paste race card text here…\n\nFormat: gate  horse name  odds\ne.g.\n1  Big Buck\'s  5/1\n2  Kauto Star  2/1'}
             className="w-full h-36 bg-white border border-gray-300 rounded px-3 py-2
@@ -371,9 +366,8 @@ function RaceCard({ race, data, onPaste, onSave, onClear }) {
           )}
           <button
             onClick={() => handleParse()}
-            disabled={!text.trim()}
             className="px-4 py-1.5 rounded bg-emerald-600 hover:bg-emerald-700
-                       text-white text-sm font-semibold disabled:opacity-40 transition-colors"
+                       text-white text-sm font-semibold transition-colors"
           >
             Parse &amp; Run →
           </button>
