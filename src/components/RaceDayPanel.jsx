@@ -14,9 +14,32 @@ import { getRaceHistory }    from '../data/historicalData';
 import { FESTIVAL_DAYS }     from '../data/schedule';
 import SEED_TUESDAY         from '../data/seed-tuesday.json';
 
-// ── Festival schedule ─────────────────────────────────────────────────────────
+// ── Helpers ─────────────────────────────────────────────────────────────────
 
-// ── Helpers ───────────────────────────────────────────────────────────────────
+/**
+ * Checks new runner list against previous for gate/name mismatches.
+ * Returns array of human-readable issue strings (empty = all good).
+ */
+function validateRunners(prevRunners, newRunners) {
+  if (!prevRunners?.length || !newRunners?.length) return [];
+  const issues = [];
+  const prevByGate = new Map(prevRunners.map(r => [r.gatePosition, r.horseName]));
+  const newByGate  = new Map(newRunners.map(r => [r.gatePosition, r.horseName]));
+  for (const [gate, prevName] of prevByGate) {
+    const newName = newByGate.get(gate);
+    if (newName === undefined) {
+      issues.push(`Gate ${gate} (${prevName}): not present in new data`);
+    } else if (newName.toLowerCase() !== prevName.toLowerCase()) {
+      issues.push(`Gate ${gate}: was "${prevName}", now "${newName}"`);
+    }
+  }
+  for (const [gate, newName] of newByGate) {
+    if (!prevByGate.has(gate)) {
+      issues.push(`Gate ${gate} (${newName}): new entry not seen before`);
+    }
+  }
+  return issues;
+}
 
 function getRaceClass(raceName, dataName) {
   const rows = getRaceHistory(dataName || raceName);
@@ -98,6 +121,7 @@ function ModelResult({ label, combo, fmtOdds, accent = 'emerald', originalOdds =
 function RaceCard({ race, data, onPaste, onSave, onClear }) {
   const [pasting,        setPasting]        = useState(false);
   const [parseError,     setParseError]     = useState(null);
+  const [parseWarn,      setParseWarn]      = useState(null);
   const [saving,         setSaving]         = useState(false);
   const [saveError,      setSaveError]      = useState(null);
   const [showHistory,    setShowHistory]    = useState(false);
@@ -208,6 +232,8 @@ function RaceCard({ race, data, onPaste, onSave, onClear }) {
       return;
     }
 
+    const issues = validateRunners(data?.runners, r.runners);
+    setParseWarn(issues.length ? issues : null);
     onPaste(r.runners);
     setPasting(false);
     if (textareaRef.current) textareaRef.current.value = '';
@@ -281,7 +307,7 @@ function RaceCard({ race, data, onPaste, onSave, onClear }) {
               ⏱
             </button>
             <button
-              onClick={() => { setPasting(p => !p); setParseError(null); if (textareaRef.current) textareaRef.current.value = ''; }}
+              onClick={() => { setPasting(p => !p); setParseError(null); setParseWarn(null); if (textareaRef.current) textareaRef.current.value = ''; }}
               className="text-xs px-3 py-2 rounded border border-gray-300 text-gray-500
                          hover:border-emerald-500 hover:text-emerald-600 transition-colors whitespace-nowrap"
             >
@@ -373,6 +399,16 @@ function RaceCard({ race, data, onPaste, onSave, onClear }) {
           >
             Parse &amp; Run →
           </button>
+        </div>
+      )}
+
+      {/* ── Consistency warnings ── */}
+      {!pasting && parseWarn && (
+        <div className="px-4 py-2 bg-amber-50 border-b border-amber-200">
+          <p className="text-xs font-semibold text-amber-700 mb-1">⚠ Data inconsistencies vs previous paste:</p>
+          <ul className="text-xs text-amber-700 space-y-0.5 list-disc list-inside">
+            {parseWarn.map((w, i) => <li key={i}>{w}</li>)}
+          </ul>
         </div>
       )}
 
@@ -502,6 +538,18 @@ export default function RaceDayPanel() {
     if (!src.trim()) return;
     const { races: parsed } = parseRaceCardText(src);
     if (!parsed?.length) { setPasteAllMsg({ error: 'No races found — check the text.' }); return; }
+    // Validate consistency against currently loaded data before updating state
+    const allWarnings = [];
+    for (const pr of parsed) {
+      if (!pr.runners?.length) continue;
+      const schedRace = matchScheduleRace(pr.raceName);
+      if (!schedRace) continue;
+      const existing = raceData[schedRace.name];
+      if (existing?.runners) {
+        const issues = validateRunners(existing.runners, pr.runners);
+        if (issues.length) allWarnings.push(...issues.map(i => `${schedRace.name}: ${i}`));
+      }
+    }
     let matched = 0;
     setRaceData(prev => {
       const next = { ...prev };
@@ -524,9 +572,14 @@ export default function RaceDayPanel() {
       return next;
     });
     if (matched > 0) {
-      setPasteAllMsg({ ok: `${matched} race${matched !== 1 ? 's' : ''} loaded ✓` });
-      setPasteAll(false);
-      if (multiRef.current) multiRef.current.value = '';
+      if (allWarnings.length) {
+        setPasteAllMsg({ warn: allWarnings, loaded: matched });
+        // Keep panel open so user can review warnings
+      } else {
+        setPasteAllMsg({ ok: `${matched} race${matched !== 1 ? 's' : ''} loaded \u2713` });
+        setPasteAll(false);
+        if (multiRef.current) multiRef.current.value = '';
+      }
     } else {
       setPasteAllMsg({ error: 'No races matched the schedule — check race names.' });
     }
@@ -691,7 +744,16 @@ export default function RaceDayPanel() {
           {pasteAllMsg && (
             pasteAllMsg.ok
               ? <p className="text-emerald-600 text-sm font-semibold">{pasteAllMsg.ok}</p>
-              : <p className="text-rose-600 text-sm">{pasteAllMsg.error}</p>
+              : pasteAllMsg.warn
+                ? <div className="bg-amber-50 border border-amber-300 rounded p-2 space-y-1">
+                    <p className="text-amber-700 text-xs font-semibold">
+                      \u26a0\ufe0f {pasteAllMsg.loaded} race{pasteAllMsg.loaded !== 1 ? 's' : ''} loaded \u2014 inconsistencies found:
+                    </p>
+                    <ul className="text-xs text-amber-700 space-y-0.5 list-disc list-inside">
+                      {pasteAllMsg.warn.map((w, i) => <li key={i}>{w}</li>)}
+                    </ul>
+                  </div>
+                : <p className="text-rose-600 text-sm">{pasteAllMsg.error}</p>
           )}
           <button
             onClick={() => handleMultiPaste()}
