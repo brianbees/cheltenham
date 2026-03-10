@@ -12,6 +12,7 @@ import { enrichRunners, enrichRunnersHenery } from '../engine/probability';
 import { rankCombinations }  from '../engine/optimiser';
 import { getRaceHistory }    from '../data/historicalData';
 import { FESTIVAL_DAYS }     from '../data/schedule';
+import SEED_TUESDAY         from '../data/seed-tuesday.json';
 
 // ── Festival schedule ─────────────────────────────────────────────────────────
 
@@ -423,12 +424,12 @@ const LS_KEY = 'raceDayData_v1';
 export default function RaceDayPanel() {
   const [activeDay, setActiveDay] = useState('Tuesday');
 
-  // Initialise from localStorage so data survives navigation + window close
+  // Initialise from localStorage, or seed Tuesday's card on first load
   const [raceData, setRaceData] = useState(() => {
     try {
       const stored = localStorage.getItem(LS_KEY);
-      if (!stored) return {};
-      const parsed = JSON.parse(stored);
+      const source = stored ? JSON.parse(stored) : SEED_TUESDAY;
+      const parsed = source;
       const restored = {};
       for (const [name, entry] of Object.entries(parsed)) {
         if (!entry.runners) continue;
