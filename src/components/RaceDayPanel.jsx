@@ -516,14 +516,18 @@ export default function RaceDayPanel() {
   const matchScheduleRace = (parsedName) => {
     const norm = s => s.toLowerCase().replace(/[^a-z0-9]/g, ' ').replace(/\s+/g, ' ').trim();
     const pn = norm(parsedName);
-    // Exact match first
-    let found = schedule.find(r => norm(r.name) === pn || norm(r.dataName || r.name) === pn);
+    // Exact match against name, dataName, or any alias
+    let found = schedule.find(r =>
+      norm(r.name) === pn ||
+      norm(r.dataName || r.name) === pn ||
+      (r.aliases || []).some(a => norm(a) === pn)
+    );
     if (found) return found;
-    // Partial: every word in the parsed name appears in the schedule name
+    // Partial: every significant word in the parsed name appears in the schedule name or an alias
     const words = pn.split(' ').filter(w => w.length > 3);
     found = schedule.find(r => {
-      const sn = norm(r.name);
-      return words.length > 0 && words.every(w => sn.includes(w));
+      const targets = [r.name, r.dataName, ...(r.aliases || [])].filter(Boolean).map(norm);
+      return words.length > 0 && targets.some(t => words.every(w => t.includes(w)));
     });
     return found ?? null;
   };

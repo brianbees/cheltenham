@@ -16,7 +16,7 @@ export const FESTIVAL_DAYS = {
     { time: '15:20', name: 'Ultima Handicap Chase' },
     { time: '16:00', name: 'Champion Hurdle' },
     { time: '16:40', name: 'TrustATrader Festival Plate Handicap', dataName: 'Plate Handicap Chase' },
-    { time: '17:20', name: 'National Hunt Chase' },
+    { time: '17:20', name: 'National Hunt Chase',                  aliases: ['NH Challenge Cup', 'National Hunt Challenge Cup'] },
   ],
   Wednesday: [
     { time: '13:20', name: "Turner's Novices' Hurdle",             dataName: 'Ballymore Novices Hurdle' },
