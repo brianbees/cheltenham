@@ -1374,7 +1374,7 @@ export const historicalData = {
         fieldSize: 10,
         top3: [
           { gatePosition: 16, horseName: "Well Chief (GER)"                        , sp:    1.1,  jockey: "A P McCoy",  trainer: "M C Pipe" },
-          { gatePosition: 16, horseName: "Well Chief (GER)"                  , sp:   10.0,  jockey: "A P McCoy",  trainer: "M C Pipe" },
+          { gatePosition:  7, horseName: "Kicking King (IRE)", sp: 4.5,  jockey: "Barry Geraghty",  trainer: "T J Taaffe" },
           { gatePosition: 14, horseName: "Le Duc I (FR)", sp: 26,  jockey: "Joe Tizzard",  trainer: "Paul Nicholls" },
         ],
         field: [
@@ -1397,7 +1397,7 @@ export const historicalData = {
         top3: [
           { gatePosition:  3, horseName: "Best Mate (IRE)"                   , sp:    1.7,  jockey: "Jim Culloty",  trainer: "Henrietta C Knight" },
           { gatePosition:  8, horseName: "Sir Rembrandt (IRE)"                     , sp:   34.0,  jockey: "Andrew Thornton",  trainer: "R H Alner" },
-          { gatePosition:  8, horseName: "Sir Rembrandt (IRE)"               , sp:   34.0,  jockey: "Andrew Thornton",  trainer: "R H Alner" },
+          { gatePosition:  5, horseName: "Harbour Pilot (IRE)", sp: 21,  jockey: "Paul Carberry",  trainer: "Noel Meade" },
         ],
         field: [
           { gatePosition:  1, horseName: "Alexander Banquet (IRE)"           , sp:   81.0,  finishPosition:  8,  jockey: "R Walsh",  trainer: "W P Mullins" },
@@ -1505,7 +1505,7 @@ export const historicalData = {
         top3: [
           { gatePosition:  8, horseName: "Earthmover (IRE)"                        , sp:    1.1,  jockey: "Miss Amaryllis Goschen",  trainer: "Paul Nicholls" },
           { gatePosition: 14, horseName: "Never Compromise (IRE)", sp: 5.5,  jockey: "Alan Crowe",  trainer: "T M Walsh" },
-          { gatePosition: 14, horseName: "Never Compromise (IRE)"                  , sp:    1.2,  jockey: "Alan Crowe",  trainer: "T M Walsh" },
+          { gatePosition:  7, horseName: "County Derry", sp: 17,  jockey: "Mr N Harris",  trainer: "Jeremy Scott" },
         ],
         field: [
           { gatePosition:  1, horseName: "Always On The Line (IRE)"          , sp:   51.0,  finishPosition: null,  jockey: "Alex Merriam",  trainer: "R Barber" },
@@ -2036,7 +2036,7 @@ export const historicalData = {
         top3: [
           { gatePosition:  6, horseName: "Kicking King (IRE)"                , sp:    5.0,  jockey: "Barry Geraghty",  trainer: "T J Taaffe" },
           { gatePosition: 12, horseName: "Take The Stand (IRE)"                    , sp:    2.0,  jockey: "Tony Dobbin",  trainer: "Peter Bowen" },
-          { gatePosition: 12, horseName: "Take The Stand (IRE)"              , sp:   26.0,  jockey: "Tony Dobbin",  trainer: "Peter Bowen" },
+          { gatePosition: 10, horseName: "Sir Rembrandt (IRE)", sp: 13,  jockey: "Andrew Thornton",  trainer: "R H Alner" },
         ],
         field: [
           { gatePosition:  2, horseName: "Ballycassidy (IRE)"                , sp:   81.0,  finishPosition:  8,  jockey: "Seamus Durack",  trainer: "Peter Bowen" },
@@ -3872,7 +3872,7 @@ export const historicalData = {
         fieldSize: 10,
         top3: [
           { gatePosition:  5, horseName: "Denman (IRE)"                            , sp:    3.2,  jockey: "Sam Thomas",  trainer: "Paul Nicholls" },
-          { gatePosition:  5, horseName: "Denman (IRE)"                      , sp:    3.2,  jockey: "Sam Thomas",  trainer: "Paul Nicholls" },
+          { gatePosition: 10, horseName: "Kauto Star (FR)", sp: 1.9,  jockey: "R Walsh",  trainer: "Paul Nicholls" },
           { gatePosition: 12, horseName: "Neptune Collonges", sp: 26,  jockey: "",  trainer: "" },
         ],
         field: [
@@ -5273,7 +5273,7 @@ export const historicalData = {
         top3: [
           { gatePosition:  2, horseName: "Berties Dream (IRE)"                     , sp:   34.0,  jockey: "A E Lynch",  trainer: "Paul John Gilligan" },
           { gatePosition:  9, horseName: "Najaf (FR)", sp: 26,  jockey: "Timmy Murphy",  trainer: "Paul Nicholls" },
-          { gatePosition:  9, horseName: "Najaf (FR)"                             , sp:   26.0,  jockey: "Timmy Murphy",  trainer: "Paul Nicholls" },
+          { gatePosition:  8, horseName: "Kennel Hill (IRE)", sp: 67,  jockey: "Jason Maguire",  trainer: "Keith Goldsworthy" },
         ],
         field: [
           { gatePosition:  1, horseName: "Arvika Ligeonniere (FR)"           , sp:   29.0,  finishPosition:  2,  jockey: "Davy Condon",  trainer: "W P Mullins" },
@@ -5997,7 +5997,7 @@ export const historicalData = {
         fieldSize: 16,
         top3: [
           { gatePosition:  3, horseName: "Bobs Worth (IRE)"                        , sp:    2.9,  jockey: "Barry Geraghty",  trainer: "Nicky Henderson" },
-          { gatePosition:  3, horseName: "Bobs Worth (IRE)"                  , sp:    2.9,  jockey: "Barry Geraghty",  trainer: "Nicky Henderson" },
+          { gatePosition: 13, horseName: "Mossley (IRE)", sp: 13,  jockey: "A P McCoy",  trainer: "Nicky Henderson" },
           { gatePosition:  5, horseName: "Court In Motion (IRE)", sp: 10,  jockey: "Jack Doyle",  trainer: "Emma Lavelle" },
         ],
         field: [
@@ -8136,7 +8136,7 @@ export const historicalData = {
         top3: [
           { gatePosition: 21, horseName: "Tammys Hill (IRE)"                       , sp:    8.5,  jockey: "Mr J",  trainer: "J Smyth Liam Lennon" },
           { gatePosition:  3, horseName: "Carsonstown Boy (IRE)", sp: 41,  jockey: "Mr N McParlan",  trainer: "C A McBratney" },
-          { gatePosition:  3, horseName: "Carsonstown Boy (IRE)"                   , sp:   41.0,  jockey: "Mr N",  trainer: "McParlan C A McBratney" },
+          { gatePosition: 16, horseName: "On The Fringe (IRE)", sp: 6.5,  jockey: "Ms N Carberry",  trainer: "E Bolger" },
         ],
         field: [
           { gatePosition:  1, horseName: "Berties Dream (IRE)"               , sp:   11.0,  finishPosition: 12,  jockey: "Miss Gina",  trainer: "Andrews Mrs L Braithwaite" },
@@ -8849,7 +8849,7 @@ export const historicalData = {
         fieldSize: 18,
         top3: [
           { gatePosition:  6, horseName: "Heir Of Excitement"                , sp:    6.0,  jockey: "Mr N",  trainer: "McParlan C A McBratney" },
-          { gatePosition: 16, horseName: "On The Fringe (IRE)"               , sp:    7.0,  jockey: "Ms N Carberry",  trainer: "E Bolger" },
+          { gatePosition:  9, horseName: "Following Dreams (IRE)", sp: 51,  jockey: "Mr S Drinkwater",  trainer: "Alastair Ralph" },
           { gatePosition: 12, horseName: "Muirhead (IRE)"                        , sp:   15.0 },
         ],
         field: [
@@ -8880,7 +8880,7 @@ export const historicalData = {
         top3: [
           { gatePosition:  3, horseName: "Jolly's Cracked It (FR)"                    , sp:    6.0,  jockey: "David Mullins",  trainer: "W P Mullins" },
           { gatePosition:  1, horseName: "Le Mercurey (FR)", sp: 9,  jockey: "Sean Bowen",  trainer: "Paul Nicholls" },
-          { gatePosition: 15, horseName: "On Tour (IRE)"                       , sp:   10.0,  jockey: "Sean Bowen",  trainer: "Paul Nicholls" },
+          { gatePosition:  9, horseName: "Roi Des Francs (FR)", sp: 4,  jockey: "David Mullins",  trainer: "W P Mullins" },
         ],
         field: [
           { gatePosition:  1, horseName: "Le Mercurey (FR)"                  , sp:    9.0,  finishPosition:  7,  jockey: "Sean Bowen",  trainer: "Paul Nicholls" },
@@ -9570,8 +9570,8 @@ export const historicalData = {
         fieldSize: 20,
         top3: [
           { gatePosition: 16, horseName: "Flying Angel (IRE)"                      , sp:   15.0,  jockey: "Jack Sherwood",  trainer: "Paul Nicholls" },
-          { gatePosition: 11, horseName: "Ibis Du Rheu (FR)"                 , sp:   15.0,  jockey: "Jack Sherwood",  trainer: "Paul Nicholls" },
-          { gatePosition: 16, horseName: "Flying Angel (IRE)"                , sp:    9.0,  jockey: "Ryan Hatch",  trainer: "Nigel Twiston-Davies" },
+          { gatePosition: 16, horseName: "Flying Angel (IRE)", sp: 9,  jockey: "Ryan Hatch",  trainer: "Nigel Twiston-Davies" },
+          { gatePosition: 21, horseName: "Sky Khan", sp: 51,  jockey: "Derek Fox",  trainer: "Lucinda Russell" },
         ],
         field: [
           { gatePosition:  1, horseName: "Jezki"                             , sp:    6.5,  finishPosition:  6,  jockey: "Mr J J Codd",  trainer: "Gordon Elliott" },
@@ -9602,7 +9602,7 @@ export const historicalData = {
         fieldSize: 22,
         top3: [
           { gatePosition: 21, horseName: "Solar Impulse"                     , sp:   29.0,  jockey: "Sam Twiston-Davies",  trainer: "Paul Nicholls" },
-          { gatePosition: 17, horseName: "Solar Impulse (FR)"                , sp:   29.0,  jockey: "Sam Twiston-Davies",  trainer: "Paul Nicholls" },
+          { gatePosition: 24, horseName: "Dandridge", sp: 9,  jockey: "Davy Russell",  trainer: "A L T Moore" },
           { gatePosition: 20, horseName: "Rock The World", sp: 5.5,  jockey: "Robbie Power",  trainer: "Mrs John Harrington" },
         ],
         field: [
@@ -10072,7 +10072,7 @@ export const historicalData = {
         fieldSize: 13,
         top3: [
           { gatePosition: 12, horseName: "Sizing John"                       , sp:    8.0,  jockey: "Robbie Power",  trainer: "Mrs John Harrington" },
-          { gatePosition: 12, horseName: "Sizing John"                       , sp:    8.0,  jockey: "Robbie Power",  trainer: "Mrs John Harrington" },
+          { gatePosition:  7, horseName: "Minella Rocco (IRE)", sp: 19,  jockey: "Noel Fehily",  trainer: "Jonjo O'Neill" },
           { gatePosition:  9, horseName: "Native River", sp: 4.5,  jockey: "B J Cooper",  trainer: "Gordon Elliott" },
         ],
         field: [
@@ -10552,7 +10552,7 @@ export const historicalData = {
         fieldSize: 17,
         top3: [
           { gatePosition: 10, horseName: "Kilbricken Storm (IRE)"                  , sp:   34.0,  jockey: "Harry Cobden",  trainer: "Colin Tizzard" },
-          { gatePosition: 10, horseName: "Kilbricken Storm (IRE)"            , sp:   34.0,  jockey: "Harry Cobden",  trainer: "Colin Tizzard" },
+          { gatePosition: 13, horseName: "Ok Corral (IRE)", sp: 17,  jockey: "Barry Geraghty",  trainer: "Nicky Henderson" },
           { gatePosition: 18, horseName: "Santini", sp: 3.8,  jockey: "Nico de Boinville",  trainer: "Nicky Henderson" },
         ],
         field: [
@@ -10581,7 +10581,7 @@ export const historicalData = {
         fieldSize: 14,
         top3: [
           { gatePosition: 11, horseName: "Native River (IRE)"                      , sp:    6.0,  jockey: "Richard Johnson",  trainer: "Colin Tizzard" },
-          { gatePosition: 11, horseName: "Native River (IRE)"                , sp:    6.0,  jockey: "Richard Johnson",  trainer: "Colin Tizzard" },
+          { gatePosition:  9, horseName: "Might Bite (IRE)", sp: 5,  jockey: "Nico de Boinville",  trainer: "Nicky Henderson" },
           { gatePosition:  2, horseName: "Anibale Fly (FR)", sp: 34,  jockey: "Barry Geraghty",  trainer: "A J Martin" },
         ],
         field: [
@@ -10670,7 +10670,7 @@ export const historicalData = {
         fieldSize: 22,
         top3: [
           { gatePosition:  1, horseName: "Blow By Blow (IRE)"                      , sp:   12.0,  jockey: "Donagh Meyler",  trainer: "Gordon Elliott" },
-          { gatePosition:  1, horseName: "Blow By Blow (IRE)"                , sp:   12.0,  jockey: "Donagh Meyler",  trainer: "Gordon Elliott" },
+          { gatePosition: 23, horseName: "Discorama (FR)", sp: 34,  jockey: "Dylan Robinson",  trainer: "Paul Nolan" },
           { gatePosition:  5, horseName: "Early Doors (FR)", sp: 10,  jockey: "J J Slevin",  trainer: "Joseph Patrick O'Brien" },
         ],
         field: [
@@ -13134,7 +13134,7 @@ export const historicalData = {
         fieldSize: 10,
         top3: [
           { gatePosition:  2, horseName: "A Plus Tard (FR)"                       , sp:    4.0,  jockey: "Rachael Blackmore",  trainer: "Henry De Bromhead" },
-          { gatePosition:  2, horseName: "A Plus Tard (FR)"                  , sp:    4.0,  jockey: "Rachael Blackmore",  trainer: "Henry De Bromhead" },
+          { gatePosition:  7, horseName: "Minella Indo (IRE)", sp: 8,  jockey: "Robbie Power",  trainer: "Henry De Bromhead" },
           { gatePosition:  8, horseName: "Protektorat (FR)", sp: 11,  jockey: "Harry Skelton",  trainer: "Dan Skelton" },
         ],
         field: [
@@ -13729,7 +13729,7 @@ export const historicalData = {
         top3: [
           { gatePosition: 17, horseName: "Stay Away Fay (IRE)"               , sp:   19.0,  jockey: "Harry Cobden",  trainer: "Paul Nicholls" },
           { gatePosition:  1, horseName: "Affordale Fury (IRE)"                    , sp:  151.0,  jockey: "Sam Ewing",  trainer: "Noel Meade" },
-          { gatePosition:  1, horseName: "Affordale Fury (IRE)"              , sp:  151.0,  jockey: "Sam Ewing",  trainer: "Noel Meade" },
+          { gatePosition:  9, horseName: "Letsbeclearaboutit (IRE)", sp: 17,  jockey: "Keith Donoghue",  trainer: "Gavin Cromwell" },
         ],
         field: [
           { gatePosition:  1, horseName: "Affordale Fury (IRE)"              , sp:  151.0,  finishPosition:  2,  jockey: "Sam Ewing",  trainer: "Noel Meade" },
@@ -15140,7 +15140,7 @@ export const historicalData = {
         fieldSize: 24,
         top3: [
           { gatePosition:  2, horseName: "Wodhooh (FR)"                           , sp:    5.5,  jockey: "Danny Gilligan",  trainer: "Gordon Elliott" },
-          { gatePosition:  2, horseName: "Wodhooh (FR)"                      , sp:    5.5,  jockey: "Danny Gilligan",  trainer: "Gordon Elliott" },
+          { gatePosition: 12, horseName: "Act Of Authority (FR)", sp: 29,  jockey: "Lewis Saunders",  trainer: "Olly Murphy" },
           { gatePosition: 17, horseName: "Raglan Road (IRE)", sp: 26,  jockey: "Gavin Brouder",  trainer: "Henry De Bromhead" },
         ],
         field: [
