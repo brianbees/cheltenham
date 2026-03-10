@@ -410,26 +410,22 @@ function YearOverviewTable() {
 }
 
 // ── Page ──────────────────────────────────────────────────────────────────────
-const RACE_NAMES = [
-  // Friday (Gold Cup Day) races
-  'Triumph Hurdle',
-  'County Hurdle',
-  'Albert Bartlett',
-  'Gold Cup',
-  'Foxhunter Chase',
-  'Hunters Chase',
-  'Mares Chase',
-  'Martin Pipe',
-  'Grand Annual',
-  // Thursday (St Patrick's Day) races — 2022 onwards
-  "Turners Novices' Chase",
-  'Pertemps Final',
-  'Ryanair Chase',
-  "Stayers' Hurdle",
-  'Plate Handicap Chase',
-  "Dawn Run Mares' Hurdle",
-  'Kim Muir',
-];
+// ── Race list: all distinct race names from historicalData ───────────────────
+const RACE_NAMES = (() => {
+  const seen = new Set();
+  for (const yearData of Object.values(historicalData)) {
+    if (!Array.isArray(yearData.races)) continue;
+    for (const race of yearData.races) seen.add(race.raceName);
+  }
+  // Sort: by category order first, then alphabetically within category
+  const catOrder = ['Grade 1 Championship', 'Novice', 'Handicap', 'Mares', 'Specialist', 'Historical', 'Other'];
+  return [...seen].sort((a, b) => {
+    const ca = RACE_CATEGORY[a] || 'Other';
+    const cb = RACE_CATEGORY[b] || 'Other';
+    const ci = catOrder.indexOf(ca) - catOrder.indexOf(cb);
+    return ci !== 0 ? ci : a.localeCompare(b);
+  });
+})();
 
 const CATEGORY_ORDER = [
   'Grade 1 Championship',
