@@ -133,6 +133,16 @@ function RaceCard({ race, data, onPaste, onSave, onClear }) {
     setShowHistory(false);
   };
 
+  const handleDeleteEntry = async (entry) => {
+    if (!window.confirm('Delete this saved entry?')) return;
+    try {
+      await fetch(`/api/delete-result?id=${encodeURIComponent(entry.file)}`, { method: 'DELETE' });
+      setHistoryEntries(prev => prev.filter(e => e.file !== entry.file));
+    } catch {
+      alert('Delete failed');
+    }
+  };
+
   const handleSave = async () => {
     if (!data) return;
     setSaving(true);
@@ -311,19 +321,27 @@ function RaceCard({ race, data, onPaste, onSave, onClear }) {
                   hour: '2-digit', minute: '2-digit', second: '2-digit',
                 });
                 return (
-                  <button
-                    key={entry.file}
-                    onClick={() => handleLoadEntry(entry)}
-                    className="w-full text-left px-3 py-1.5 rounded border border-sky-200
-                               bg-white hover:border-sky-400 hover:bg-sky-50 transition-colors
-                               flex items-center justify-between gap-3"
-                  >
-                    <span className="text-xs font-mono text-sky-700">{label}</span>
-                    <span className="text-xs text-gray-400">{entry.fieldSize} runners</span>
-                    {i === 0 && (
-                      <span className="text-xs bg-sky-100 text-sky-600 px-1.5 py-0.5 rounded">latest</span>
-                    )}
-                  </button>
+                  <div key={entry.file} className="flex items-center gap-1">
+                    <button
+                      onClick={() => handleLoadEntry(entry)}
+                      className="flex-1 text-left px-3 py-1.5 rounded border border-sky-200
+                                 bg-white hover:border-sky-400 hover:bg-sky-50 transition-colors
+                                 flex items-center justify-between gap-3"
+                    >
+                      <span className="text-xs font-mono text-sky-700">{label}</span>
+                      <span className="text-xs text-gray-400">{entry.fieldSize} runners</span>
+                      {i === 0 && (
+                        <span className="text-xs bg-sky-100 text-sky-600 px-1.5 py-0.5 rounded">latest</span>
+                      )}
+                    </button>
+                    <button
+                      onClick={() => handleDeleteEntry(entry)}
+                      title="Delete this entry"
+                      className="p-1.5 text-gray-300 hover:text-rose-500 transition-colors shrink-0"
+                    >
+                      ✕
+                    </button>
+                  </div>
                 );
               })}
             </div>
