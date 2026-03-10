@@ -103,10 +103,15 @@ function cleanHorseName(str) {
   return str.replace(COUNTRY_RE, '').trim();
 }
 
+// Lines starting with parentheses are non-runners — skip them
+// e.g. "(5 Mambonumberfive — NR)"
+const NR_LINE_RE = /^\(/;
+
 /**
  * splitColumns(line) → string[]
  * Splits a line into columns.
  * Tries tab-splitting first (most copy-pasted tables use tabs).
+ * Then tries Sporting Life em-dash format: "8 Old Park Star — 2/1"
  * Then tries " - " delimiter (e.g. "15 - Tiger Roll (IRE) - 10/1").
  * Falls back to splitting on 2+ consecutive spaces.
  */
@@ -114,6 +119,9 @@ function splitColumns(line) {
   if (line.includes('\t')) {
     return line.split('\t').map(s => s.trim()).filter(s => s.length > 0);
   }
+  // Sporting Life format: "8 Old Park Star — 2/1" or "8 Old Park Star — 2/1 sportinglife"
+  const emDash = line.match(/^(\d+)\s+(.+?)\s+\u2014\s+(\S+)/);
+  if (emDash) return [emDash[1], emDash[2], emDash[3]];
   // " - " delimited: gate - name - odds  (Racing Post / copy-paste format)
   if (/ - /.test(line)) {
     const parts = line.split(' - ').map(s => s.trim()).filter(s => s.length > 0);
@@ -140,12 +148,14 @@ function isSkipLine(line) {
 
 /**
  * isRaceNameLine(line) → boolean
- * A race name line does not start with a digit and isn't a recognised header or skip line.
- * Must be at least 4 chars and contain a word longer than 2 chars (avoids "+1" etc).
+ * A race name line does not start with a digit (unless it's a time like "13:20 — Race Name")
+ * and isn't a recognised header or skip line.
  */
 function isRaceNameLine(line) {
   const t = line.trim();
   if (!t || t.length < 4) return false;
+  // Time-prefixed race name: "13:20 — Supreme Novices' Hurdle"
+  if (/^\d{1,2}:\d{2}\s*\u2014/.test(t)) return true;
   if (/^\d/.test(t)) return false;
   if (isHeaderLine(t)) return false;
   if (isSkipLine(t)) return false;
@@ -231,18 +241,22 @@ export function parseRaceCardText(text) {
     if (!line) continue;
     if (isHeaderLine(line)) continue;
 
-    // ── Skip line (source attribution, image caption etc) ──
+    // ── Skip line (source attribution, image caption, non-runner etc) ──
     if (isSkipLine(line)) continue;
+    if (NR_LINE_RE.test(line)) continue;  // e.g. "(5 Mambonumberfive — NR)"
 
     // ── Race name line ──
     if (isRaceNameLine(line)) {
+      // Strip time prefix: "13:20 — Supreme Novices' Hurdle" → "Supreme Novices' Hurdle"
+      const timePrefixed = line.match(/^\d{1,2}:\d{2}\s*\u2014\s*(.+)/);
+      const raceName = timePrefixed ? timePrefixed[1].trim() : line;
       // Only start a new race block if the current one has runners,
       // or if it still has the default name (avoid orphan empty blocks)
       if (current.runners.length > 0) {
-        initRace(line);
+        initRace(raceName);
       } else {
         // Update the name of the still-empty current race
-        current.raceName = line;
+        current.raceName = raceName;
       }
       continue;
     }
