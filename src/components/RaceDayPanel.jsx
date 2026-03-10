@@ -230,14 +230,8 @@ function RaceCard({ race, data, onPaste, onSave, onClear }) {
     }
   };
 
-  // When the user long-press-pastes into the textarea: let the browser insert
-  // text natively (no preventDefault), then read from the DOM after the event.
-  const handleTextareaPaste = () => {
-    setTimeout(() => {
-      const val = textareaRef.current?.value ?? '';
-      if (val.trim()) handleParse(val);
-    }, 0);
-  };
+  // No onPaste handler needed — textarea is uncontrolled, browser inserts text
+  // naturally. User sees the text and taps "Parse & Run" to submit.
 
   const combo        = data?.combo        ?? null;
   const comboHenery  = data?.comboHenery  ?? null;
@@ -350,7 +344,6 @@ function RaceCard({ race, data, onPaste, onSave, onClear }) {
           <p className="text-xs text-gray-400 text-center">— or type / paste manually below —</p>
           <textarea
             ref={textareaRef}
-            onPaste={handleTextareaPaste}
             placeholder={'Paste race card text here…\n\nFormat: gate  horse name  odds\ne.g.\n1  Big Buck\'s  5/1\n2  Kauto Star  2/1'}
             className="w-full h-36 bg-white border border-gray-300 rounded px-3 py-2
                        text-sm text-gray-800 font-mono focus:outline-none focus:border-emerald-500
