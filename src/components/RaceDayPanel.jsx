@@ -538,27 +538,36 @@ export default function RaceDayPanel() {
     if (!src.trim()) return;
     const { races: parsed } = parseRaceCardText(src);
     if (!parsed?.length) { setPasteAllMsg({ error: 'No races found — check the text.' }); return; }
-    // Validate consistency against currently loaded data before updating state
-    const allWarnings = [];
+    // Pre-compute all matches and results synchronously BEFORE calling setRaceData
+    const matchedRaces = [];
     for (const pr of parsed) {
       if (!pr.runners?.length) continue;
       const schedRace = matchScheduleRace(pr.raceName);
       if (!schedRace) continue;
+      const results = computeRaceResults(pr.runners);
+      if (!results) continue;
+      matchedRaces.push({ pr, schedRace, results });
+    }
+
+    // Validate consistency against currently loaded data
+    const allWarnings = [];
+    for (const { pr, schedRace } of matchedRaces) {
       const existing = raceData[schedRace.name];
       if (existing?.runners) {
         const issues = validateRunners(existing.runners, pr.runners);
         if (issues.length) allWarnings.push(...issues.map(i => `${schedRace.name}: ${i}`));
       }
     }
-    let matched = 0;
+
+    const matched = matchedRaces.length;
+    if (matched === 0) {
+      setPasteAllMsg({ error: 'No races matched the schedule — check race names.' });
+      return;
+    }
+
     setRaceData(prev => {
       const next = { ...prev };
-      for (const pr of parsed) {
-        if (!pr.runners?.length) continue;
-        const schedRace = matchScheduleRace(pr.raceName);
-        if (!schedRace) continue;
-        const results = computeRaceResults(pr.runners);
-        if (!results) continue;
+      for (const { pr, schedRace, results } of matchedRaces) {
         const existing = next[schedRace.name];
         const originalOdds = existing?.originalOdds ??
           Object.fromEntries(pr.runners.map(r => [r.gatePosition, r.decimalOdds]));
@@ -567,7 +576,6 @@ export default function RaceDayPanel() {
           enriched: results.enriched, ranked: results.ranked,
           savedAt: existing?.savedAt ?? null, originalOdds,
         };
-        matched++;
       }
       return next;
     });
