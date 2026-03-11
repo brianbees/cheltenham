@@ -732,10 +732,25 @@ export default function RaceDayPanel() {
           enriched:     results.enriched,
           ranked:       results.ranked,
           savedAt:      entry.timestamp ? new Date(entry.timestamp) : null,
+          // Preserve existing originalOdds baseline so arrows survive re-restore.
+          // On first restore, set baseline to these odds so subsequent restores show movement.
+          _newRunners: runners,
         };
         count++;
       }
-      setRaceData(prev => ({ ...prev, ...updates }));
+      setRaceData(prev => {
+        const next = { ...prev };
+        for (const [name, upd] of Object.entries(updates)) {
+          const { _newRunners, ...rest } = upd;
+          const existingOriginal = prev[name]?.originalOdds;
+          next[name] = {
+            ...rest,
+            originalOdds: existingOriginal ??
+              Object.fromEntries(_newRunners.map(r => [r.gatePosition, r.decimalOdds])),
+          };
+        }
+        return next;
+      });
       setRestoreMsg(count > 0 ? `Restored ${count} race${count !== 1 ? 's' : ''}` : 'No saved races found');
     } catch {
       setRestoreMsg('Restore failed — try restarting the dev server');
