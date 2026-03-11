@@ -15977,10 +15977,10 @@ export function getRuntimeResults() {
  * spToPoints(sp)
  * Converts decimal SP to competition points.
  * A 10/1 shot has decimal 11.0 → scores 10 points (fractional equivalent).
- * Formula: points = decimal - 1
+ * Formula: points = decimal SP
  */
 export function spToPoints(sp) {
-  return sp - 1;
+  return sp;
 }
 
 /**

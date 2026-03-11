@@ -57,8 +57,8 @@ function getRaceClass(raceName) {
   const rows = getRaceHistory(raceName);
   if (!rows || rows.length === 0) return null;
   const avg = rows.reduce((s, r) => s + r.spTotal, 0) / rows.length;
-  if (avg > 40) return { label: 'Swing Race',     badge: 'bg-rose-950 text-rose-300 border border-rose-800' };
-  if (avg > 20) return { label: 'Judgement Race', badge: 'bg-amber-950 text-amber-300 border border-amber-800' };
+  if (avg > 43) return { label: 'Swing Race',     badge: 'bg-rose-950 text-rose-300 border border-rose-800' };
+  if (avg > 23) return { label: 'Judgement Race', badge: 'bg-amber-950 text-amber-300 border border-amber-800' };
   return             { label: 'Banker Race',      badge: 'bg-emerald-950 text-emerald-300 border border-emerald-800' };
 }
 

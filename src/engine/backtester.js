@@ -258,8 +258,8 @@ export function analyseRace(raceName) {
 
   // Classification (matches RaceHistoryPanel thresholds)
   const classification =
-    avgSpTotal > 40 ? 'Swing' :
-    avgSpTotal > 20 ? 'Judgement' :
+    avgSpTotal > 43 ? 'Swing' :
+    avgSpTotal > 23 ? 'Judgement' :
                       'Banker';
 
   return {

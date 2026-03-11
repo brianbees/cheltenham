@@ -59,8 +59,8 @@ function allCombinations(arr) {
 function evForCombo(enrichedRunners, idxA, idxB, idxC) {
   const picks = [idxA, idxB, idxC].map(i => enrichedRunners[i]);
 
-  // Expected SP points: for each pick, probability it places × its SP points value
-  const evSp = picks.reduce((sum, r) => sum + r.pPlace * (r.decimalOdds - 1), 0);
+  // Expected SP points: for each pick, probability it places × its decimal odds
+  const evSp = picks.reduce((sum, r) => sum + r.pPlace * r.decimalOdds, 0);
 
   // Expected win bonus: probability each pick wins × the 10-pt win bonus
   const evWin = picks.reduce((sum, r) => sum + r.pWin * 10, 0);

@@ -18,8 +18,8 @@ const RACE_NAMES = ALL_RACE_NAMES;
 
 // ── Classification thresholds (per spec) ─────────────────────────────────────
 function classifyRace(avgSpTotal) {
-  if (avgSpTotal > 40) return { label: 'Swing Race',      colour: 'text-rose-400',   badge: 'bg-rose-950 text-rose-300 border border-rose-800' };
-  if (avgSpTotal > 20) return { label: 'Judgement Race',  colour: 'text-amber-400',  badge: 'bg-amber-950 text-amber-300 border border-amber-800' };
+  if (avgSpTotal > 43) return { label: 'Swing Race',      colour: 'text-rose-400',   badge: 'bg-rose-950 text-rose-300 border border-rose-800' };
+  if (avgSpTotal > 23) return { label: 'Judgement Race',  colour: 'text-amber-400',  badge: 'bg-amber-950 text-amber-300 border border-amber-800' };
   return                       { label: 'Banker Race',    colour: 'text-emerald-400', badge: 'bg-emerald-950 text-emerald-300 border border-emerald-800' };
 }
 
@@ -209,13 +209,13 @@ export default function RaceHistoryPanel() {
         {/* Classification key */}
         <div className="flex justify-center gap-4 mt-3 flex-wrap">
           <span className="text-xs px-2.5 py-1 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-800">
-            Banker Race — avg SP ≤ 20
+            Banker Race — avg SP ≤ 23
           </span>
           <span className="text-xs px-2.5 py-1 rounded-full bg-amber-950 text-amber-300 border border-amber-800">
-            Judgement Race — avg SP 21–40
+            Judgement Race — avg SP 24–43
           </span>
           <span className="text-xs px-2.5 py-1 rounded-full bg-rose-950 text-rose-300 border border-rose-800">
-            Swing Race — avg SP &gt; 40
+            Swing Race — avg SP &gt; 43
           </span>
         </div>
       </div>

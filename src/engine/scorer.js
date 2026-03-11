@@ -45,8 +45,8 @@ export function scoreRace(picks, result) {
   // Which result entries correspond to picks the player made
   const placedPicks = result.filter(r => pickSet.has(r.gatePosition));
 
-  // SP points: sum (decimal − 1) for each placed pick
-  const spPoints = placedPicks.reduce((sum, r) => sum + (r.sp - 1), 0);
+  // SP points: sum decimal SP for each placed pick
+  const spPoints = placedPicks.reduce((sum, r) => sum + r.sp, 0);
 
   // Win bonus: did any of the player's picks win (i.e. finish 1st)?
   const winner    = result[0]; // result is ordered 1st, 2nd, 3rd

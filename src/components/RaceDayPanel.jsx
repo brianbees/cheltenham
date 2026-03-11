@@ -47,8 +47,8 @@ function getRaceClass(raceName, dataName) {
   if (!rows || rows.length === 0) return null;
   const avg = rows.reduce((s, r) => s + r.spTotal, 0) / rows.length;
   const count = rows.length;
-  if (avg > 40) return { label: 'Swing',     count, color: 'bg-rose-100 text-rose-700 border border-rose-300' };
-  if (avg > 20) return { label: 'Judgement', count, color: 'bg-amber-100 text-amber-700 border border-amber-300' };
+  if (avg > 43) return { label: 'Swing',     count, color: 'bg-rose-100 text-rose-700 border border-rose-300' };
+  if (avg > 23) return { label: 'Judgement', count, color: 'bg-amber-100 text-amber-700 border border-amber-300' };
   return             { label: 'Banker',     count, color: 'bg-emerald-100 text-emerald-700 border border-emerald-300' };
 }
 
@@ -485,7 +485,9 @@ const DAY_SEEDS = {
 };
 
 export default function RaceDayPanel() {
-  const [activeDay, setActiveDay] = useState(detectFestivalDay);
+  const [activeDay, setActiveDay] = useState(
+    () => localStorage.getItem('activeDay') || detectFestivalDay()
+  );
 
   // Initialise from localStorage; merge in today's seed for any races not yet loaded
   const [raceData, setRaceData] = useState(() => {
@@ -820,7 +822,7 @@ export default function RaceDayPanel() {
         {Object.keys(FESTIVAL_DAYS).map(day => (
           <button
             key={day}
-            onClick={() => setActiveDay(day)}
+            onClick={() => { setActiveDay(day); localStorage.setItem('activeDay', day); }}
             className={`px-5 py-2 rounded-lg text-sm font-semibold transition-colors ${
               activeDay === day
                 ? 'bg-emerald-600 text-white shadow'

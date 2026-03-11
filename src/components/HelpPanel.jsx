@@ -381,17 +381,17 @@ export default function HelpPanel() {
               <strong className="text-emerald-400">+25 points</strong> when all 3 of your gates place
             </KeyRow>
             <KeyRow label={<span className="text-sm font-medium text-gray-200">SP points formula</span>}>
-              <InlineCode>decimal SP − 1</InlineCode> per placed horse
-              (e.g. 33/1 → 33 pts, Evs → 1 pt)
+              <InlineCode>decimal SP</InlineCode> per placed horse
+              (e.g. 33/1 → 34 pts, Evs → 2 pts)
             </KeyRow>
             <KeyRow label={<span className="text-sm font-medium text-gray-200">Banker threshold</span>}>
-              Average SP total <strong className="text-white">≤ 20</strong>
+              Average SP total <strong className="text-white">≤ 23</strong>
             </KeyRow>
             <KeyRow label={<span className="text-sm font-medium text-gray-200">Judgement threshold</span>}>
-              Average SP total <strong className="text-white">21 – 40</strong>
+              Average SP total <strong className="text-white">24 – 43</strong>
             </KeyRow>
             <KeyRow label={<span className="text-sm font-medium text-gray-200">Swing threshold</span>}>
-              Average SP total <strong className="text-white">&gt; 40</strong>
+              Average SP total <strong className="text-white">&gt; 43</strong>
             </KeyRow>
             <KeyRow label={<span className="text-sm font-medium text-gray-200">Short SP</span>}>
               ≤ 5/1 (decimal ≤ 6.0)
