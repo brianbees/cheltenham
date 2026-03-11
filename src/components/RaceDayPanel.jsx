@@ -13,6 +13,7 @@ import { rankCombinations }  from '../engine/optimiser';
 import { getRaceHistory }    from '../data/historicalData';
 import { FESTIVAL_DAYS }     from '../data/schedule';
 import SEED_TUESDAY         from '../data/seed-tuesday.json';
+import SEED_WEDNESDAY        from '../data/seed-wednesday.json';
 
 // ── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -465,17 +466,40 @@ function RaceCard({ race, data, onPaste, onSave, onClear }) {
 
 const LS_KEY = 'raceDayData_v1';
 
-export default function RaceDayPanel() {
-  const [activeDay, setActiveDay] = useState('Tuesday');
+// Detect today's festival day (Cheltenham 2026: Tue 10, Wed 11, Thu 12, Fri 13 March)
+function detectFestivalDay() {
+  const d = new Date();
+  if (d.getFullYear() === 2026 && d.getMonth() === 2) {
+    if (d.getDate() === 10) return 'Tuesday';
+    if (d.getDate() === 11) return 'Wednesday';
+    if (d.getDate() === 12) return 'Thursday';
+    if (d.getDate() === 13) return 'Friday';
+  }
+  return 'Tuesday';
+}
 
-  // Initialise from localStorage, or seed Tuesday's card on first load
+// Seeds per day — add more as they become available
+const DAY_SEEDS = {
+  Tuesday:   SEED_TUESDAY,
+  Wednesday: SEED_WEDNESDAY,
+};
+
+export default function RaceDayPanel() {
+  const [activeDay, setActiveDay] = useState(detectFestivalDay);
+
+  // Initialise from localStorage; merge in today's seed for any races not yet loaded
   const [raceData, setRaceData] = useState(() => {
     try {
       const stored = localStorage.getItem(LS_KEY);
-      const source = stored ? JSON.parse(stored) : SEED_TUESDAY;
-      const parsed = source;
+      const base   = stored ? JSON.parse(stored) : {};
+      // Merge seeds for every available day (never overwrite existing data)
+      for (const [, seed] of Object.entries(DAY_SEEDS)) {
+        for (const [name, entry] of Object.entries(seed)) {
+          if (!base[name] || !base[name].runners) base[name] = entry;
+        }
+      }
       const restored = {};
-      for (const [name, entry] of Object.entries(parsed)) {
+      for (const [name, entry] of Object.entries(base)) {
         if (!entry.runners) continue;
         const results = computeRaceResults(entry.runners);
         if (results) {
