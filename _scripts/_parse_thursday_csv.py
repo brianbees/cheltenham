@@ -9,7 +9,7 @@ William Hill format:
 
 Usage:
   python _scripts/_parse_thursday_csv.py <path-to-csv>
-  e.g. python _scripts/_parse_thursday_csv.py "chelt wednsday races and odds - will hill odds thursday .csv"
+  e.g. python _scripts/_parse_thursday_csv.py "_data/chelt wednsday races and odds - will hill odds thursday .csv"
 """
 import csv, re, json, itertools, sys, urllib.request
 from datetime import datetime, timezone
@@ -126,7 +126,10 @@ def rank_combos(enriched):
 if __name__ == '__main__':
     csv_path = sys.argv[1] if len(sys.argv) > 1 else input("CSV path: ").strip()
     blocks = parse_blocks(csv_path)
-    print(f"Found {len(blocks)} race blocks")
+    # Drop leading empty blocks (all-races format has a preamble block before first No. header)
+    race_blocks = [b for b in blocks if parse_runners(b)]
+    print(f"Found {len(blocks)} blocks, {len(race_blocks)} with runners")
+    blocks = race_blocks
     ts = datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z')
     for idx, (sched_name, data_name, race_time) in enumerate(SCHEDULE):
         if idx >= len(blocks):

@@ -82,9 +82,70 @@ src/
 
 ---
 
+## Data Pipeline — Loading Race Cards Each Day
+
+Each festival day, download the William Hill racecard as a CSV export and run the appropriate parse script. This computes Harville probabilities, ranks all gate combinations by EV, and POSTs the results to the Supabase-backed API. Then click **↩ Restore saved** in the app.
+
+### CSV Format
+
+William Hill exports come in two shapes — both are handled automatically:
+
+| Format | Description | Example file |
+|---|---|---|
+| **Single-race** | One race per file, `No.` header at top | `will hill odds thursday .csv` |
+| **All-races** | All 7 races in one file, preamble block before first `No.` header | `Sheet8.csv`, `willhill thursday all races.csv` |
+
+The parse scripts skip any leading empty blocks, so both formats work without modification.
+
+### Parse Scripts
+
+| Script | Day | Source data | Usage |
+|---|---|---|---|
+| `_parse_thursday_csv.py` | **Thursday (Day 3)** | William Hill CSV (single or all-races) | `python _scripts/_parse_thursday_csv.py "_data/<filename>.csv"` |
+| `_parse_wednesday_csv.py` | **Wednesday (Day 2)** | William Hill CSV → converts to racecard text | `python _scripts/_parse_wednesday_csv.py` (path hardcoded) |
+| `_parse_williamhill_csv.py` | **Tuesday (Day 1)** | William Hill all-races CSV | `python _scripts/_parse_williamhill_csv.py "_data/<filename>.csv"` |
+| `_save_wednesday_races.py` | Wednesday | Reads `src/data/seed-wednesday.json` seed | `python _scripts/_save_wednesday_races.py` |
+| `_gen_wednesday_seed.py` | Wednesday | Converts parsed racecard text → seed JSON | `python _scripts/_gen_wednesday_seed.py` |
+
+### Day-by-Day Workflow
+
+**Thursday (today's standard flow):**
+```bash
+# Drop the latest WH CSV export into _data/, then:
+python _scripts/_parse_thursday_csv.py "_data/<filename>.csv"
+# Then click ↩ Restore saved in the app
+```
+
+**Wednesday:**
+```bash
+python _scripts/_parse_wednesday_csv.py       # → _scripts/_wednesday_racecard.txt
+python _scripts/_gen_wednesday_seed.py        # → src/data/seed-wednesday.json
+python _scripts/_save_wednesday_races.py      # → POSTs to API
+```
+
+**Tuesday / any all-races WH file:**
+```bash
+python _scripts/_parse_williamhill_csv.py "_data/<filename>.csv"
+```
+
+### CSV Column Reference (William Hill format)
+
+| Col | Content |
+|---|---|
+| 0 | Gate number |
+| 2 | Horse name (+ rating in parens, stripped) |
+| 5 | Previous odds (newline-separated, most-recent first — oldest used as movement baseline) |
+| 6 | Current Win/EW odds (fractional) |
+
+### When you paste a new CSV
+
+Tell Copilot: *"new CSV in `_data/` — Thursday format"* (or Wednesday/Tuesday). It will run the right script and re-save all races. The `originalDecimalOdds` field is extracted from column 5 so odds movement arrows (▼/▲) show immediately on Restore.
+
+---
+
 ## Build Phases
 
 - [x] **Phase 1** — Historical data + UI (HistoricalDisplay, RaceHistoryPanel)
-- [ ] **Phase 2** — Maths engine (`probability.js`, `optimiser.js`, `scorer.js`)
-- [ ] **Phase 3** — Live race input + optimal pick recommender
+- [x] **Phase 2** — Maths engine (Harville, Henery, optimiser, scorer)
+- [x] **Phase 3** — Live race input + optimal pick recommender (RaceDayPanel)
 - [ ] **Phase 4** — Live leaderboard / scoring during Gold Cup Day

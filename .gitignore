@@ -30,9 +30,7 @@ _archive/
 .claude/
 
 # Raw odds/racecard CSVs and spreadsheets (local data files)
-*.csv
-*.tsv
-*.ods
+_data/
 
 # Thursday/Friday seed data (generated locally, not deployed)
 src/data/seed-thursday.json
