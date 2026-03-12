@@ -11,7 +11,7 @@ Structure:
 import csv
 import re
 
-CSV_PATH = r"c:\Users\Brian\Documents\Cheltenham_vscode\chelt wednsday races and odds - Sheet2.csv"
+CSV_PATH = r"c:\Users\Brian\Documents\Cheltenham_vscode\chelt wednsday races and odds - Sheet5.csv"
 OUT_PATH = r"c:\Users\Brian\Documents\Cheltenham_vscode\_scripts\_wednesday_racecard.txt"
 
 GATE_RE  = re.compile(r'^(\d+)\(\d+\)$')    # e.g. "12(0)"

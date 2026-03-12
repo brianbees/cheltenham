@@ -63,7 +63,7 @@ def rank_combinations(enriched):
     combos = []
     for ia, ib, ic in itertools.combinations(range(n), 3):
         ra, rb, rc = enriched[ia], enriched[ib], enriched[ic]
-        evSp      = sum(r['pPlace'] * (r['decimalOdds'] - 1) for r in [ra, rb, rc])
+        evSp      = sum(r['pPlace'] * r['decimalOdds'] for r in [ra, rb, rc])
         evWin     = sum(r['pWin'] * 10                       for r in [ra, rb, rc])
         pJackpot  = p_all_three_place(enriched, ia, ib, ic)
         evJackpot = pJackpot * 25

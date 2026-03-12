@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s http://localhost:5173)",
+      "Bash(python _scripts/_gen_wednesday_seed.py)",
+      "Bash(npm run:*)"
+    ]
+  }
+}

@@ -9,7 +9,7 @@
       {
         "gatePosition": 17,
         "horseName": "Sober",
-        "decimalOdds": 8.0
+        "decimalOdds": 8.5
       },
       {
         "gatePosition": 9,
@@ -57,13 +57,13 @@
         "decimalOdds": 34.0
       },
       {
-        "gatePosition": 22,
-        "horseName": "Zeus Power",
-        "decimalOdds": 41.0
-      },
-      {
         "gatePosition": 11,
         "horseName": "Laurets d'Estruval",
+        "decimalOdds": 34.0
+      },
+      {
+        "gatePosition": 22,
+        "horseName": "Zeus Power",
         "decimalOdds": 41.0
       },
       {
@@ -120,7 +120,7 @@
       {
         "gatePosition": 2,
         "horseName": "Final Demand",
-        "decimalOdds": 5.5
+        "decimalOdds": 6.0
       },
       {
         "gatePosition": 4,
@@ -143,14 +143,14 @@
         "decimalOdds": 13.0
       },
       {
-        "gatePosition": 8,
-        "horseName": "Oscars Brother",
-        "decimalOdds": 15.0
-      },
-      {
         "gatePosition": 5,
         "horseName": "Kitzbuhel",
         "decimalOdds": 13.0
+      },
+      {
+        "gatePosition": 8,
+        "horseName": "Oscars Brother",
+        "decimalOdds": 15.0
       },
       {
         "gatePosition": 12,
@@ -158,13 +158,13 @@
         "decimalOdds": 26.0
       },
       {
-        "gatePosition": 1,
-        "horseName": "Argento Boy",
+        "gatePosition": 13,
+        "horseName": "Thomas Mor",
         "decimalOdds": 51.0
       },
       {
-        "gatePosition": 13,
-        "horseName": "Thomas Mor",
+        "gatePosition": 1,
+        "horseName": "Argento Boy",
         "decimalOdds": 51.0
       },
       {
@@ -196,7 +196,7 @@
       {
         "gatePosition": 10,
         "horseName": "Jingko Blue",
-        "decimalOdds": 7.0
+        "decimalOdds": 7.5
       },
       {
         "gatePosition": 14,
@@ -239,14 +239,19 @@
         "decimalOdds": 23.0
       },
       {
+        "gatePosition": 12,
+        "horseName": "Guard Duty",
+        "decimalOdds": 26.0
+      },
+      {
         "gatePosition": 4,
         "horseName": "Lucky Place",
         "decimalOdds": 26.0
       },
       {
-        "gatePosition": 12,
-        "horseName": "Guard Duty",
-        "decimalOdds": 26.0
+        "gatePosition": 20,
+        "horseName": "Beckett Rock",
+        "decimalOdds": 29.0
       },
       {
         "gatePosition": 2,
@@ -254,9 +259,9 @@
         "decimalOdds": 34.0
       },
       {
-        "gatePosition": 20,
-        "horseName": "Beckett Rock",
-        "decimalOdds": 34.0
+        "gatePosition": 5,
+        "horseName": "Buddy One",
+        "decimalOdds": 41.0
       },
       {
         "gatePosition": 13,
@@ -264,13 +269,13 @@
         "decimalOdds": 41.0
       },
       {
-        "gatePosition": 19,
-        "horseName": "Franciscan Rock",
+        "gatePosition": 24,
+        "horseName": "HMS Seahorse",
         "decimalOdds": 51.0
       },
       {
-        "gatePosition": 5,
-        "horseName": "Buddy One",
+        "gatePosition": 19,
+        "horseName": "Franciscan Rock",
         "decimalOdds": 51.0
       },
       {
@@ -282,11 +287,6 @@
         "gatePosition": 16,
         "horseName": "Give It To Me Oj",
         "decimalOdds": 51.0
-      },
-      {
-        "gatePosition": 24,
-        "horseName": "HMS Seahorse",
-        "decimalOdds": 67.0
       },
       {
         "gatePosition": 7,
@@ -322,12 +322,12 @@
       {
         "gatePosition": 1,
         "horseName": "Stumptown",
-        "decimalOdds": 5.0
+        "decimalOdds": 5.5
       },
       {
         "gatePosition": 9,
         "horseName": "Desertmore House",
-        "decimalOdds": 7.5
+        "decimalOdds": 8.0
       },
       {
         "gatePosition": 3,
@@ -337,7 +337,7 @@
       {
         "gatePosition": 4,
         "horseName": "Vanillier",
-        "decimalOdds": 10.0
+        "decimalOdds": 9.0
       },
       {
         "gatePosition": 6,
@@ -355,29 +355,29 @@
         "decimalOdds": 17.0
       },
       {
-        "gatePosition": 5,
-        "horseName": "Conflated",
-        "decimalOdds": 41.0
-      },
-      {
         "gatePosition": 12,
         "horseName": "Latenightpass",
         "decimalOdds": 34.0
       },
       {
+        "gatePosition": 5,
+        "horseName": "Conflated",
+        "decimalOdds": 34.0
+      },
+      {
         "gatePosition": 14,
         "horseName": "Famous Bridge",
+        "decimalOdds": 67.0
+      },
+      {
+        "gatePosition": 8,
+        "horseName": "Velvet Elvis",
         "decimalOdds": 81.0
       },
       {
         "gatePosition": 10,
         "horseName": "Horantzau d'Airy",
         "decimalOdds": 81.0
-      },
-      {
-        "gatePosition": 8,
-        "horseName": "Velvet Elvis",
-        "decimalOdds": 101.0
       },
       {
         "gatePosition": 11,
@@ -534,7 +534,7 @@
       {
         "gatePosition": 1,
         "horseName": "Touch Me Not",
-        "decimalOdds": 51.0
+        "decimalOdds": 41.0
       },
       {
         "gatePosition": 13,
@@ -583,9 +583,9 @@
         "decimalOdds": 15.0
       },
       {
-        "gatePosition": 7,
-        "horseName": "It's Only A Game",
-        "decimalOdds": 17.0
+        "gatePosition": 3,
+        "horseName": "Broadway Ted",
+        "decimalOdds": 15.0
       },
       {
         "gatePosition": 22,
@@ -593,9 +593,9 @@
         "decimalOdds": 17.0
       },
       {
-        "gatePosition": 3,
-        "horseName": "Broadway Ted",
-        "decimalOdds": 15.0
+        "gatePosition": 7,
+        "horseName": "It's Only A Game",
+        "decimalOdds": 19.0
       },
       {
         "gatePosition": 19,
@@ -623,11 +623,6 @@
         "decimalOdds": 41.0
       },
       {
-        "gatePosition": 15,
-        "horseName": "The Wager",
-        "decimalOdds": 51.0
-      },
-      {
         "gatePosition": 6,
         "horseName": "Diamant Dore",
         "decimalOdds": 51.0
@@ -636,6 +631,11 @@
         "gatePosition": 17,
         "horseName": "Wilde's Legacy",
         "decimalOdds": 51.0
+      },
+      {
+        "gatePosition": 15,
+        "horseName": "The Wager",
+        "decimalOdds": 67.0
       },
       {
         "gatePosition": 14,

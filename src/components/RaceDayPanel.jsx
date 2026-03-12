@@ -14,6 +14,7 @@ import { getRaceHistory }    from '../data/historicalData';
 import { FESTIVAL_DAYS }     from '../data/schedule';
 import SEED_TUESDAY         from '../data/seed-tuesday.json';
 import SEED_WEDNESDAY        from '../data/seed-wednesday.json';
+import SEED_THURSDAY         from '../data/seed-thursday.json';
 
 // ── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -69,7 +70,11 @@ function computeRaceResults(runners) {
 function fmtOdds(decimal) {
   if (!decimal) return '';
   const frac = decimal - 1;
-  if (Number.isInteger(frac) && frac > 0) return `${frac}/1`;
+  // Try to express as a clean fraction with denominator up to 20
+  for (let d = 1; d <= 20; d++) {
+    const n = Math.round(frac * d);
+    if (Math.abs(n / d - frac) < 0.001 && n > 0) return `${n}/${d}`;
+  }
   return decimal.toFixed(2);
 }
 
@@ -482,6 +487,7 @@ function detectFestivalDay() {
 const DAY_SEEDS = {
   Tuesday:   SEED_TUESDAY,
   Wednesday: SEED_WEDNESDAY,
+  Thursday:  SEED_THURSDAY,
 };
 
 export default function RaceDayPanel() {
@@ -748,7 +754,7 @@ export default function RaceDayPanel() {
           next[name] = {
             ...rest,
             originalOdds: existingOriginal ??
-              Object.fromEntries(_newRunners.map(r => [r.gatePosition, r.decimalOdds])),
+              Object.fromEntries(_newRunners.map(r => [r.gatePosition, r.originalDecimalOdds ?? r.decimalOdds])),
           };
         }
         return next;
