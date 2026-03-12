@@ -19,10 +19,12 @@ SCHEDULE = [
 ]
 
 TIME_RE   = re.compile(r'^(\d{1,2}:\d{2})\s*[—\-]\s*(.+)')
-RUNNER_RE = re.compile(r'^(\d+)\s{2,}(.+?)\s{2,}(\d+/\d+)$')
+RUNNER_RE = re.compile(r'^(\d+)\s{2,}(.+?)\s{2,}(\d+/\d+|EVS|EVENS)$', re.IGNORECASE)
 
 def frac_to_decimal(frac_str):
-    """'9/4' → 3.25"""
+    """'9/4' → 3.25, 'EVS' → 2.0"""
+    frac_str = frac_str.strip().upper()
+    if frac_str in ('EVS', 'EVENS'): return 2.0
     n, d = frac_str.split('/')
     return round(int(n) / int(d) + 1, 4)
 
