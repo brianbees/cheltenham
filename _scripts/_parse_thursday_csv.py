@@ -27,7 +27,9 @@ SCHEDULE = [
 ]
 
 def frac_to_decimal(frac):
-    frac = frac.strip().replace('-', '/')
+    frac = frac.strip().upper()
+    if frac in ('EVS', 'EVENS'): return 2.0
+    frac = frac.replace('-', '/')
     n, d = frac.split('/')
     return int(n) / int(d) + 1
 
@@ -64,11 +66,11 @@ def parse_runners(rows):
             continue
         horse = clean_horse(row[2]) if len(row) > 2 else ''
         odds_raw = row[6].strip() if len(row) > 6 else ''
-        if not horse or not odds_raw or '/' not in odds_raw:
-            continue
+        if not horse or not odds_raw: continue
+        if '/' not in odds_raw and odds_raw.upper() not in ('EVS', 'EVENS'): continue
         # Previous Odds col (col5): newline-separated, most-recent first — take oldest as baseline
         prev_raw = row[5].strip() if len(row) > 5 else ''
-        prev_lines = [l.strip() for l in prev_raw.split('\n') if '/' in l.strip()]
+        prev_lines = [l.strip() for l in prev_raw.split('\n') if ('/' in l.strip() or l.strip().upper() in ('EVS','EVENS'))]
         orig_raw = prev_lines[-1] if prev_lines else None
         try:
             dec = frac_to_decimal(odds_raw)

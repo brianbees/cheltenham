@@ -27,7 +27,9 @@ SCHEDULE = [
 ]
 
 def frac_to_decimal(frac):
-    frac = frac.strip().replace('-', '/')
+    frac = frac.strip().upper()
+    if frac in ('EVS', 'EVENS'): return 2.0
+    frac = frac.replace('-', '/')
     n, d = frac.split('/')
     return int(n) / int(d) + 1
 
@@ -64,8 +66,8 @@ def parse_runners(rows):
             continue
         horse = clean_horse(row[2]) if len(row) > 2 else ''
         odds_raw = row[6].strip() if len(row) > 6 else ''
-        if not horse or not odds_raw or '/' not in odds_raw:
-            continue
+        if not horse or not odds_raw: continue
+        if '/' not in odds_raw and odds_raw.upper() not in ('EVS', 'EVENS'): continue
         try:
             runners.append({'gatePosition': int(gate_raw), 'horseName': horse,
                             'decimalOdds': frac_to_decimal(odds_raw)})
