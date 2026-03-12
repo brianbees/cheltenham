@@ -32,5 +32,4 @@ _archive/
 # Raw odds/racecard CSVs and spreadsheets (local data files)
 _data/
 
-# Thursday/Friday seed data (generated locally, not deployed)
-src/data/seed-thursday.json
+
