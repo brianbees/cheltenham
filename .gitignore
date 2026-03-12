@@ -25,3 +25,14 @@ export_data.py
 
 # Archive of throwaway scripts and data files
 _archive/
+
+# Claude Code local settings
+.claude/
+
+# Raw odds/racecard CSVs and spreadsheets (local data files)
+*.csv
+*.tsv
+*.ods
+
+# Thursday/Friday seed data (generated locally, not deployed)
+src/data/seed-thursday.json
