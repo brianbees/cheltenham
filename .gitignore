@@ -32,4 +32,11 @@ _archive/
 # Raw odds/racecard CSVs and spreadsheets (local data files)
 _data/
 
+# Any CSV / spreadsheet dropped directly into the root
+*.csv
+*.tsv
+*.ods
+*.xlsx
+*.xls
+
 
