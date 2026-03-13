@@ -18,7 +18,8 @@ import HelpPanel          from './components/HelpPanel';
 import ResultsTablePanel  from './components/ResultsTablePanel';
 import RaceDayPanel       from './components/RaceDayPanel';
 import AddResultsPanel      from './components/AddResultsPanel';
-import FridayRacecardPanel  from './components/FridayRacecardPanel';
+import FridayRacecardPanel       from './components/FridayRacecardPanel';
+import FridaySPCompositionPanel  from './components/FridaySPCompositionPanel';
 import { loadRuntimeResults } from './data/historicalData';
 
 const NAV_LINKS = [
@@ -31,7 +32,8 @@ const NAV_LINKS = [
   { to: '/results-table',    end: false, label: 'Results Table' },
   { to: '/race-day',         end: false, label: 'Race Day' },
   { to: '/add-results',      end: false, label: 'Add Results' },
-  { to: '/friday-racecard',  end: false, label: 'Friday Racecard' },
+  { to: '/friday-racecard',      end: false, label: 'Friday Racecard' },
+  { to: '/friday-sp-composition', end: false, label: 'Friday SP Composition' },
   { to: '/help',             end: false, label: 'Help' },
 ];
 
@@ -111,7 +113,8 @@ export default function App() {
         <Route path="/results-table" element={<ResultsTablePanel />} />
         <Route path="/race-day" element={<RaceDayPanel />} />
         <Route path="/add-results" element={<AddResultsPanel />} />
-        <Route path="/friday-racecard" element={<FridayRacecardPanel />} />
+        <Route path="/friday-racecard"      element={<FridayRacecardPanel />} />
+        <Route path="/friday-sp-composition" element={<FridaySPCompositionPanel />} />
         <Route path="/help" element={<HelpPanel />} />
       </Routes>
     </div>
