@@ -674,6 +674,70 @@ export default function RaceDayPanel() {
   const [savingAll,    setSavingAll]    = useState(false);
   const [saveAllMsg,   setSaveAllMsg]   = useState(null);
 
+  // Load runners from today's seed file, compute results, and save all to Supabase in one step.
+  const handleLoadAndSave = async () => {
+    const seed = DAY_SEEDS[activeDay];
+    if (!seed) { setSaveAllMsg({ error: 'No seed data for this day.' }); return; }
+    setSavingAll(true);
+    setSaveAllMsg(null);
+    const raceUpdates = {};
+    let saved = 0;
+    const now = new Date();
+    for (const race of schedule) {
+      const seedEntry = seed[race.name];
+      if (!seedEntry?.runners?.length) continue;
+      const results = computeRaceResults(seedEntry.runners);
+      if (!results) continue;
+      const runners = seedEntry.runners;
+      const payload = {
+        race:      race.dataName || race.name,
+        timestamp: now.toISOString(),
+        fieldSize: runners.length,
+        runners: results.enriched.map(r => ({
+          gatePosition: r.gatePosition,
+          horseName:    r.horseName,
+          decimalOdds:  r.decimalOdds,
+          pWin:         +r.pWin.toFixed(6),
+          pPlace:       +r.pPlace.toFixed(6),
+          spPoints:     +(r.decimalOdds - 1).toFixed(2),
+        })),
+        combinations: results.ranked.map(c => ({
+          rank:      c.rank,
+          gates:     c.runners.map(r => r.gatePosition),
+          horses:    c.runners.map(r => r.horseName),
+          ev:        +c.ev.toFixed(4),
+          evSp:      +c.evSp.toFixed(4),
+          evWin:     +c.evWin.toFixed(4),
+          evJackpot: +c.evJackpot.toFixed(4),
+          pJackpot:  +c.pJackpot.toFixed(6),
+        })),
+      };
+      raceUpdates[race.name] = {
+        runners,
+        combo:        results.combo,
+        comboHenery:  results.comboHenery,
+        enriched:     results.enriched,
+        ranked:       results.ranked,
+        savedAt:      null,
+        originalOdds: Object.fromEntries(runners.map(r => [r.gatePosition, r.decimalOdds])),
+      };
+      try {
+        const resp = await fetch('/api/save-results', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify(payload),
+        });
+        if (resp.ok) { raceUpdates[race.name].savedAt = now; saved++; }
+      } catch { /* skip failed */ }
+    }
+    setRaceData(prev => ({ ...prev, ...raceUpdates }));
+    setSavingAll(false);
+    setSaveAllMsg(saved > 0
+      ? { ok: `${saved} race${saved !== 1 ? 's' : ''} loaded from seed & saved ✓` }
+      : { error: 'No seed races found or save failed.' }
+    );
+  };
+
   const handleSaveAll = async () => {
     const unsaved = schedule.filter(r => raceData[r.name]);
     if (!unsaved.length) { setSaveAllMsg({ ok: 'No races loaded yet.' }); return; }
@@ -882,6 +946,14 @@ export default function RaceDayPanel() {
                          disabled:opacity-40 transition-colors"
             >
               {restoring ? 'Restoring…' : '↩ Restore saved'}
+            </button>
+            <button
+              onClick={handleLoadAndSave}
+              disabled={savingAll}
+              className="px-3 py-1.5 rounded border border-sky-400 text-sky-600
+                         hover:bg-sky-50 disabled:opacity-40 transition-colors font-semibold"
+            >
+              {savingAll ? 'Saving…' : '🌱 Load seed & save'}
             </button>
             {loaded > 0 && (
               <button

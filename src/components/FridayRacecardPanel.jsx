@@ -17,7 +17,7 @@ const RACES = [
     name: 'JCB Triumph Hurdle',
     grade: 'Grade 1',
     distance: '2m 179y',
-    runners: 20,
+    fieldSize: 20,
     prize: '£150,000',
     runners: [
       { no: 1,  horse: 'Apolon De Charnie (FR)',   form: '2',        age: 4, wt: '11-2', or: null, trainer: 'W P Mullins',     jockey: 'Mr P W Mullins',    rating: 0.5 },
@@ -47,7 +47,7 @@ const RACES = [
     name: 'William Hill County Handicap Hurdle',
     grade: 'Premier Handicap',
     distance: '2m 179y',
-    runners: 23,
+    fieldSize: 23,
     prize: '£110,000',
     runners: [
       { no: 1,  horse: 'Ndaawi',                    form: '36/22-13',  age: 6, wt: '12-0',  or: 156,  trainer: 'G Elliott',       jockey: 'Josh Williamson',   rating: 1.5 },
@@ -81,7 +81,7 @@ const RACES = [
     name: 'Mrs Paddy Power Mares\' Chase',
     grade: 'Grade 2',
     distance: '2m 4f 127y',
-    runners: 9,
+    fieldSize: 9,
     prize: '£130,000',
     runners: [
       { no: 1, horse: 'Spindleberry (IRE)',   form: '111-11P',  age: 8,  wt: '11-7', or: 153, trainer: 'W P Mullins',    jockey: 'Paul Townend',      rating: 3.5 },
@@ -100,7 +100,7 @@ const RACES = [
     name: 'Albert Bartlett Novices\' Hurdle',
     grade: 'Grade 1',
     distance: '2m 7f 213y',
-    runners: 22,
+    fieldSize: 22,
     prize: '£154,650',
     runners: [
       { no: 1,  horse: 'Doctor Du Mesnil (FR)',      form: '1-22',     age: 6, wt: '11-7', or: null, trainer: 'W P Mullins',     jockey: 'Danny Mullins',       rating: 0.0 },
@@ -132,7 +132,7 @@ const RACES = [
     name: 'Boodles Cheltenham Gold Cup Chase',
     grade: 'Grade 1',
     distance: '3m 2f 70y',
-    runners: 11,
+    fieldSize: 11,
     prize: '£625,000',
     runners: [
       { no: 1,  horse: 'Envoi Allen (FR)',           form: '24/1U3-1',  age: 12, wt: '11-10', or: 162, trainer: 'H De Bromhead',  jockey: 'Darragh O\'Keeffe',  rating: 3.5 },
@@ -153,7 +153,7 @@ const RACES = [
     name: 'Princess Royal Challenge Cup Open Hunters\' Chase',
     grade: 'Class 2',
     distance: '3m 2f 70y',
-    runners: 24,
+    fieldSize: 24,
     prize: '£50,000',
     runners: [
       { no: 1,  horse: 'Barton Snow (IRE)',          form: '211-111',   age: 9,  wt: '12-0', or: 142, trainer: 'J J O\'Shea',        jockey: 'Mr H Crow',                    rating: 5.0 },
@@ -187,7 +187,7 @@ const RACES = [
     name: 'Martin Pipe Conditional Jockeys\' Handicap Hurdle',
     grade: 'Class 2',
     distance: '2m 4f 56y',
-    runners: 24,
+    fieldSize: 24,
     prize: '£75,000',
     runners: [
       { no: 1,  horse: 'Its Bilbo (FR)',             form: '522-431',   age: 5, wt: '11-12', or: 141, trainer: 'H De Bromhead',  jockey: 'Mike O\'Connor',       rating: 2.0 },
