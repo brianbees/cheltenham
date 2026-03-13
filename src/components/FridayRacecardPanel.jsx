@@ -216,6 +216,18 @@ const RACES = [
   },
 ];
 
+// ── Odds (Win/EW prices) ─────────────────────────────────────────────────────
+
+const ODDS = {
+  '13:20': { 1:'20/1', 2:'150/1', 3:'40/1', 4:'50/1', 5:'40/1', 6:'28/1', 7:'50/1', 8:'12/1', 9:'7/1', 10:'16/1', 11:'6/1', 12:'22/1', 13:'25/1', 14:'40/1', 15:'9/2', 16:'200/1', 17:'7/1', 18:'66/1', 19:'7/2', 20:'80/1' },
+  '14:00': { 1:'28/1', 2:'22/1', 3:'20/1', 4:'4/1', 5:'16/1', 6:'14/1', 7:'66/1', 8:'10/1', 9:'33/1', 10:'33/1', 11:'12/1', 12:'16/1', 13:'33/1', 14:'40/1', 15:'80/1', 16:'9/1', 17:'66/1', 19:'66/1', 20:'80/1', 21:'12/1', 22:'9/2', 23:'10/1', 24:'40/1' },
+  '14:40': { 1:'5/1', 2:'2/1', 3:'12/1', 4:'10/1', 5:'100/1', 6:'8/1', 7:'5/2', 8:'100/1', 9:'50/1' },
+  '15:20': { 1:'28/1', 2:'11/4', 3:'14/1', 4:'33/1', 5:'25/1', 6:'20/1', 7:'22/1', 8:'14/1', 9:'100/1', 10:'25/1', 11:'20/1', 12:'14/1', 13:'12/1', 14:'33/1', 15:'16/1', 16:'100/1', 17:'66/1', 18:'11/2', 19:'9/1', 20:'80/1', 21:'28/1', 22:'50/1' },
+  '16:00': { 1:'40/1', 2:'40/1', 3:'3/1', 4:'100/1', 5:'14/1', 6:'6/1', 7:'8/1', 8:'5/1', 9:'50/1', 10:'16/1', 11:'7/2' },
+  '16:40': { 1:'8/1', 2:'50/1', 3:'14/1', 4:'6/1', 5:'14/1', 6:'40/1', 7:'5/1', 8:'125/1', 9:'100/1', 10:'150/1', 11:'28/1', 12:'18/1', 13:'11/2', 14:'80/1', 15:'125/1', 16:'22/1', 17:'33/1', 18:'12/1', 19:'80/1', 20:'150/1', 21:'125/1', 22:'18/1', 23:'6/1', 24:'12/1' },
+  '17:20': { 1:'18/1', 2:'18/1', 3:'11/1', 4:'22/1', 5:'20/1', 6:'14/1', 7:'33/1', 8:'4/1', 9:'22/1', 10:'17/2', 11:'66/1', 12:'50/1', 13:'14/1', 14:'10/1', 15:'20/1', 16:'20/1', 17:'17/2', 18:'16/1', 19:'80/1', 20:'28/1', 21:'10/1', 22:'80/1', 23:'33/1', 24:'40/1' },
+};
+
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
 function ratingColor(r) {
@@ -240,8 +252,9 @@ function RatingDots({ value }) {
 
 // ── Components ────────────────────────────────────────────────────────────────
 
-function RunnerRow({ runner }) {
+function RunnerRow({ runner, raceTime }) {
   const { no, horse, form, age, wt, or: officialRating, trainer, jockey, rating, nr } = runner;
+  const odds = ODDS[raceTime]?.[no] ?? null;
   return (
     <div className={`grid grid-cols-[2rem_1fr_auto] md:grid-cols-[2rem_1fr_5rem_3rem_4rem_4rem_1fr_1fr_auto_6rem] gap-x-3 gap-y-0.5 items-center py-2 border-b border-gray-800 last:border-0 text-sm ${nr ? 'opacity-40' : ''}`}>
       {/* No */}
@@ -266,9 +279,9 @@ function RunnerRow({ runner }) {
         <RatingDots value={rating} />
       </span>
 
-      {/* Odds placeholder */}
+      {/* Odds */}
       <span className="hidden md:block text-right">
-        <span className="inline-block bg-gray-800 text-gray-500 text-xs font-mono px-2 py-0.5 rounded border border-gray-700 min-w-[3rem] text-center">—</span>
+        <span className={`inline-block text-xs font-mono px-2 py-0.5 rounded border min-w-[3rem] text-center ${odds ? 'bg-emerald-950 text-emerald-300 border-emerald-800 font-semibold' : 'bg-gray-800 text-gray-500 border-gray-700'}`}>{odds ?? '—'}</span>
       </span>
     </div>
   );
@@ -307,7 +320,7 @@ function RaceCard({ race }) {
 
       {/* Runners */}
       <div className="px-4">
-        {race.runners.map(r => <RunnerRow key={r.no} runner={r} />)}
+        {race.runners.map(r => <RunnerRow key={r.no} runner={r} raceTime={race.time} />)}
       </div>
     </section>
   );
