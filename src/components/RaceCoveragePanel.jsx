@@ -1,4 +1,4 @@
-/**
+﻿/**
  * RaceCoveragePanel.jsx
  *
  * Route: /race-coverage
@@ -30,15 +30,15 @@ export default function RaceCoveragePanel() {
 
   return (
     <div className="p-6 max-w-4xl mx-auto">
-      <h1 className="text-2xl font-bold text-white mb-1">Race Coverage</h1>
-      <p className="text-gray-400 text-sm mb-6">
+      <h1 className="text-2xl font-bold text-gray-900 mb-1">Race Coverage</h1>
+      <p className="text-gray-500 text-sm mb-6">
         {rows.length} distinct races across {Object.keys(historicalData).length} years of data.
       </p>
 
-      <div className="rounded-lg border border-gray-800 overflow-hidden">
+      <div className="rounded-lg border border-gray-200 overflow-hidden">
         <table className="w-full text-sm">
           <thead>
-            <tr className="bg-gray-800 text-gray-400 text-left">
+            <tr className="bg-gray-100 text-gray-500 text-left">
               <th className="px-4 py-3 font-medium w-8">#</th>
               <th className="px-4 py-3 font-medium">Race</th>
               <th className="px-4 py-3 font-medium text-center w-20">Years</th>
@@ -49,16 +49,16 @@ export default function RaceCoveragePanel() {
             {rows.map((row, i) => (
               <tr
                 key={row.name}
-                className={`border-t border-gray-800 ${i % 2 === 0 ? 'bg-gray-950' : 'bg-gray-900'}`}
+                className={`border-t border-gray-200 ${i % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}
               >
                 <td className="px-4 py-3 text-gray-500">{i + 1}</td>
-                <td className="px-4 py-3 text-white font-medium">{row.name}</td>
+                <td className="px-4 py-3 text-gray-900 font-medium">{row.name}</td>
                 <td className="px-4 py-3 text-center">
-                  <span className="inline-block bg-emerald-900 text-emerald-300 text-xs font-bold px-2 py-0.5 rounded-full">
+                  <span className="inline-block bg-emerald-900 text-emerald-700 text-xs font-bold px-2 py-0.5 rounded-full">
                     {row.years.length}
                   </span>
                 </td>
-                <td className="px-4 py-3 text-gray-400 leading-relaxed">
+                <td className="px-4 py-3 text-gray-500 leading-relaxed">
                   {row.years.join(', ')}
                 </td>
               </tr>

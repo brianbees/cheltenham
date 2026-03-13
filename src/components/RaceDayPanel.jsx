@@ -1,4 +1,4 @@
-/**
+﻿/**
  * RaceDayPanel.jsx — Festival Day Dashboard
  *
  * Paste a race card for each race in the day's schedule.
@@ -83,14 +83,14 @@ function fmtOdds(decimal) {
 
 function ModelResult({ label, combo, fmtOdds, accent = 'emerald', originalOdds = {} }) {
   const gateColor = accent === 'blue'
-    ? 'bg-blue-600 text-white'
-    : 'bg-emerald-600 text-white';
+    ? 'bg-blue-600 text-gray-900'
+    : 'bg-emerald-600 text-gray-900';
   const evColor = accent === 'blue'
     ? 'text-blue-600'
     : 'text-emerald-600';
   const labelColor = accent === 'blue'
     ? 'text-blue-500'
-    : 'text-gray-400';
+    : 'text-gray-500';
 
   return (
     <div className="space-y-1.5">
@@ -109,7 +109,7 @@ function ModelResult({ label, combo, fmtOdds, accent = 'emerald', originalOdds =
               Gate {r.gatePosition}
             </span>
             <span className="text-gray-800 text-sm font-medium flex-1 min-w-0">{r.horseName}</span>
-            <span className="text-gray-400 text-xs font-mono shrink-0">{fmtOdds(r.decimalOdds)}</span>
+            <span className="text-gray-500 text-xs font-mono shrink-0">{fmtOdds(r.decimalOdds)}</span>
             {shortened && (
               <span className="text-emerald-600 text-xs font-bold shrink-0" title={`Shortened from ${fmtOdds(orig)}`}>▼</span>
             )}
@@ -309,7 +309,7 @@ function RaceCard({ race, data, onPaste, onSave, onClear }) {
             {runners && (
               <button
                 onClick={onClear}
-                className="p-2 text-gray-400 hover:text-rose-500 transition-colors"
+                className="p-2 text-gray-500 hover:text-rose-600 transition-colors"
                 title="Clear"
               >
                 ✕
@@ -321,7 +321,7 @@ function RaceCard({ race, data, onPaste, onSave, onClear }) {
               className={`px-2 py-2 rounded border text-xs transition-colors ${
                 showHistory
                   ? 'border-sky-400 text-sky-600 bg-sky-50'
-                  : 'border-gray-300 text-gray-400 hover:border-sky-400 hover:text-sky-500'
+                  : 'border-gray-300 text-gray-500 hover:border-sky-400 hover:text-sky-500'
               }`}
             >
               ⏱
@@ -353,13 +353,13 @@ function RaceCard({ race, data, onPaste, onSave, onClear }) {
             {historyEntries?.length > 0 && (
               <button
                 onClick={handleDeleteAll}
-                className="text-xs text-rose-400 hover:text-rose-600 transition-colors"
+                className="text-xs text-rose-600 hover:text-rose-600 transition-colors"
               >Delete all</button>
             )}
           </div>
-          {loadingHistory && <p className="text-xs text-gray-400 italic">Loading…</p>}
+          {loadingHistory && <p className="text-xs text-gray-500 italic">Loading…</p>}
           {!loadingHistory && historyEntries && historyEntries.length === 0 && (
-            <p className="text-xs text-gray-400 italic">No saves found for this race.</p>
+            <p className="text-xs text-gray-500 italic">No saves found for this race.</p>
           )}
           {!loadingHistory && historyEntries && historyEntries.length > 0 && (
             <div className="space-y-1">
@@ -378,7 +378,7 @@ function RaceCard({ race, data, onPaste, onSave, onClear }) {
                                  flex items-center justify-between gap-3"
                     >
                       <span className="text-xs font-mono text-sky-700">{label}</span>
-                      <span className="text-xs text-gray-400">{entry.fieldSize} runners</span>
+                      <span className="text-xs text-gray-500">{entry.fieldSize} runners</span>
                       {i === 0 && (
                         <span className="text-xs bg-sky-100 text-sky-600 px-1.5 py-0.5 rounded">latest</span>
                       )}
@@ -386,7 +386,7 @@ function RaceCard({ race, data, onPaste, onSave, onClear }) {
                     <button
                       onClick={() => handleDeleteEntry(entry)}
                       title="Delete this entry"
-                      className="p-1.5 text-gray-300 hover:text-rose-500 transition-colors shrink-0"
+                      className="p-1.5 text-gray-700 hover:text-rose-600 transition-colors shrink-0"
                     >
                       ✕
                     </button>
@@ -405,11 +405,11 @@ function RaceCard({ race, data, onPaste, onSave, onClear }) {
           <button
             onClick={handleClipboardPaste}
             className="w-full py-2.5 rounded bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800
-                       text-white text-sm font-semibold transition-colors flex items-center justify-center gap-2"
+                       text-gray-900 text-sm font-semibold transition-colors flex items-center justify-center gap-2"
           >
             📋 Paste from clipboard
           </button>
-          <p className="text-xs text-gray-400 text-center">— or type / paste manually below —</p>
+          <p className="text-xs text-gray-500 text-center">— or type / paste manually below —</p>
           <textarea
             ref={textareaRef}
             placeholder={'Paste race card text here…\n\nFormat: gate  horse name  odds\ne.g.\n1  Big Buck\'s  5/1\n2  Kauto Star  2/1'}
@@ -423,7 +423,7 @@ function RaceCard({ race, data, onPaste, onSave, onClear }) {
           <button
             onClick={() => handleParse()}
             className="px-4 py-1.5 rounded bg-emerald-600 hover:bg-emerald-700
-                       text-white text-sm font-semibold transition-colors"
+                       text-gray-900 text-sm font-semibold transition-colors"
           >
             Parse &amp; Run →
           </button>
@@ -452,10 +452,10 @@ function RaceCard({ race, data, onPaste, onSave, onClear }) {
             <ModelResult label="Henery" combo={comboHenery} fmtOdds={fmtOdds} accent="blue" originalOdds={originalOdds} />
           )}
           {sameAsHarville && (
-            <p className="text-xs text-gray-400 italic">Both models agree ✓</p>
+            <p className="text-xs text-gray-500 italic">Both models agree ✓</p>
           )}
           <div className="mt-2 flex items-center justify-between gap-3 flex-wrap">
-            <span className="text-xs text-gray-400">
+            <span className="text-xs text-gray-500">
               {runners.length} runners · {(runners.length * (runners.length - 1) * (runners.length - 2) / 6).toFixed(0)} combos evaluated
             </span>
             <div className="flex items-center gap-3">
@@ -464,7 +464,7 @@ function RaceCard({ race, data, onPaste, onSave, onClear }) {
                   Saved {savedAt.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
                 </span>
               )}
-              {saveError && <span className="text-xs text-rose-500">{saveError}</span>}
+              {saveError && <span className="text-xs text-rose-600">{saveError}</span>}
               <button
                 onClick={handleSave}
                 disabled={saving}
@@ -480,7 +480,7 @@ function RaceCard({ race, data, onPaste, onSave, onClear }) {
 
       {/* ── Empty state ── */}
       {!pasting && !combo && (
-        <div className="px-4 py-3 text-sm text-gray-400 italic">
+        <div className="px-4 py-3 text-sm text-gray-500 italic">
           No card loaded
         </div>
       )}
@@ -803,7 +803,7 @@ export default function RaceDayPanel() {
           onClick={() => { setPasteAll(p => !p); setPasteAllMsg(null); if (multiRef.current) multiRef.current.value = ''; }}
           className={`mt-3 px-5 py-2 rounded-lg text-sm font-semibold border transition-colors ${
             pasteAll
-              ? 'bg-emerald-600 text-white border-emerald-600'
+              ? 'bg-emerald-600 text-gray-900 border-emerald-600'
               : 'bg-white text-emerald-600 border-emerald-500 hover:bg-emerald-50'
           }`}
         >
@@ -839,7 +839,7 @@ export default function RaceDayPanel() {
           )}
           <button
             onClick={() => handleMultiPaste()}
-            className="px-4 py-1.5 rounded bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold transition-colors"
+            className="px-4 py-1.5 rounded bg-emerald-600 hover:bg-emerald-700 text-gray-900 text-sm font-semibold transition-colors"
           >
             Parse &amp; Load All →
           </button>
@@ -854,7 +854,7 @@ export default function RaceDayPanel() {
             onClick={() => { setActiveDay(day); localStorage.setItem('activeDay', day); }}
             className={`px-5 py-2 rounded-lg text-sm font-semibold transition-colors ${
               activeDay === day
-                ? 'bg-emerald-600 text-white shadow'
+                ? 'bg-emerald-600 text-gray-900 shadow'
                 : 'bg-white text-gray-500 border border-gray-200 hover:text-gray-800 hover:border-gray-400'
             }`}
           >
@@ -865,14 +865,14 @@ export default function RaceDayPanel() {
 
       {/* ── Progress bar ── */}
       <div className="max-w-5xl mx-auto mb-5">
-        <div className="flex items-center justify-between gap-2 flex-wrap text-xs text-gray-400 mb-1">
+        <div className="flex items-center justify-between gap-2 flex-wrap text-xs text-gray-500 mb-1">
           <span className="shrink-0">{loaded} of {schedule.length} races loaded</span>
           <div className="flex items-center gap-2 flex-wrap">
             {restoreMsg && <span className="text-emerald-600">{restoreMsg}</span>}
             {saveAllMsg && (
               saveAllMsg.ok
                 ? <span className="text-emerald-600">{saveAllMsg.ok}</span>
-                : <span className="text-rose-500">{saveAllMsg.error}</span>
+                : <span className="text-rose-600">{saveAllMsg.error}</span>
             )}
             <button
               onClick={handleRestore}

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * App.jsx
  *
  * Root component. Defines top-level routing and the persistent navigation bar.
@@ -38,19 +38,19 @@ const NAV_LINKS = [
 function NavBar() {
   const [open, setOpen] = useState(false);
   const base    = 'px-4 py-2 rounded text-sm font-medium transition-colors';
-  const active   = `${base} bg-gray-800 text-emerald-400`;
-  const inactive = `${base} text-gray-400 hover:text-gray-100 hover:bg-gray-800`;
-  const mobileActive   = 'block px-4 py-3 text-sm font-medium text-emerald-400 bg-gray-800 rounded';
-  const mobileInactive = 'block px-4 py-3 text-sm font-medium text-gray-300 hover:bg-gray-800 hover:text-white rounded';
+  const active   = `${base} bg-gray-100 text-emerald-700`;
+  const inactive = `${base} text-gray-500 hover:text-gray-800 hover:bg-gray-100`;
+  const mobileActive   = 'block px-4 py-3 text-sm font-medium text-emerald-700 bg-gray-100 rounded';
+  const mobileInactive = 'block px-4 py-3 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 rounded';
 
   return (
-    <nav className="bg-gray-900 border-b border-gray-800">
+    <nav className="bg-gray-50 border-b border-gray-200">
       <div className="px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <span className="text-emerald-400 font-bold text-base tracking-tight">
+          <span className="text-emerald-700 font-bold text-base tracking-tight">
             Champion Tipster
           </span>
-          <span className="text-emerald-400 font-bold text-base tracking-tight font-mono">
+          <span className="text-emerald-700 font-bold text-base tracking-tight font-mono">
             v{__BUILD_LABEL__}
           </span>
         </div>
@@ -68,7 +68,7 @@ function NavBar() {
         {/* Hamburger */}
         <button
           onClick={() => setOpen(o => !o)}
-          className="md:hidden p-2 rounded text-gray-400 hover:text-white hover:bg-gray-800 transition-colors"
+          className="md:hidden p-2 rounded text-gray-500 hover:text-gray-900 hover:bg-gray-100 transition-colors"
           aria-label="Menu"
         >
           {open
@@ -80,7 +80,7 @@ function NavBar() {
 
       {/* Mobile dropdown */}
       {open && (
-        <div className="md:hidden border-t border-gray-800 px-2 pb-3 space-y-1">
+        <div className="md:hidden border-t border-gray-200 px-2 pb-3 space-y-1">
           {NAV_LINKS.map(({ to, end, label }) => (
             <NavLink key={to} to={to} end={end}
               onClick={() => setOpen(false)}
@@ -99,7 +99,7 @@ export default function App() {
   useEffect(() => { loadRuntimeResults(); }, []);
 
   return (
-    <div className="dark min-h-screen bg-gray-950">
+    <div className="dark min-h-screen bg-white">
       <NavBar />
       <Routes>
         <Route path="/" element={<HistoricalDisplay />} />

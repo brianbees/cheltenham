@@ -1,4 +1,4 @@
-/**
+﻿/**
  * BacktesterPanel.jsx  —  Historical Backtester
  *
  * Route: /backtester
@@ -22,24 +22,24 @@ const CAT_STYLES = {
   'Novice':               'bg-blue-950 text-blue-300 border border-blue-800',
   'Handicap':             'bg-orange-950 text-orange-300 border border-orange-800',
   'Mares':                'bg-pink-950 text-pink-300 border border-pink-800',
-  'Specialist':           'bg-gray-800 text-gray-300 border border-gray-600',
+  'Specialist':           'bg-gray-100 text-gray-700 border border-gray-300',
   'Historical':           'bg-stone-900 text-stone-400 border border-stone-700',
-  'Other':                'bg-gray-800 text-gray-500 border border-gray-700',
+  'Other':                'bg-gray-100 text-gray-500 border border-gray-300',
 };
 
 // ── Classification styles ──────────────────────────────────────────────────────
 const CLS_STYLES = {
-  Swing:      { badge: 'bg-rose-950 text-rose-300 border border-rose-800',     colour: 'text-rose-400'    },
+  Swing:      { badge: 'bg-rose-950 text-rose-300 border border-rose-800',     colour: 'text-rose-600'    },
   Judgement:  { badge: 'bg-amber-950 text-amber-300 border border-amber-800',  colour: 'text-amber-400'   },
-  Banker:     { badge: 'bg-emerald-950 text-emerald-300 border border-emerald-800', colour: 'text-emerald-400' },
+  Banker:     { badge: 'bg-emerald-50 text-emerald-700 border border-emerald-400', colour: 'text-emerald-700' },
 };
 
 // ── Completeness badge ────────────────────────────────────────────────────────
 const COMPLETENESS_STYLES = {
-  FULL:    'bg-emerald-900 text-emerald-300 border border-emerald-700',
+  FULL:    'bg-emerald-900 text-emerald-700 border border-emerald-700',
   PARTIAL: 'bg-blue-900 text-blue-300 border border-blue-700',
-  SP_ONLY: 'bg-gray-800 text-gray-400 border border-gray-700',
-  MISSING: 'bg-rose-950 text-rose-400 border border-rose-800',
+  SP_ONLY: 'bg-gray-100 text-gray-500 border border-gray-300',
+  MISSING: 'bg-rose-950 text-rose-600 border border-rose-800',
 };
 const COMPLETENESS_LABEL = {
   FULL:    'Full',
@@ -61,9 +61,9 @@ function CompositionBar({ shortRate, midRate, bigRate }) {
         <div style={{ width: `${b}%` }} className="bg-rose-500"    title={`Big-priced ${b}%`} />
       </div>
       <div className="flex gap-3 mt-1 text-xs text-gray-500">
-        <span><span className="text-emerald-400">{s}%</span> short (≤5/1)</span>
+        <span><span className="text-emerald-700">{s}%</span> short (≤5/1)</span>
         <span><span className="text-amber-400">{m}%</span> mid</span>
-        <span><span className="text-rose-400">{b}%</span> big (15/1+)</span>
+        <span><span className="text-rose-600">{b}%</span> big (15/1+)</span>
       </div>
     </div>
   );
@@ -99,10 +99,10 @@ function RaceBacktestCard({ raceName }) {
 
   if (!data.available) {
     return (
-      <div className="mb-6 border border-gray-800 rounded-xl overflow-hidden opacity-50">
-        <div className="bg-gray-900 px-4 py-3">
-          <h2 className="text-base font-bold text-gray-400">{raceName}</h2>
-          <p className="text-gray-600 text-xs mt-0.5">No data available</p>
+      <div className="mb-6 border border-gray-200 rounded-xl overflow-hidden opacity-50">
+        <div className="bg-gray-50 px-4 py-3">
+          <h2 className="text-base font-bold text-gray-500">{raceName}</h2>
+          <p className="text-gray-500 text-xs mt-0.5">No data available</p>
         </div>
       </div>
     );
@@ -114,12 +114,12 @@ function RaceBacktestCard({ raceName }) {
   const fullCount      = data.years.filter(y => y.completeness === 'FULL').length;
 
   return (
-    <div className="mb-6 border border-gray-800 rounded-xl overflow-hidden">
+    <div className="mb-6 border border-gray-200 rounded-xl overflow-hidden">
 
       {/* ── Card header ── */}
-      <div className="bg-gray-900 px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+      <div className="bg-gray-50 px-4 py-3 flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-3 flex-wrap">
-          <h2 className="text-base font-bold text-white">{raceName}</h2>
+          <h2 className="text-base font-bold text-gray-900">{raceName}</h2>
           <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${CAT_STYLES[data.category] || CAT_STYLES['Other']}`}>
             {data.category}
           </span>
@@ -127,7 +127,7 @@ function RaceBacktestCard({ raceName }) {
             {agg.classification} Race
           </span>
           {fullCount > 0 && (
-            <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-900 text-emerald-300 border border-emerald-700">
+            <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-900 text-emerald-700 border border-emerald-700">
               {fullCount} yr{fullCount !== 1 ? 's' : ''} full data
             </span>
           )}
@@ -141,13 +141,13 @@ function RaceBacktestCard({ raceName }) {
           </div>
           <div className="text-right">
             <span className="text-xs text-gray-500 uppercase tracking-wide block">Avg Perfect</span>
-            <span className="text-lg font-bold font-mono text-gray-200">
+            <span className="text-lg font-bold font-mono text-gray-700">
               {agg.avgPerfectScore.toFixed(1)}
             </span>
           </div>
           <button
             onClick={() => setExpanded(e => !e)}
-            className="text-gray-500 hover:text-gray-200 text-sm transition-colors px-2"
+            className="text-gray-500 hover:text-gray-700 text-sm transition-colors px-2"
           >
             {expanded ? '▲ Hide' : '▼ Show'} years
           </button>
@@ -155,9 +155,9 @@ function RaceBacktestCard({ raceName }) {
       </div>
 
       {/* ── Aggregate stats row ── */}
-      <div className="bg-gray-950 border-b border-gray-800 px-4 py-3 flex flex-wrap gap-6 text-sm">
+      <div className="bg-white border-b border-gray-200 px-4 py-3 flex flex-wrap gap-6 text-sm">
         <div>
-          <span className="text-xs text-gray-600 uppercase tracking-wide block">SP Composition</span>
+          <span className="text-xs text-gray-500 uppercase tracking-wide block">SP Composition</span>
           <div className="mt-1 w-48">
             <CompositionBar
               shortRate={agg.shortRate}
@@ -167,37 +167,37 @@ function RaceBacktestCard({ raceName }) {
           </div>
         </div>
         <div>
-          <span className="text-xs text-gray-600 uppercase tracking-wide block">High year</span>
-          <span className="text-emerald-400 font-bold font-mono">
+          <span className="text-xs text-gray-500 uppercase tracking-wide block">High year</span>
+          <span className="text-emerald-700 font-bold font-mono">
             {agg.highYear.year}
           </span>{' '}
-          <span className="text-gray-400 text-xs font-mono">
+          <span className="text-gray-500 text-xs font-mono">
             {agg.highYear.spTotal.toFixed(1)} SP pts
           </span>
         </div>
         <div>
-          <span className="text-xs text-gray-600 uppercase tracking-wide block">Low year</span>
-          <span className="text-rose-400 font-bold font-mono">
+          <span className="text-xs text-gray-500 uppercase tracking-wide block">Low year</span>
+          <span className="text-rose-600 font-bold font-mono">
             {agg.lowYear.year}
           </span>{' '}
-          <span className="text-gray-400 text-xs font-mono">
+          <span className="text-gray-500 text-xs font-mono">
             {agg.lowYear.spTotal.toFixed(1)} SP pts
           </span>
         </div>
         <div>
-          <span className="text-xs text-gray-600 uppercase tracking-wide block">Upset rate</span>
-          <span className="text-gray-200 font-bold font-mono">
+          <span className="text-xs text-gray-500 uppercase tracking-wide block">Upset rate</span>
+          <span className="text-gray-700 font-bold font-mono">
             {(agg.upsetRate * 100).toFixed(0)}%
           </span>
           <span className="text-gray-500 text-xs ml-1">(15/1+ wins)</span>
         </div>
         <div>
-          <span className="text-xs text-gray-600 uppercase tracking-wide block">Years in data</span>
-          <span className="text-gray-200 font-bold">{agg.count}</span>
+          <span className="text-xs text-gray-500 uppercase tracking-wide block">Years in data</span>
+          <span className="text-gray-700 font-bold">{agg.count}</span>
         </div>
         <div>
-          <span className="text-xs text-gray-600 uppercase tracking-wide block">Tier 2 ready</span>
-          <span className={fullCount > 0 ? 'text-emerald-400 font-bold' : 'text-gray-600'}>
+          <span className="text-xs text-gray-500 uppercase tracking-wide block">Tier 2 ready</span>
+          <span className={fullCount > 0 ? 'text-emerald-700 font-bold' : 'text-gray-500'}>
             {fullCount > 0 ? `${fullCount} / ${agg.count}` : 'Needs gate data'}
           </span>
         </div>
@@ -208,7 +208,7 @@ function RaceBacktestCard({ raceName }) {
         <div className="overflow-x-auto">
           <table className="w-full text-xs">
             <thead>
-              <tr className="bg-gray-900/60 border-b border-gray-800">
+              <tr className="bg-gray-100 border-b border-gray-200">
                 <th className="text-left px-3 py-2 text-gray-500 font-medium">Year</th>
                 <th className="text-left px-3 py-2 text-gray-500 font-medium">1st</th>
                 <th className="text-left px-3 py-2 text-gray-500 font-medium">2nd</th>
@@ -223,21 +223,21 @@ function RaceBacktestCard({ raceName }) {
             <tbody>
               {data.years.map((row, i) => {
                 if (!row.available) return (
-                  <tr key={row.year} className="border-b border-gray-800 opacity-40">
+                  <tr key={row.year} className="border-b border-gray-200 opacity-40">
                     <td className="px-3 py-2 font-mono text-gray-500">{row.year}</td>
                     <td colSpan={8} className="px-3 py-2 text-gray-700 italic">No data</td>
                   </tr>
                 );
                 const isHigh = row.year === agg.highYear.year;
                 const isLow  = row.year === agg.lowYear.year;
-                const rowBg  = isHigh ? 'bg-emerald-950/30' : isLow ? 'bg-rose-950/20' : i % 2 === 0 ? 'bg-gray-950' : 'bg-gray-900/40';
+                const rowBg  = isHigh ? 'bg-emerald-100' : isLow ? 'bg-rose-50' : i % 2 === 0 ? 'bg-white' : 'bg-gray-50';
                 const posStyles = ['bg-yellow-500 text-yellow-950', 'bg-gray-400 text-gray-900', 'bg-amber-700 text-amber-100'];
                 return (
-                  <tr key={row.year} className={`border-b border-gray-800 ${rowBg}`}>
-                    <td className="px-3 py-2 font-mono font-medium text-gray-300">
+                  <tr key={row.year} className={`border-b border-gray-200 ${rowBg}`}>
+                    <td className="px-3 py-2 font-mono font-medium text-gray-700">
                       {row.year}
-                      {isHigh && <span className="ml-1 text-emerald-400 text-xs">↑</span>}
-                      {isLow  && <span className="ml-1 text-rose-400 text-xs">↓</span>}
+                      {isHigh && <span className="ml-1 text-emerald-700 text-xs">↑</span>}
+                      {isLow  && <span className="ml-1 text-rose-600 text-xs">↓</span>}
                     </td>
                     {row.top3.map((h, pos) => (
                       <td key={pos} className="px-3 py-2">
@@ -245,17 +245,17 @@ function RaceBacktestCard({ raceName }) {
                           <span className={`text-xs font-bold px-1 rounded ${posStyles[pos]}`}>
                             {['1','2','3'][pos]}
                           </span>
-                          <span className="text-gray-300 truncate max-w-28">{h.horseName}</span>
-                          <span className="text-gray-600 font-mono">
+                          <span className="text-gray-700 truncate max-w-28">{h.horseName}</span>
+                          <span className="text-gray-500 font-mono">
                             {h.sp !== null ? (h.sp - 1 % 1 === 0 ? `${h.sp-1}/1` : h.sp.toFixed(2)) : '—'}
                           </span>
                         </div>
                       </td>
                     ))}
-                    <td className="px-3 py-2 text-right font-mono font-medium text-gray-200">
+                    <td className="px-3 py-2 text-right font-mono font-medium text-gray-700">
                       {row.spTotal.toFixed(1)}
                     </td>
-                    <td className="px-3 py-2 text-right font-mono font-bold text-emerald-400">
+                    <td className="px-3 py-2 text-right font-mono font-bold text-emerald-700">
                       {row.perfectScore.toFixed(1)}
                     </td>
                     <td className="px-3 py-2 text-center">
@@ -291,45 +291,45 @@ function SummaryBar({ summary }) {
     : 0;
 
   return (
-    <div className="max-w-5xl mx-auto mb-8 border border-gray-800 rounded-xl bg-gray-900 px-5 py-4 flex flex-wrap gap-8 items-center">
+    <div className="max-w-5xl mx-auto mb-8 border border-gray-200 rounded-xl bg-gray-50 px-5 py-4 flex flex-wrap gap-8 items-center">
       <div>
         <span className="text-xs text-gray-500 uppercase tracking-wide block">Years in dataset</span>
-        <span className="text-2xl font-bold text-white">{summary.totalYears}</span>
+        <span className="text-2xl font-bold text-gray-900">{summary.totalYears}</span>
       </div>
       <div>
         <span className="text-xs text-gray-500 uppercase tracking-wide block">Race entries</span>
-        <span className="text-2xl font-bold text-white">{summary.totalRaceEntries}</span>
+        <span className="text-2xl font-bold text-gray-900">{summary.totalRaceEntries}</span>
       </div>
       <div>
         <span className="text-xs text-gray-500 uppercase tracking-wide block">SP-only</span>
-        <span className="text-2xl font-bold text-gray-400">{summary.spOnlyEntries}</span>
-        <span className="text-gray-600 text-xs ml-1">(Tier 1)</span>
+        <span className="text-2xl font-bold text-gray-500">{summary.spOnlyEntries}</span>
+        <span className="text-gray-500 text-xs ml-1">(Tier 1)</span>
       </div>
       <div>
         <span className="text-xs text-gray-500 uppercase tracking-wide block">Full data</span>
-        <span className={`text-2xl font-bold ${summary.fullDataEntries > 0 ? 'text-emerald-400' : 'text-gray-600'}`}>
+        <span className={`text-2xl font-bold ${summary.fullDataEntries > 0 ? 'text-emerald-700' : 'text-gray-500'}`}>
           {summary.fullDataEntries}
         </span>
-        <span className="text-gray-600 text-xs ml-1">(Tier 2)</span>
+        <span className="text-gray-500 text-xs ml-1">(Tier 2)</span>
       </div>
       <div className="flex-1 min-w-48">
         <span className="text-xs text-gray-500 uppercase tracking-wide block mb-1">
           Tier 2 model backtesting readiness
         </span>
-        <div className="flex rounded overflow-hidden h-2 bg-gray-800 w-full">
+        <div className="flex rounded overflow-hidden h-2 bg-gray-100 w-full">
           <div
             style={{ width: `${tier2Pct}%` }}
             className="bg-emerald-500 transition-all"
           />
         </div>
-        <div className="flex justify-between text-xs text-gray-600 mt-0.5">
+        <div className="flex justify-between text-xs text-gray-500 mt-0.5">
           <span>{summary.fullDataEntries} races ready</span>
           <span>{tier2Pct}%</span>
         </div>
       </div>
-      <div className="border-l border-gray-700 pl-6">
+      <div className="border-l border-gray-300 pl-6">
         <p className="text-xs text-gray-500 max-w-sm">
-          <span className="text-emerald-400 font-semibold">Tier 1</span> — SP analysis from result data only.<br/>
+          <span className="text-emerald-700 font-semibold">Tier 1</span> — SP analysis from result data only.<br/>
           <span className="text-amber-400 font-semibold">Tier 2</span> — Full model validation requires gate positions
           + complete pre-race field odds.
         </p>
@@ -339,10 +339,10 @@ function SummaryBar({ summary }) {
           <span className="text-xs text-gray-500 uppercase tracking-wide block mb-1">Next data target</span>
           <span className="text-amber-400 font-bold text-lg">{summary.nextDataTarget.year}</span>
           <span className="text-gray-500 text-xs ml-2">{summary.nextDataTarget.date}</span>
-          <div className="text-xs text-gray-400 mt-0.5">
+          <div className="text-xs text-gray-500 mt-0.5">
             {summary.nextDataTarget.partial} race{summary.nextDataTarget.partial !== 1 ? 's' : ''} partial
             {summary.nextDataTarget.spOnly > 0 && (
-              <span className="text-gray-600">, {summary.nextDataTarget.spOnly} SP-only</span>
+              <span className="text-gray-500">, {summary.nextDataTarget.spOnly} SP-only</span>
             )}
             {' — add full field arrays to unlock Tier 2'}
           </div>
@@ -357,9 +357,9 @@ function YearOverviewTable() {
   const years = Object.keys(historicalData).map(Number).sort((a, b) => a - b);
 
   return (
-    <div className="max-w-5xl mx-auto mb-8 border border-gray-800 rounded-xl overflow-hidden">
-      <div className="bg-gray-900 px-4 py-3 border-b border-gray-800">
-        <h2 className="text-base font-bold text-white">Year-by-Year Scoring Landscape</h2>
+    <div className="max-w-5xl mx-auto mb-8 border border-gray-200 rounded-xl overflow-hidden">
+      <div className="bg-gray-50 px-4 py-3 border-b border-gray-200">
+        <h2 className="text-base font-bold text-gray-900">Year-by-Year Scoring Landscape</h2>
         <p className="text-gray-500 text-xs mt-0.5">
           Perfect score = SP total of all 3 placed horses + win bonus (10) + jackpot (25).
           Reflects maximum points achievable if you had correctly picked all 3 placed gates.
@@ -368,13 +368,13 @@ function YearOverviewTable() {
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
-            <tr className="bg-gray-900/60 border-b border-gray-800">
-              <th className="text-left px-4 py-2 text-gray-400 font-medium">Year</th>
-              <th className="text-left px-4 py-2 text-gray-400 font-medium">Date</th>
-              <th className="text-right px-4 py-2 text-gray-400 font-medium">Total SP pts</th>
-              <th className="text-right px-4 py-2 text-gray-400 font-medium">Perfect score</th>
-              <th className="text-right px-4 py-2 text-gray-400 font-medium">Winner score</th>
-              <th className="text-left px-4 py-2 text-gray-400 font-medium">Winner</th>
+            <tr className="bg-gray-100 border-b border-gray-200">
+              <th className="text-left px-4 py-2 text-gray-500 font-medium">Year</th>
+              <th className="text-left px-4 py-2 text-gray-500 font-medium">Date</th>
+              <th className="text-right px-4 py-2 text-gray-500 font-medium">Total SP pts</th>
+              <th className="text-right px-4 py-2 text-gray-500 font-medium">Perfect score</th>
+              <th className="text-right px-4 py-2 text-gray-500 font-medium">Winner score</th>
+              <th className="text-left px-4 py-2 text-gray-500 font-medium">Winner</th>
             </tr>
           </thead>
           <tbody>
@@ -383,11 +383,11 @@ function YearOverviewTable() {
               if (!y) return null;
               const winner = y.leaderboard?.[0];
               return (
-                <tr key={year} className={`border-b border-gray-800 ${i % 2 === 0 ? 'bg-gray-950' : 'bg-gray-900/40'}`}>
-                  <td className="px-4 py-2.5 font-mono font-bold text-gray-200">{year}</td>
-                  <td className="px-4 py-2.5 text-gray-400 text-xs">{y.date}</td>
-                  <td className="px-4 py-2.5 text-right font-mono text-gray-300">{y.totalSpTotal.toFixed(1)}</td>
-                  <td className="px-4 py-2.5 text-right font-mono font-bold text-emerald-400">
+                <tr key={year} className={`border-b border-gray-200 ${i % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}>
+                  <td className="px-4 py-2.5 font-mono font-bold text-gray-700">{year}</td>
+                  <td className="px-4 py-2.5 text-gray-500 text-xs">{y.date}</td>
+                  <td className="px-4 py-2.5 text-right font-mono text-gray-700">{y.totalSpTotal.toFixed(1)}</td>
+                  <td className="px-4 py-2.5 text-right font-mono font-bold text-emerald-700">
                     {y.totalPerfectScore.toFixed(1)}
                   </td>
                   <td className="px-4 py-2.5 text-right font-mono">
@@ -396,7 +396,7 @@ function YearOverviewTable() {
                       : <span className="text-gray-700">—</span>
                     }
                   </td>
-                  <td className="px-4 py-2.5 text-gray-300 text-sm">
+                  <td className="px-4 py-2.5 text-gray-700 text-sm">
                     {winner?.name || <span className="text-gray-700 italic">unknown</span>}
                   </td>
                 </tr>
@@ -455,12 +455,12 @@ export default function BacktesterPanel() {
   })).filter(g => g.races.length > 0);
 
   return (
-    <div className="min-h-screen bg-gray-950 text-gray-100 p-4 font-sans">
+    <div className="min-h-screen bg-white text-gray-800 p-4 font-sans">
 
       {/* ── Page header ── */}
       <div className="mb-6 text-center">
-        <h1 className="text-3xl font-bold text-emerald-400 tracking-tight">Backtester</h1>
-        <p className="text-gray-400 mt-1 text-sm">
+        <h1 className="text-3xl font-bold text-emerald-700 tracking-tight">Backtester</h1>
+        <p className="text-gray-500 mt-1 text-sm">
           Historical model validation — what does the data tell us?
         </p>
       </div>
@@ -474,7 +474,7 @@ export default function BacktesterPanel() {
         <button
           onClick={() => setView('by-race')}
           className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-            view === 'by-race' ? 'bg-gray-800 text-emerald-400' : 'text-gray-500 hover:text-gray-300'
+            view === 'by-race' ? 'bg-gray-100 text-emerald-700' : 'text-gray-500 hover:text-gray-700'
           }`}
         >
           By Race
@@ -482,7 +482,7 @@ export default function BacktesterPanel() {
         <button
           onClick={() => setView('by-year')}
           className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-            view === 'by-year' ? 'bg-gray-800 text-emerald-400' : 'text-gray-500 hover:text-gray-300'
+            view === 'by-year' ? 'bg-gray-100 text-emerald-700' : 'text-gray-500 hover:text-gray-700'
           }`}
         >
           By Year
@@ -491,7 +491,7 @@ export default function BacktesterPanel() {
         {/* Category filter — only shown in by-race view */}
         {view === 'by-race' && (
           <>
-            <div className="w-px h-6 bg-gray-700 mx-1" />
+            <div className="w-px h-6 bg-gray-200 mx-1" />
             {allCategories.map(cat => (
               <button
                 key={cat}
@@ -499,9 +499,9 @@ export default function BacktesterPanel() {
                 className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-colors ${
                   activeCategory === cat
                     ? cat === 'All'
-                      ? 'bg-gray-700 text-white'
-                      : (CAT_STYLES[cat] || 'bg-gray-700 text-white')
-                    : 'text-gray-500 hover:text-gray-300 border border-gray-800'
+                      ? 'bg-gray-200 text-gray-900'
+                      : (CAT_STYLES[cat] || 'bg-gray-200 text-gray-900')
+                    : 'text-gray-500 hover:text-gray-700 border border-gray-200'
                 }`}
               >
                 {cat}
@@ -528,8 +528,8 @@ export default function BacktesterPanel() {
                 <span className={`text-xs font-bold px-3 py-1 rounded-full ${CAT_STYLES[cat] || CAT_STYLES['Other']}`}>
                   {cat}
                 </span>
-                <span className="text-gray-600 text-xs">{races.length} race{races.length !== 1 ? 's' : ''}</span>
-                <div className="flex-1 border-t border-gray-800" />
+                <span className="text-gray-500 text-xs">{races.length} race{races.length !== 1 ? 's' : ''}</span>
+                <div className="flex-1 border-t border-gray-200" />
               </div>
               {races.map(name => (
                 <RaceBacktestCard key={name} raceName={name} />

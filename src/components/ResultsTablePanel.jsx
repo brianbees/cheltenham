@@ -1,4 +1,4 @@
-/**
+﻿/**
  * ResultsTablePanel.jsx
  *
  * Route: /results-table
@@ -63,11 +63,11 @@ function RaceTable({ raceName }) {
 
   return (
     <section className="mb-10">
-      <h2 className="text-lg font-semibold text-white mb-3">{raceName}</h2>
-      <div className="rounded-lg border border-gray-800 overflow-hidden">
+      <h2 className="text-lg font-semibold text-gray-900 mb-3">{raceName}</h2>
+      <div className="rounded-lg border border-gray-200 overflow-hidden">
         <table className="w-full text-sm">
           <thead>
-            <tr className="bg-gray-800 text-gray-400 text-left">
+            <tr className="bg-gray-100 text-gray-500 text-left">
               <th className="px-4 py-2.5 font-medium w-16">Year</th>
               <th className="px-4 py-2.5 font-medium">1st</th>
               <th className="px-4 py-2.5 font-medium text-right w-16">SP</th>
@@ -81,28 +81,28 @@ function RaceTable({ raceName }) {
             {rows.map(({ year, first, second, third }, i) => (
               <tr
                 key={year}
-                className={i % 2 === 0 ? 'bg-gray-950' : 'bg-gray-900'}
+                className={i % 2 === 0 ? 'bg-white' : 'bg-gray-50'}
               >
-                <td className="px-4 py-2 font-mono text-gray-300">{year}</td>
+                <td className="px-4 py-2 font-mono text-gray-700">{year}</td>
 
                 <td className="px-4 py-2 text-yellow-300 font-medium">
                   {first?.horseName ?? '—'}
                 </td>
-                <td className="px-4 py-2 text-right font-mono text-gray-300">
+                <td className="px-4 py-2 text-right font-mono text-gray-700">
                   {spDisplay(first?.sp)}
                 </td>
 
-                <td className="px-4 py-2 text-gray-200">
+                <td className="px-4 py-2 text-gray-700">
                   {second?.horseName ?? '—'}
                 </td>
-                <td className="px-4 py-2 text-right font-mono text-gray-300">
+                <td className="px-4 py-2 text-right font-mono text-gray-700">
                   {spDisplay(second?.sp)}
                 </td>
 
-                <td className="px-4 py-2 text-gray-400">
+                <td className="px-4 py-2 text-gray-500">
                   {third?.horseName ?? '—'}
                 </td>
-                <td className="px-4 py-2 text-right font-mono text-gray-300">
+                <td className="px-4 py-2 text-right font-mono text-gray-700">
                   {spDisplay(third?.sp)}
                 </td>
               </tr>
@@ -110,7 +110,7 @@ function RaceTable({ raceName }) {
           </tbody>
         </table>
       </div>
-      <p className="text-gray-600 text-xs mt-1.5">{rows.length} years of data</p>
+      <p className="text-gray-500 text-xs mt-1.5">{rows.length} years of data</p>
     </section>
   );
 }
@@ -120,11 +120,11 @@ export default function ResultsTablePanel() {
 
   return (
     <div className="p-6 max-w-5xl mx-auto">
-      <h1 className="text-2xl font-bold text-white mb-1">Race Results</h1>
-      <p className="text-gray-400 text-sm mb-8">
+      <h1 className="text-2xl font-bold text-gray-900 mb-1">Race Results</h1>
+      <p className="text-gray-500 text-sm mb-8">
         First-three finishers for each race across all years in the dataset.
         Decimal SPs taken directly from the{' '}
-        <code className="text-gray-300">top3</code> arrays.
+        <code className="text-gray-700">top3</code> arrays.
       </p>
 
       {raceNames.map(name => (

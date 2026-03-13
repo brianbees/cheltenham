@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 
 /**
  * FridayRacecardPanel.jsx
@@ -258,17 +258,17 @@ const TRAINER_COUNTRY = {
   'Gabriel Leenders': 'FR',
 };
 
-const TC_COLOR = { IE: 'text-emerald-400', GB: 'text-sky-400', FR: 'text-rose-400' };
+const TC_COLOR = { IE: 'text-emerald-700', GB: 'text-sky-600', FR: 'text-rose-600' };
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
 function ratingColor(r) {
-  if (r >= 5.0) return 'text-emerald-400 font-bold';
-  if (r >= 3.5) return 'text-emerald-400';
-  if (r >= 2.5) return 'text-yellow-400';
-  if (r >= 1.5) return 'text-orange-400';
-  if (r >= 0.5) return 'text-gray-400';
-  return 'text-gray-600';
+  if (r >= 5.0) return 'text-emerald-700 font-bold';
+  if (r >= 3.5) return 'text-emerald-700';
+  if (r >= 2.5) return 'text-yellow-600';
+  if (r >= 1.5) return 'text-orange-500';
+  if (r >= 0.5) return 'text-gray-500';
+  return 'text-gray-500';
 }
 
 function parseHorse(horse) {
@@ -313,7 +313,7 @@ function RatingDots({ value }) {
   return (
     <span className="flex gap-0.5 items-center">
       {[1,2,3,4,5].map(i => (
-        <span key={i} className={`inline-block w-2 h-2 rounded-full ${i <= filled ? (filled >= 5 ? 'bg-emerald-400' : filled >= 3 ? 'bg-emerald-500' : 'bg-orange-400') : 'bg-gray-700'}`} />
+        <span key={i} className={`inline-block w-2 h-2 rounded-full ${i <= filled ? (filled >= 5 ? 'bg-emerald-500' : filled >= 3 ? 'bg-emerald-500' : 'bg-orange-400') : 'bg-gray-300'}`} />
       ))}
     </span>
   );
@@ -327,21 +327,21 @@ function RunnerRow({ runner, raceTime }) {
   const odds = ODDS[raceTime]?.[no] ?? null;
   const tc = TRAINER_COUNTRY[trainer];
   return (
-    <div className={`grid grid-cols-[2rem_1fr_auto] md:grid-cols-[2rem_1fr_3rem_5rem_3rem_4rem_4rem_1fr_3rem_1fr_auto_6rem] gap-x-3 gap-y-0.5 items-center py-2 border-b border-gray-800 last:border-0 text-sm ${nr ? 'opacity-40' : ''}`}>
+    <div className={`grid grid-cols-[2rem_1fr_auto] md:grid-cols-[2rem_1fr_3rem_5rem_3rem_4rem_4rem_1fr_3rem_1fr_auto_6rem] gap-x-3 gap-y-0.5 items-center py-2 border-b border-gray-200 last:border-0 text-sm ${nr ? 'opacity-40' : ''}`}>
       <span className="text-gray-500 font-mono text-xs text-right">{no}{nr ? ' NR' : ''}</span>
-      <span className="text-white font-medium truncate">{horseName}</span>
+      <span className="text-gray-900 font-medium truncate">{horseName}</span>
       <span className="flex justify-end md:hidden"><RatingDots value={rating} /></span>
       <span className="hidden md:block text-gray-500 text-xs text-center font-mono">{country || '—'}</span>
-      <span className="hidden md:block text-gray-400 font-mono text-xs">{form}</span>
+      <span className="hidden md:block text-gray-500 font-mono text-xs">{form}</span>
       <span className="hidden md:block text-gray-500 text-xs text-center">{age}</span>
-      <span className="hidden md:block text-gray-400 text-xs font-mono">{wt}</span>
+      <span className="hidden md:block text-gray-500 text-xs font-mono">{wt}</span>
       <span className="hidden md:block text-gray-500 text-xs text-center">{officialRating ?? '—'}</span>
-      <span className="hidden md:block text-gray-400 text-xs truncate">{trainer}</span>
-      <span className={`hidden md:block text-xs text-center font-mono font-semibold ${TC_COLOR[tc] ?? 'text-gray-600'}`}>{tc ?? '—'}</span>
-      <span className="hidden md:block text-gray-300 text-xs truncate">{jockey}</span>
+      <span className="hidden md:block text-gray-500 text-xs truncate">{trainer}</span>
+      <span className={`hidden md:block text-xs text-center font-mono font-semibold ${TC_COLOR[tc] ?? 'text-gray-500'}`}>{tc ?? '—'}</span>
+      <span className="hidden md:block text-gray-700 text-xs truncate">{jockey}</span>
       <span className="hidden md:flex items-center"><RatingDots value={rating} /></span>
       <span className="hidden md:block text-right">
-        <span className={`inline-block text-xs font-mono px-2 py-0.5 rounded border min-w-[3rem] text-center ${odds ? 'bg-emerald-950 text-emerald-300 border-emerald-800 font-semibold' : 'bg-gray-800 text-gray-500 border-gray-700'}`}>{odds ?? '—'}</span>
+        <span className={`inline-block text-xs font-mono px-2 py-0.5 rounded border min-w-[3rem] text-center ${odds ? 'bg-emerald-50 text-emerald-700 border-emerald-400 font-semibold' : 'bg-gray-100 text-gray-500 border-gray-300'}`}>{odds ?? '—'}</span>
       </span>
     </div>
   );
@@ -359,7 +359,7 @@ function RaceCard({ race }) {
   const SortBtn = ({ col, label, className = '' }) => (
     <button
       onClick={() => handleSort(col)}
-      className={`flex items-center gap-0.5 hover:text-gray-300 transition-colors uppercase tracking-wide ${sortKey === col ? 'text-emerald-400' : 'text-gray-600'} ${className}`}
+      className={`flex items-center gap-0.5 hover:text-gray-700 transition-colors uppercase tracking-wide ${sortKey === col ? 'text-emerald-700' : 'text-gray-500'} ${className}`}
     >
       {label}
       <span className="text-[10px]">{sortKey === col ? (sortDir === 'asc' ? '↑' : '↓') : '↕'}</span>
@@ -369,15 +369,15 @@ function RaceCard({ race }) {
   const sorted = getSorted(race.runners, sortKey, sortDir, race.time);
 
   return (
-    <section className="mb-8 bg-gray-900 rounded-lg border border-gray-800 overflow-hidden">
+    <section className="mb-8 bg-gray-50 rounded-lg border border-gray-200 overflow-hidden">
       {/* Race header */}
-      <div className="px-4 py-3 bg-gray-800 border-b border-gray-700">
+      <div className="px-4 py-3 bg-gray-100 border-b border-gray-300">
         <div className="flex flex-wrap items-center gap-3">
-          <span className="text-emerald-400 font-bold font-mono text-lg">{race.time}</span>
-          <h2 className="text-white font-bold text-base flex-1">{race.name}</h2>
-          <span className="text-xs bg-gray-700 text-gray-300 px-2 py-0.5 rounded">{race.grade}</span>
+          <span className="text-emerald-700 font-bold font-mono text-lg">{race.time}</span>
+          <h2 className="text-gray-900 font-bold text-base flex-1">{race.name}</h2>
+          <span className="text-xs bg-gray-200 text-gray-700 px-2 py-0.5 rounded">{race.grade}</span>
         </div>
-        <div className="flex flex-wrap gap-4 mt-1 text-xs text-gray-400">
+        <div className="flex flex-wrap gap-4 mt-1 text-xs text-gray-500">
           <span>{race.distance}</span>
           <span>{race.runners.filter(r => !r.nr).length} runners</span>
           <span>{race.prize} added</span>
@@ -385,17 +385,17 @@ function RaceCard({ race }) {
       </div>
 
       {/* Column headers — desktop only, all sortable */}
-      <div className="hidden md:grid grid-cols-[2rem_1fr_3rem_5rem_3rem_4rem_4rem_1fr_3rem_1fr_auto_6rem] gap-x-3 px-4 py-2 bg-gray-850 border-b border-gray-800 text-xs">
+      <div className="hidden md:grid grid-cols-[2rem_1fr_3rem_5rem_3rem_4rem_4rem_1fr_3rem_1fr_auto_6rem] gap-x-3 px-4 py-2 bg-gray-100 border-b border-gray-200 text-xs">
         <SortBtn col="no" label="#" className="justify-end" />
         <SortBtn col="horse" label="Horse" />
         <SortBtn col="country" label="Ctry" className="justify-center" />
-        <span className="text-gray-600 uppercase tracking-wide">Form</span>
+        <span className="text-gray-500 uppercase tracking-wide">Form</span>
         <SortBtn col="age" label="Age" className="justify-center" />
-        <span className="text-gray-600 uppercase tracking-wide">Weight</span>
+        <span className="text-gray-500 uppercase tracking-wide">Weight</span>
         <SortBtn col="or" label="OR" className="justify-center" />
-        <span className="text-gray-600 uppercase tracking-wide">Trainer</span>
+        <span className="text-gray-500 uppercase tracking-wide">Trainer</span>
         <SortBtn col="trainerCountry" label="TC" className="justify-center" />
-        <span className="text-gray-600 uppercase tracking-wide">Jockey</span>
+        <span className="text-gray-500 uppercase tracking-wide">Jockey</span>
         <SortBtn col="rating" label="Rating" />
         <SortBtn col="odds" label="Odds" className="justify-end" />
       </div>
@@ -414,8 +414,8 @@ export default function FridayRacecardPanel() {
   return (
     <div className="max-w-6xl mx-auto px-4 py-6">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-white">Friday 14 March 2026</h1>
-        <p className="text-gray-400 text-sm mt-1">Gold Cup Day — Cheltenham Festival · 7 races</p>
+        <h1 className="text-2xl font-bold text-gray-900">Friday 14 March 2026</h1>
+        <p className="text-gray-500 text-sm mt-1">Gold Cup Day — Cheltenham Festival · 7 races</p>
       </div>
 
       {RACES.map(race => <RaceCard key={race.time} race={race} />)}

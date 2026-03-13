@@ -1,4 +1,4 @@
-/**
+﻿/**
  * OptimiserPanel.jsx  —  Phase 3: Live Race Optimiser
  *
  * Route: /optimiser
@@ -59,7 +59,7 @@ function getRaceClass(raceName) {
   const avg = rows.reduce((s, r) => s + r.spTotal, 0) / rows.length;
   if (avg > 43) return { label: 'Swing Race',     badge: 'bg-rose-950 text-rose-300 border border-rose-800' };
   if (avg > 23) return { label: 'Judgement Race', badge: 'bg-amber-950 text-amber-300 border border-amber-800' };
-  return             { label: 'Banker Race',      badge: 'bg-emerald-950 text-emerald-300 border border-emerald-800' };
+  return             { label: 'Banker Race',      badge: 'bg-emerald-50 text-emerald-700 border border-emerald-400' };
 }
 
 // ── Sub-components ────────────────────────────────────────────────────────────
@@ -67,7 +67,7 @@ function getRaceClass(raceName) {
 /** Single runner input row */
 function RunnerRow({ runner, onChange, onRemove, canRemove }) {
   return (
-    <tr className="border-b border-gray-800">
+    <tr className="border-b border-gray-200">
       {/* Gate */}
       <td className="px-3 py-2">
         <input
@@ -76,7 +76,7 @@ function RunnerRow({ runner, onChange, onRemove, canRemove }) {
           placeholder="1"
           value={runner.gate}
           onChange={e => onChange(runner.id, 'gate', e.target.value)}
-          className="w-16 bg-gray-900 border border-gray-700 rounded px-2 py-1 text-sm text-gray-100
+          className="w-16 bg-gray-50 border border-gray-300 rounded px-2 py-1 text-sm text-gray-800
                      focus:outline-none focus:border-emerald-500 text-center"
         />
       </td>
@@ -88,7 +88,7 @@ function RunnerRow({ runner, onChange, onRemove, canRemove }) {
           placeholder="Horse name"
           value={runner.name}
           onChange={e => onChange(runner.id, 'name', e.target.value)}
-          className="w-full bg-gray-900 border border-gray-700 rounded px-2 py-1 text-sm text-gray-100
+          className="w-full bg-gray-50 border border-gray-300 rounded px-2 py-1 text-sm text-gray-800
                      focus:outline-none focus:border-emerald-500"
         />
       </td>
@@ -100,7 +100,7 @@ function RunnerRow({ runner, onChange, onRemove, canRemove }) {
           placeholder="10/1 or 11.0"
           value={runner.odds}
           onChange={e => onChange(runner.id, 'odds', e.target.value)}
-          className="w-28 bg-gray-900 border border-gray-700 rounded px-2 py-1 text-sm text-gray-100
+          className="w-28 bg-gray-50 border border-gray-300 rounded px-2 py-1 text-sm text-gray-800
                      font-mono focus:outline-none focus:border-emerald-500 text-center"
         />
       </td>
@@ -108,7 +108,7 @@ function RunnerRow({ runner, onChange, onRemove, canRemove }) {
       {/* Parsed decimal preview */}
       <td className="px-3 py-2 text-center">
         {runner.odds && parseOdds(runner.odds) !== null ? (
-          <span className="text-xs text-gray-400 font-mono">
+          <span className="text-xs text-gray-500 font-mono">
             {parseOdds(runner.odds).toFixed(2)}
           </span>
         ) : (
@@ -121,7 +121,7 @@ function RunnerRow({ runner, onChange, onRemove, canRemove }) {
         <button
           onClick={() => onRemove(runner.id)}
           disabled={!canRemove}
-          className="text-gray-600 hover:text-rose-400 disabled:opacity-20 text-lg leading-none transition-colors"
+          className="text-gray-500 hover:text-rose-600 disabled:opacity-20 text-lg leading-none transition-colors"
           title="Remove runner"
         >
           ×
@@ -134,8 +134,8 @@ function RunnerRow({ runner, onChange, onRemove, canRemove }) {
 /** One combination result row */
 function ComboRow({ combo, isTop }) {
   const bgClass = isTop
-    ? 'bg-emerald-950/40 border-b border-emerald-900/60'
-    : 'border-b border-gray-800 hover:bg-gray-900/40';
+    ? 'bg-emerald-50/40 border-b border-emerald-900/60'
+    : 'border-b border-gray-200 hover:bg-gray-50';
 
   return (
     <tr className={bgClass}>
@@ -157,7 +157,7 @@ function ComboRow({ combo, isTop }) {
           {combo.runners.map((r, i) => (
             <span key={i}
               className={`text-xs font-bold px-2 py-0.5 rounded ${
-                isTop ? 'bg-emerald-700 text-emerald-100' : 'bg-gray-800 text-gray-300'
+                isTop ? 'bg-emerald-700 text-emerald-100' : 'bg-gray-100 text-gray-700'
               }`}>
               Gate {r.gatePosition}
             </span>
@@ -165,30 +165,30 @@ function ComboRow({ combo, isTop }) {
         </div>
         <div className="mt-1 flex gap-2 flex-wrap">
           {combo.runners.map((r, i) => (
-            <span key={i} className="text-xs text-gray-400">{r.horseName || '—'}</span>
+            <span key={i} className="text-xs text-gray-500">{r.horseName || '—'}</span>
           ))}
         </div>
       </td>
 
       {/* EV total */}
       <td className="px-4 py-3 text-right font-mono font-bold text-base">
-        <span className={isTop ? 'text-emerald-400' : 'text-gray-200'}>
+        <span className={isTop ? 'text-emerald-700' : 'text-gray-700'}>
           {combo.ev.toFixed(2)}
         </span>
       </td>
 
       {/* SP EV */}
-      <td className="px-4 py-3 text-right text-sm font-mono text-gray-400">
+      <td className="px-4 py-3 text-right text-sm font-mono text-gray-500">
         {combo.evSp.toFixed(2)}
       </td>
 
       {/* Win bonus EV */}
-      <td className="px-4 py-3 text-right text-sm font-mono text-gray-400">
+      <td className="px-4 py-3 text-right text-sm font-mono text-gray-500">
         {combo.evWin.toFixed(2)}
       </td>
 
       {/* Jackpot EV */}
-      <td className="px-4 py-3 text-right text-sm font-mono text-gray-400">
+      <td className="px-4 py-3 text-right text-sm font-mono text-gray-500">
         {combo.evJackpot.toFixed(2)}
       </td>
 
@@ -359,12 +359,12 @@ export default function OptimiserPanel({ model = 'harville' }) {
   const canOptimise = filledCount >= 3;
 
   return (
-    <div className="min-h-screen bg-gray-950 text-gray-100 p-4 font-sans">
+    <div className="min-h-screen bg-white text-gray-800 p-4 font-sans">
 
       {/* ── Page header ── */}
       <div className="mb-6 text-center">
-        <h1 className="text-3xl font-bold text-emerald-400 tracking-tight">Optimiser</h1>
-        <p className="text-gray-400 mt-1 text-sm">
+        <h1 className="text-3xl font-bold text-emerald-700 tracking-tight">Optimiser</h1>
+        <p className="text-gray-500 mt-1 text-sm">
           Enter today's field · find the highest Expected Value combination
         </p>
         <span className={`inline-block mt-2 text-xs font-semibold px-2.5 py-1 rounded-full ${meta.badge}`}>
@@ -373,24 +373,24 @@ export default function OptimiserPanel({ model = 'harville' }) {
       </div>
 
       {/* ── Input card ── */}
-      <div className="max-w-4xl mx-auto mb-8 border border-gray-800 rounded-xl overflow-hidden">
+      <div className="max-w-4xl mx-auto mb-8 border border-gray-200 rounded-xl overflow-hidden">
 
         {/* Card header: race selector */}
-        <div className="bg-gray-900 px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+        <div className="bg-gray-50 px-4 py-3 flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-3 flex-wrap">
             <button
               onClick={() => setShowModal(true)}
-              className="px-3 py-1.5 rounded-lg text-xs font-semibold border border-gray-600
-                         text-gray-300 hover:border-emerald-500 hover:text-emerald-400
+              className="px-3 py-1.5 rounded-lg text-xs font-semibold border border-gray-300
+                         text-gray-700 hover:border-emerald-500 hover:text-emerald-700
                          transition-colors"
             >
               ⬆ Paste Race Card
             </button>
-            <label className="text-sm text-gray-400 font-medium">Race</label>
+            <label className="text-sm text-gray-500 font-medium">Race</label>
             <select
               value={selectedRace}
               onChange={e => { setSelectedRace(e.target.value); setResults(null); setErrors([]); }}
-              className="bg-gray-800 border border-gray-700 rounded px-3 py-1.5 text-sm text-gray-100
+              className="bg-gray-100 border border-gray-300 rounded px-3 py-1.5 text-sm text-gray-800
                          focus:outline-none focus:border-emerald-500"
             >
               {RACE_NAMES.map(n => (
@@ -405,7 +405,7 @@ export default function OptimiserPanel({ model = 'harville' }) {
           </div>
           <button
             onClick={clearAll}
-            className="text-xs text-gray-500 hover:text-gray-300 transition-colors"
+            className="text-xs text-gray-500 hover:text-gray-700 transition-colors"
           >
             Clear all
           </button>
@@ -415,11 +415,11 @@ export default function OptimiserPanel({ model = 'harville' }) {
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="bg-gray-900/60 border-b border-gray-800">
-                <th className="text-left px-3 py-2 text-gray-400 font-medium w-20">Gate</th>
-                <th className="text-left px-3 py-2 text-gray-400 font-medium">Horse name</th>
-                <th className="text-left px-3 py-2 text-gray-400 font-medium w-36">Odds</th>
-                <th className="text-center px-3 py-2 text-gray-400 font-medium w-24">Decimal</th>
+              <tr className="bg-gray-100 border-b border-gray-200">
+                <th className="text-left px-3 py-2 text-gray-500 font-medium w-20">Gate</th>
+                <th className="text-left px-3 py-2 text-gray-500 font-medium">Horse name</th>
+                <th className="text-left px-3 py-2 text-gray-500 font-medium w-36">Odds</th>
+                <th className="text-center px-3 py-2 text-gray-500 font-medium w-24">Decimal</th>
                 <th className="w-10"></th>
               </tr>
             </thead>
@@ -438,10 +438,10 @@ export default function OptimiserPanel({ model = 'harville' }) {
         </div>
 
         {/* Card footer: add runner + optimise */}
-        <div className="bg-gray-900 px-4 py-3 border-t border-gray-800 flex items-center justify-between gap-4 flex-wrap">
+        <div className="bg-gray-50 px-4 py-3 border-t border-gray-200 flex items-center justify-between gap-4 flex-wrap">
           <button
             onClick={addRunner}
-            className="text-sm text-emerald-500 hover:text-emerald-300 transition-colors"
+            className="text-sm text-emerald-500 hover:text-emerald-700 transition-colors"
           >
             + Add runner
           </button>
@@ -454,7 +454,7 @@ export default function OptimiserPanel({ model = 'harville' }) {
               onClick={handleOptimise}
               disabled={!canOptimise}
               className="px-5 py-2 rounded-lg text-sm font-semibold transition-colors
-                         bg-emerald-600 hover:bg-emerald-500 text-white
+                         bg-emerald-600 hover:bg-emerald-500 text-gray-900
                          disabled:opacity-30 disabled:cursor-not-allowed"
             >
               Optimise
@@ -466,7 +466,7 @@ export default function OptimiserPanel({ model = 'harville' }) {
       {/* ── Validation errors ── */}
       {errors.length > 0 && (
         <div className="max-w-4xl mx-auto mb-6 border border-rose-800 rounded-xl bg-rose-950/40 px-4 py-3">
-          <p className="text-rose-400 text-sm font-semibold mb-1">Please fix the following:</p>
+          <p className="text-rose-600 text-sm font-semibold mb-1">Please fix the following:</p>
           <ul className="list-disc list-inside space-y-0.5">
             {errors.map((e, i) => (
               <li key={i} className="text-rose-300 text-sm">{e}</li>
@@ -477,12 +477,12 @@ export default function OptimiserPanel({ model = 'harville' }) {
 
       {/* ── Results ── */}
       {results && (
-        <div className="max-w-4xl mx-auto border border-gray-800 rounded-xl overflow-hidden">
+        <div className="max-w-4xl mx-auto border border-gray-200 rounded-xl overflow-hidden">
 
           {/* Results header */}
-          <div className="bg-gray-900 px-4 py-3 flex items-center justify-between flex-wrap gap-2">
+          <div className="bg-gray-50 px-4 py-3 flex items-center justify-between flex-wrap gap-2">
             <div>
-              <h2 className="text-base font-bold text-white">{selectedRace} — Ranked Combinations</h2>
+              <h2 className="text-base font-bold text-gray-900">{selectedRace} — Ranked Combinations</h2>
               <p className="text-gray-500 text-xs mt-0.5">
                 {results.ranked.length} combinations · {results.fieldSize} runners
                 {raceClass && ` · ${raceClass.label}`} · {meta.label}
@@ -490,23 +490,23 @@ export default function OptimiserPanel({ model = 'harville' }) {
             </div>
             <div className="text-right">
               <span className="text-xs text-gray-500 uppercase tracking-wide block">Best EV</span>
-              <span className="text-emerald-400 font-bold text-xl font-mono">
+              <span className="text-emerald-700 font-bold text-xl font-mono">
                 {results.ranked[0]?.ev.toFixed(2)} pts
               </span>
             </div>
           </div>
 
           {/* Probability summary per runner */}
-          <div className="border-b border-gray-800 bg-gray-950 overflow-x-auto">
+          <div className="border-b border-gray-200 bg-white overflow-x-auto">
             <table className="w-full text-xs">
               <thead>
                 <tr className="border-b border-gray-900">
-                  <th className="text-left px-4 py-2 text-gray-600 font-medium">Gate</th>
-                  <th className="text-left px-4 py-2 text-gray-600 font-medium">Horse</th>
-                  <th className="text-right px-4 py-2 text-gray-600 font-medium">Odds</th>
-                  <th className="text-right px-4 py-2 text-gray-600 font-medium">P(Win)</th>
-                  <th className="text-right px-4 py-2 text-gray-600 font-medium">P(Place)</th>
-                  <th className="text-right px-4 py-2 text-gray-600 font-medium">SP pts</th>
+                  <th className="text-left px-4 py-2 text-gray-500 font-medium">Gate</th>
+                  <th className="text-left px-4 py-2 text-gray-500 font-medium">Horse</th>
+                  <th className="text-right px-4 py-2 text-gray-500 font-medium">Odds</th>
+                  <th className="text-right px-4 py-2 text-gray-500 font-medium">P(Win)</th>
+                  <th className="text-right px-4 py-2 text-gray-500 font-medium">P(Place)</th>
+                  <th className="text-right px-4 py-2 text-gray-500 font-medium">SP pts</th>
                 </tr>
               </thead>
               <tbody>
@@ -515,20 +515,20 @@ export default function OptimiserPanel({ model = 'harville' }) {
                   .sort((a, b) => b.pPlace - a.pPlace)
                   .map((r, i) => (
                     <tr key={i} className="border-b border-gray-900">
-                      <td className="px-4 py-1.5 font-mono text-gray-400">{r.gatePosition}</td>
-                      <td className="px-4 py-1.5 text-gray-300">{r.horseName}</td>
-                      <td className="px-4 py-1.5 text-right font-mono text-gray-400">
+                      <td className="px-4 py-1.5 font-mono text-gray-500">{r.gatePosition}</td>
+                      <td className="px-4 py-1.5 text-gray-700">{r.horseName}</td>
+                      <td className="px-4 py-1.5 text-right font-mono text-gray-500">
                         {(r.decimalOdds - 1 % 1 === 0
                           ? `${r.decimalOdds - 1}/1`
                           : r.decimalOdds.toFixed(2))}
                       </td>
-                      <td className="px-4 py-1.5 text-right font-mono text-gray-400">
+                      <td className="px-4 py-1.5 text-right font-mono text-gray-500">
                         {(r.pWin * 100).toFixed(1)}%
                       </td>
                       <td className="px-4 py-1.5 text-right font-mono text-emerald-500">
                         {(r.pPlace * 100).toFixed(1)}%
                       </td>
-                      <td className="px-4 py-1.5 text-right font-mono text-gray-400">
+                      <td className="px-4 py-1.5 text-right font-mono text-gray-500">
                         {(r.decimalOdds - 1).toFixed(1)}p
                       </td>
                     </tr>
@@ -542,14 +542,14 @@ export default function OptimiserPanel({ model = 'harville' }) {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="bg-gray-900/60 border-b border-gray-800">
-                  <th className="px-4 py-2 text-gray-400 font-medium text-center w-12">#</th>
-                  <th className="text-left px-4 py-2 text-gray-400 font-medium">Combination</th>
-                  <th className="text-right px-4 py-2 text-gray-400 font-medium">Total EV</th>
-                  <th className="text-right px-4 py-2 text-gray-400 font-medium">SP EV</th>
-                  <th className="text-right px-4 py-2 text-gray-400 font-medium">Win EV</th>
-                  <th className="text-right px-4 py-2 text-gray-400 font-medium">Jackpot EV</th>
-                  <th className="text-right px-4 py-2 text-gray-400 font-medium">P(Jackpot)</th>
+                <tr className="bg-gray-100 border-b border-gray-200">
+                  <th className="px-4 py-2 text-gray-500 font-medium text-center w-12">#</th>
+                  <th className="text-left px-4 py-2 text-gray-500 font-medium">Combination</th>
+                  <th className="text-right px-4 py-2 text-gray-500 font-medium">Total EV</th>
+                  <th className="text-right px-4 py-2 text-gray-500 font-medium">SP EV</th>
+                  <th className="text-right px-4 py-2 text-gray-500 font-medium">Win EV</th>
+                  <th className="text-right px-4 py-2 text-gray-500 font-medium">Jackpot EV</th>
+                  <th className="text-right px-4 py-2 text-gray-500 font-medium">P(Jackpot)</th>
                 </tr>
               </thead>
               <tbody>
@@ -560,8 +560,8 @@ export default function OptimiserPanel({ model = 'harville' }) {
             </table>
           </div>
 
-          <div className="bg-gray-900 px-4 py-2 border-t border-gray-800">
-            <p className="text-gray-600 text-xs text-center">
+          <div className="bg-gray-50 px-4 py-2 border-t border-gray-200">
+            <p className="text-gray-500 text-xs text-center">
               EV = expected SP points + expected win bonus (×10) + expected jackpot (×25) · Harville model
             </p>
           </div>
@@ -570,11 +570,11 @@ export default function OptimiserPanel({ model = 'harville' }) {
 
       {/* ── Pasted result notice ── */}
       {pastedResult && (
-        <div className="max-w-4xl mx-auto mb-4 border border-emerald-800 rounded-xl bg-emerald-950/30 px-4 py-3">
-          <p className="text-emerald-400 text-xs font-semibold mb-1">Result loaded from paste:</p>
+        <div className="max-w-4xl mx-auto mb-4 border border-emerald-400 rounded-xl bg-emerald-100 px-4 py-3">
+          <p className="text-emerald-700 text-xs font-semibold mb-1">Result loaded from paste:</p>
           <div className="flex gap-4 flex-wrap">
             {pastedResult.map((r, i) => (
-              <span key={i} className="text-xs font-mono text-emerald-300">
+              <span key={i} className="text-xs font-mono text-emerald-700">
                 <span className={`font-bold px-1.5 py-0.5 rounded mr-1 ${
                   ['bg-yellow-500 text-yellow-950','bg-gray-400 text-gray-900','bg-amber-700 text-amber-100'][i]
                 }`}>{['1st','2nd','3rd'][i]}</span>

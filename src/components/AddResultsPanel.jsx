@@ -1,4 +1,4 @@
-/**
+﻿/**
  * AddResultsPanel.jsx — Enter actual race results
  *
  * Route: /add-results
@@ -42,7 +42,7 @@ const emptyPlace = () => ({ gate: '', horse: '', sp: '' });
 function PlaceRow({ label, value, onChange }) {
   return (
     <div className="flex items-center gap-2">
-      <span className="text-xs font-bold text-gray-400 w-7 shrink-0 text-right">{label}</span>
+      <span className="text-xs font-bold text-gray-500 w-7 shrink-0 text-right">{label}</span>
       <input
         type="number" min="1" max="40"
         value={value.gate}
@@ -150,7 +150,7 @@ function RaceEntryCard({ race, year, existingEntry, onSaved, onDeleted }) {
         {saved && (
           <button
             onClick={handleDelete}
-            className="text-xs text-gray-400 hover:text-rose-500 transition-colors px-1"
+            className="text-xs text-gray-500 hover:text-rose-600 transition-colors px-1"
             title="Delete this result"
           >
             ✕
@@ -170,7 +170,7 @@ function RaceEntryCard({ race, year, existingEntry, onSaved, onDeleted }) {
             className="w-20 px-2 py-1.5 text-sm border border-gray-300 rounded
                        focus:outline-none focus:border-emerald-500 text-center"
           />
-          <span className="text-xs text-gray-400 hidden sm:inline">
+          <span className="text-xs text-gray-500 hidden sm:inline">
             Gate · Horse · SP (fractional or decimal)
           </span>
         </div>
@@ -186,7 +186,7 @@ function RaceEntryCard({ race, year, existingEntry, onSaved, onDeleted }) {
         <button
           onClick={handleSave}
           className="text-sm px-4 py-2 rounded bg-emerald-600 hover:bg-emerald-700
-                     text-white font-semibold transition-colors"
+                     text-gray-900 font-semibold transition-colors"
         >
           {saved && !dirty ? '↻ Update' : 'Save Result'}
         </button>
@@ -234,7 +234,7 @@ export default function AddResultsPanel() {
 
         {/* Year + totals */}
         <div className="mb-5 flex items-center gap-3 flex-wrap">
-          <label className="text-sm font-semibold text-gray-600">Year:</label>
+          <label className="text-sm font-semibold text-gray-500">Year:</label>
           <input
             type="number" min="2002" max="2035"
             value={year}
@@ -257,7 +257,7 @@ export default function AddResultsPanel() {
               onClick={() => setActiveDay(day)}
               className={`px-5 py-2 rounded-lg text-sm font-semibold transition-colors ${
                 activeDay === day
-                  ? 'bg-emerald-600 text-white shadow'
+                  ? 'bg-emerald-600 text-gray-900 shadow'
                   : 'bg-white text-gray-500 border border-gray-200 hover:text-gray-800 hover:border-gray-400'
               }`}
             >
@@ -267,7 +267,7 @@ export default function AddResultsPanel() {
         </div>
 
         {/* Progress */}
-        <p className="text-xs text-gray-400 mb-4">
+        <p className="text-xs text-gray-500 mb-4">
           {savedCount} of {schedule.length} {activeDay} races entered for {year}
         </p>
 
@@ -292,7 +292,7 @@ export default function AddResultsPanel() {
         {/* Summary of all results for this year */}
         {yearSaved.length > 0 && (
           <div className="mt-10 border-t border-gray-200 pt-6">
-            <h2 className="text-sm font-semibold text-gray-600 mb-3">
+            <h2 className="text-sm font-semibold text-gray-500 mb-3">
               All {year} results in analysis
             </h2>
             <div className="space-y-2">
@@ -301,17 +301,17 @@ export default function AddResultsPanel() {
                   <div className="flex items-center justify-between gap-2 mb-2">
                     <span className="text-sm font-semibold text-gray-800">{e.raceName}</span>
                     {e.fieldSize && (
-                      <span className="text-xs text-gray-400">{e.fieldSize} runners</span>
+                      <span className="text-xs text-gray-500">{e.fieldSize} runners</span>
                     )}
                   </div>
                   <div className="space-y-1">
                     {e.top3.map((h, i) => (
-                      <div key={i} className="flex items-center gap-2 text-xs text-gray-600">
-                        <span className="font-bold w-7 text-right shrink-0 text-gray-400">
+                      <div key={i} className="flex items-center gap-2 text-xs text-gray-500">
+                        <span className="font-bold w-7 text-right shrink-0 text-gray-500">
                           {['1st', '2nd', '3rd'][i]}
                         </span>
                         {h.gatePosition && (
-                          <span className="font-mono text-gray-400 shrink-0">G{h.gatePosition}</span>
+                          <span className="font-mono text-gray-500 shrink-0">G{h.gatePosition}</span>
                         )}
                         <span className="font-medium flex-1">{h.horseName}</span>
                         <span className="font-mono text-emerald-700 shrink-0">{spDisplay(h.sp)}</span>
