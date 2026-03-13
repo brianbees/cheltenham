@@ -675,8 +675,8 @@ export default function RaceDayPanel() {
   const [saveAllMsg,   setSaveAllMsg]   = useState(null);
 
   const handleSaveAll = async () => {
-    const unsaved = schedule.filter(r => raceData[r.name] && !raceData[r.name].savedAt);
-    if (!unsaved.length) { setSaveAllMsg({ ok: 'All loaded races already saved.' }); return; }
+    const unsaved = schedule.filter(r => raceData[r.name]);
+    if (!unsaved.length) { setSaveAllMsg({ ok: 'No races loaded yet.' }); return; }
     setSavingAll(true);
     setSaveAllMsg(null);
     let saved = 0;
