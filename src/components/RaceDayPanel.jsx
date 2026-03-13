@@ -174,6 +174,19 @@ function RaceCard({ race, data, onPaste, onSave, onClear }) {
     }
   };
 
+  const handleDeleteAll = async () => {
+    if (!historyEntries?.length) return;
+    if (!window.confirm(`Delete all ${historyEntries.length} saved versions for this race?`)) return;
+    try {
+      await Promise.all(historyEntries.map(e =>
+        fetch(`/api/delete-result?id=${encodeURIComponent(e.file)}`, { method: 'DELETE' })
+      ));
+      setHistoryEntries([]);
+    } catch {
+      alert('Some deletes failed — refresh and try again');
+    }
+  };
+
   const handleSave = async () => {
     if (!data) return;
     setSaving(true);
@@ -335,7 +348,15 @@ function RaceCard({ race, data, onPaste, onSave, onClear }) {
       {/* ── History dropdown ── */}
       {showHistory && (
         <div className="bg-sky-50 border-b border-sky-100 px-4 py-3">
-          <p className="text-xs font-semibold text-sky-700 mb-2">Saved versions — click to load</p>
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-xs font-semibold text-sky-700">Saved versions — click to load</p>
+            {historyEntries?.length > 0 && (
+              <button
+                onClick={handleDeleteAll}
+                className="text-xs text-rose-400 hover:text-rose-600 transition-colors"
+              >Delete all</button>
+            )}
+          </div>
           {loadingHistory && <p className="text-xs text-gray-400 italic">Loading…</p>}
           {!loadingHistory && historyEntries && historyEntries.length === 0 && (
             <p className="text-xs text-gray-400 italic">No saves found for this race.</p>
