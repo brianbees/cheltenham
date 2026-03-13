@@ -8,19 +8,16 @@
  */
 
 import { historicalData } from '../data/historicalData';
+import { RACE_CATEGORY } from '../engine/backtester';
 
-// Preferred display order — any races not listed here appear after in the order
-// they are first encountered.
-const RACE_ORDER = [
-  'Triumph Hurdle',
-  'County Hurdle',
-  'Albert Bartlett',
-  'Gold Cup',
-  'Foxhunter Chase',
-  'Hunters Chase',
-  'Mares Chase',
-  'Martin Pipe',
-  'Grand Annual',
+const CATEGORY_ORDER = [
+  'Grade 1 Championship',
+  'Novice',
+  'Handicap',
+  'Mares',
+  'Specialist',
+  'Historical',
+  'Other',
 ];
 
 function spDisplay(sp) {
@@ -28,20 +25,18 @@ function spDisplay(sp) {
   return sp % 1 === 0 ? sp.toFixed(0) : sp.toString();
 }
 
-// Collect all distinct race names from the data in preferred order
+// Collect all distinct race names from the data, sorted category-then-alpha
 function getRaceNames() {
   const seen = new Set();
-  const ordered = [...RACE_ORDER];
   for (const yearData of Object.values(historicalData)) {
-    for (const race of yearData.races ?? []) {
-      if (!seen.has(race.raceName)) {
-        seen.add(race.raceName);
-        if (!ordered.includes(race.raceName)) ordered.push(race.raceName);
-      }
-    }
+    for (const race of yearData.races ?? []) seen.add(race.raceName);
   }
-  // Only return names that actually exist in the data
-  return ordered.filter(name => seen.has(name));
+  return [...seen].sort((a, b) => {
+    const ca = RACE_CATEGORY[a] || 'Other';
+    const cb = RACE_CATEGORY[b] || 'Other';
+    const ci = CATEGORY_ORDER.indexOf(ca) - CATEGORY_ORDER.indexOf(cb);
+    return ci !== 0 ? ci : a.localeCompare(b);
+  });
 }
 
 // Build rows for one race name
