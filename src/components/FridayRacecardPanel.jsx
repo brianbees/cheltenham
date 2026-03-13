@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 /**
  * FridayRacecardPanel.jsx
  *
@@ -239,6 +241,38 @@ function ratingColor(r) {
   return 'text-gray-600';
 }
 
+function parseHorse(horse) {
+  const m = horse.match(/^(.*?)\s*\(([A-Z]{2,3})\)\s*$/);
+  return m ? { name: m[1].trim(), country: m[2] } : { name: horse, country: '' };
+}
+
+function oddsToDecimal(str) {
+  if (!str) return 9999;
+  const parts = str.split('/');
+  if (parts.length !== 2) return 9999;
+  return Number(parts[0]) / Number(parts[1]);
+}
+
+function getSorted(runners, key, dir, raceTime) {
+  const mul = dir === 'asc' ? 1 : -1;
+  return [...runners].sort((a, b) => {
+    switch (key) {
+      case 'no':      return mul * (a.no - b.no);
+      case 'horse':   return mul * parseHorse(a.horse).name.localeCompare(parseHorse(b.horse).name);
+      case 'country': return mul * (parseHorse(a.horse).country || '').localeCompare(parseHorse(b.horse).country || '');
+      case 'age':     return mul * (a.age - b.age);
+      case 'or':      return mul * ((a.or ?? 0) - (b.or ?? 0));
+      case 'rating':  return mul * (a.rating - b.rating);
+      case 'odds': {
+        const ao = oddsToDecimal(ODDS[raceTime]?.[a.no]);
+        const bo = oddsToDecimal(ODDS[raceTime]?.[b.no]);
+        return mul * (ao - bo);
+      }
+      default: return 0;
+    }
+  });
+}
+
 function RatingDots({ value }) {
   const filled = Math.round(value);
   return (
@@ -254,32 +288,21 @@ function RatingDots({ value }) {
 
 function RunnerRow({ runner, raceTime }) {
   const { no, horse, form, age, wt, or: officialRating, trainer, jockey, rating, nr } = runner;
+  const { name: horseName, country } = parseHorse(horse);
   const odds = ODDS[raceTime]?.[no] ?? null;
   return (
-    <div className={`grid grid-cols-[2rem_1fr_auto] md:grid-cols-[2rem_1fr_5rem_3rem_4rem_4rem_1fr_1fr_auto_6rem] gap-x-3 gap-y-0.5 items-center py-2 border-b border-gray-800 last:border-0 text-sm ${nr ? 'opacity-40' : ''}`}>
-      {/* No */}
+    <div className={`grid grid-cols-[2rem_1fr_auto] md:grid-cols-[2rem_1fr_3rem_5rem_3rem_4rem_4rem_1fr_1fr_auto_6rem] gap-x-3 gap-y-0.5 items-center py-2 border-b border-gray-800 last:border-0 text-sm ${nr ? 'opacity-40' : ''}`}>
       <span className="text-gray-500 font-mono text-xs text-right">{no}{nr ? ' NR' : ''}</span>
-
-      {/* Horse name (always visible) */}
-      <span className="text-white font-medium truncate">{horse}</span>
-
-      {/* Rating dots (always visible) */}
-      <span className="flex justify-end md:hidden">
-        <RatingDots value={rating} />
-      </span>
-
-      {/* Desktop columns */}
+      <span className="text-white font-medium truncate">{horseName}</span>
+      <span className="flex justify-end md:hidden"><RatingDots value={rating} /></span>
+      <span className="hidden md:block text-gray-500 text-xs text-center font-mono">{country || '—'}</span>
       <span className="hidden md:block text-gray-400 font-mono text-xs">{form}</span>
       <span className="hidden md:block text-gray-500 text-xs text-center">{age}</span>
       <span className="hidden md:block text-gray-400 text-xs font-mono">{wt}</span>
       <span className="hidden md:block text-gray-500 text-xs text-center">{officialRating ?? '—'}</span>
       <span className="hidden md:block text-gray-400 text-xs truncate">{trainer}</span>
       <span className="hidden md:block text-gray-300 text-xs truncate">{jockey}</span>
-      <span className="hidden md:flex items-center">
-        <RatingDots value={rating} />
-      </span>
-
-      {/* Odds */}
+      <span className="hidden md:flex items-center"><RatingDots value={rating} /></span>
       <span className="hidden md:block text-right">
         <span className={`inline-block text-xs font-mono px-2 py-0.5 rounded border min-w-[3rem] text-center ${odds ? 'bg-emerald-950 text-emerald-300 border-emerald-800 font-semibold' : 'bg-gray-800 text-gray-500 border-gray-700'}`}>{odds ?? '—'}</span>
       </span>
@@ -288,6 +311,26 @@ function RunnerRow({ runner, raceTime }) {
 }
 
 function RaceCard({ race }) {
+  const [sortKey, setSortKey] = useState('no');
+  const [sortDir, setSortDir] = useState('asc');
+
+  const handleSort = (key) => {
+    if (sortKey === key) setSortDir(d => d === 'asc' ? 'desc' : 'asc');
+    else { setSortKey(key); setSortDir('asc'); }
+  };
+
+  const SortBtn = ({ col, label, className = '' }) => (
+    <button
+      onClick={() => handleSort(col)}
+      className={`flex items-center gap-0.5 hover:text-gray-300 transition-colors uppercase tracking-wide ${sortKey === col ? 'text-emerald-400' : 'text-gray-600'} ${className}`}
+    >
+      {label}
+      <span className="text-[10px]">{sortKey === col ? (sortDir === 'asc' ? '↑' : '↓') : '↕'}</span>
+    </button>
+  );
+
+  const sorted = getSorted(race.runners, sortKey, sortDir, race.time);
+
   return (
     <section className="mb-8 bg-gray-900 rounded-lg border border-gray-800 overflow-hidden">
       {/* Race header */}
@@ -304,23 +347,24 @@ function RaceCard({ race }) {
         </div>
       </div>
 
-      {/* Column headers — desktop only */}
-      <div className="hidden md:grid grid-cols-[2rem_1fr_5rem_3rem_4rem_4rem_1fr_1fr_auto_6rem] gap-x-3 px-4 py-2 bg-gray-850 border-b border-gray-800 text-xs text-gray-600 uppercase tracking-wide">
-        <span className="text-right">#</span>
-        <span>Horse</span>
-        <span>Form</span>
-        <span className="text-center">Age</span>
-        <span>Weight</span>
-        <span className="text-center">OR</span>
-        <span>Trainer</span>
-        <span>Jockey</span>
-        <span>Rating</span>
-        <span className="text-right">Odds</span>
+      {/* Column headers — desktop only, all sortable */}
+      <div className="hidden md:grid grid-cols-[2rem_1fr_3rem_5rem_3rem_4rem_4rem_1fr_1fr_auto_6rem] gap-x-3 px-4 py-2 bg-gray-850 border-b border-gray-800 text-xs">
+        <SortBtn col="no" label="#" className="justify-end" />
+        <SortBtn col="horse" label="Horse" />
+        <SortBtn col="country" label="Ctry" className="justify-center" />
+        <span className="text-gray-600 uppercase tracking-wide">Form</span>
+        <SortBtn col="age" label="Age" className="justify-center" />
+        <span className="text-gray-600 uppercase tracking-wide">Weight</span>
+        <SortBtn col="or" label="OR" className="justify-center" />
+        <span className="text-gray-600 uppercase tracking-wide">Trainer</span>
+        <span className="text-gray-600 uppercase tracking-wide">Jockey</span>
+        <SortBtn col="rating" label="Rating" />
+        <SortBtn col="odds" label="Odds" className="justify-end" />
       </div>
 
       {/* Runners */}
       <div className="px-4">
-        {race.runners.map(r => <RunnerRow key={r.no} runner={r} raceTime={race.time} />)}
+        {sorted.map(r => <RunnerRow key={r.no} runner={r} raceTime={race.time} />)}
       </div>
     </section>
   );

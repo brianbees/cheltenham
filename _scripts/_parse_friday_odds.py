@@ -22,8 +22,9 @@ from pathlib import Path
 DEFAULT_FILE = "chelt frid odds - Sheet1.csv"
 
 # Column indices (0-based) in the runner data rows
-COL_NO   = 0   # Horse number
-COL_ODDS = 6   # Win/EW price (e.g. "4/1", "7/2", "Evs")
+COL_NO    = 0   # Horse number
+COL_HORSE = 1   # Horse name (may include country code e.g. "Name (FR)")
+COL_ODDS  = 6   # Win/EW price (e.g. "4/1", "7/2", "Evs")
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -51,10 +52,18 @@ def clean_odds(val):
     val = re.sub(r'(?i)^evs$', 'Evs', val)
     return val if val else None
 
+COUNTRY_RE = re.compile(r'\(([A-Z]{2,3})\)\s*$')
+
+def parse_country(name):
+    """Extract country code from horse name e.g. 'Dinoblue (FR)' → 'FR'."""
+    m = COUNTRY_RE.search(name.strip())
+    return m.group(1) if m else ''
+
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 def parse(filepath):
-    results = {}          # { "HH:MM": { horse_no: odds_str } }
+    results   = {}   # { "HH:MM": { horse_no: odds_str } }
+    countries = {}   # { "HH:MM": { horse_no: country_code } }
     current_time = None
     in_runners = False    # True once we've seen the "No.," header for a race
 
@@ -69,7 +78,8 @@ def parse(filepath):
             # Detect race time header
             if is_time_row(cell0):
                 current_time = extract_time(cell0)
-                results[current_time] = {}
+                results[current_time]   = {}
+                countries[current_time] = {}
                 in_runners = False
                 continue
 
@@ -93,10 +103,14 @@ def parse(filepath):
                 odds = clean_odds(row[COL_ODDS])
                 if odds:
                     results[current_time][no] = odds
+                if len(row) > COL_HORSE:
+                    c = parse_country(row[COL_HORSE])
+                    if c:
+                        countries[current_time][no] = c
 
-    return results
+    return results, countries
 
-def render(results):
+def render(results, countries):
     lines = ['const ODDS = {']
     for time, runners in sorted(results.items()):
         entries = ', '.join(
@@ -104,6 +118,17 @@ def render(results):
             for no, odds in sorted(runners.items())
         )
         lines.append(f"  '{time}': {{ {entries} }},")
+    lines.append('};')
+    lines.append('')
+    lines.append('// Country codes by race time and saddle number')
+    lines.append('const COUNTRIES = {')
+    for time, ctrs in sorted(countries.items()):
+        if ctrs:
+            entries = ', '.join(
+                f"{no}:'{c}'"
+                for no, c in sorted(ctrs.items())
+            )
+            lines.append(f"  '{time}': {{ {entries} }},")
     lines.append('};')
     return '\n'.join(lines)
 
@@ -114,6 +139,6 @@ if __name__ == '__main__':
         print(f"ERROR: file not found: {filepath}", file=sys.stderr)
         sys.exit(1)
 
-    results = parse(filepath)
-    print(render(results))
+    results, countries = parse(filepath)
+    print(render(results, countries))
     print(f"\n// Parsed {sum(len(v) for v in results.values())} runners across {len(results)} races", file=sys.stderr)
