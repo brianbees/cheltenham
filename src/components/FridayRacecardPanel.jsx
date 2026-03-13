@@ -230,6 +230,36 @@ const ODDS = {
   '17:20': { 1:'18/1', 2:'18/1', 3:'11/1', 4:'22/1', 5:'20/1', 6:'14/1', 7:'33/1', 8:'4/1', 9:'22/1', 10:'17/2', 11:'66/1', 12:'50/1', 13:'14/1', 14:'10/1', 15:'20/1', 16:'20/1', 17:'17/2', 18:'16/1', 19:'80/1', 20:'28/1', 21:'10/1', 22:'80/1', 23:'33/1', 24:'40/1' },
 };
 
+// ── Trainer countries ───────────────────────────────────────────────────────
+
+const TRAINER_COUNTRY = {
+  // Ireland
+  'A J McNamara': 'IE', 'G Elliott': 'IE', 'W P Mullins': 'IE',
+  'G P Cromwell': 'IE', 'H De Bromhead': 'IE', 'N Meade': 'IE',
+  'P Fenton': 'IE', 'P Nolan': 'IE', 'J J Mangan': 'IE',
+  "J J O'Shea": 'IE', 'S R B Crawford': 'IE', "T O'Brien": 'IE',
+  'E Mullins': 'IE', 'G Ahern': 'IE', 'C W J Farrell': 'IE',
+  'M Brassil': 'IE', 'E Bolger': 'IE', 'S Curling': 'IE',
+  'Padraig Butler': 'IE',
+  // GB
+  'N J Henderson': 'GB', 'A Keatley': 'GB', 'Faye Bramley': 'GB',
+  'D Skelton': 'GB', 'A Nicol': 'GB', 'Harry Derham': 'GB',
+  'S Drinkwater': 'GB', "J & A O'Neill": 'GB', "F O'Brien": 'GB',
+  'P F Nicholls': 'GB', 'Christian Williams': 'GB', 'O Murphy': 'GB',
+  'Ewan Whillans': 'GB', 'T Lacey': 'GB', 'James Owen': 'GB',
+  'Ben Clarke': 'GB', 'B Pauling': 'GB', 'Jamie Snowden': 'GB',
+  'J Tizzard': 'GB', 'C E Longsdon': 'GB', 'D Queally': 'GB',
+  'Miss R Curtis': 'GB', 'A J Honeyball': 'GB', 'Chester Williams': 'GB',
+  'Miss M Filby': 'GB', 'Miss Kelly Morgan': 'GB', 'R Pudd': 'GB',
+  'Myles Osborne': 'GB', 'T Britten': 'GB', 'C Gordon': 'GB',
+  'M Bowen': 'GB', 'Tom Dascombe': 'GB', 'L Wadham': 'GB',
+  'H Morrison': 'GB', 'Miss V Williams': 'GB', 'Daisy Hitchins': 'GB',
+  // France
+  'Gabriel Leenders': 'FR',
+};
+
+const TC_COLOR = { IE: 'text-emerald-400', GB: 'text-sky-400', FR: 'text-rose-400' };
+
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
 function ratingColor(r) {
@@ -268,6 +298,11 @@ function getSorted(runners, key, dir, raceTime) {
         const bo = oddsToDecimal(ODDS[raceTime]?.[b.no]);
         return mul * (ao - bo);
       }
+      case 'trainerCountry': {
+        const ac = TRAINER_COUNTRY[a.trainer] ?? '';
+        const bc = TRAINER_COUNTRY[b.trainer] ?? '';
+        return mul * ac.localeCompare(bc);
+      }
       default: return 0;
     }
   });
@@ -290,8 +325,9 @@ function RunnerRow({ runner, raceTime }) {
   const { no, horse, form, age, wt, or: officialRating, trainer, jockey, rating, nr } = runner;
   const { name: horseName, country } = parseHorse(horse);
   const odds = ODDS[raceTime]?.[no] ?? null;
+  const tc = TRAINER_COUNTRY[trainer];
   return (
-    <div className={`grid grid-cols-[2rem_1fr_auto] md:grid-cols-[2rem_1fr_3rem_5rem_3rem_4rem_4rem_1fr_1fr_auto_6rem] gap-x-3 gap-y-0.5 items-center py-2 border-b border-gray-800 last:border-0 text-sm ${nr ? 'opacity-40' : ''}`}>
+    <div className={`grid grid-cols-[2rem_1fr_auto] md:grid-cols-[2rem_1fr_3rem_5rem_3rem_4rem_4rem_1fr_3rem_1fr_auto_6rem] gap-x-3 gap-y-0.5 items-center py-2 border-b border-gray-800 last:border-0 text-sm ${nr ? 'opacity-40' : ''}`}>
       <span className="text-gray-500 font-mono text-xs text-right">{no}{nr ? ' NR' : ''}</span>
       <span className="text-white font-medium truncate">{horseName}</span>
       <span className="flex justify-end md:hidden"><RatingDots value={rating} /></span>
@@ -301,6 +337,7 @@ function RunnerRow({ runner, raceTime }) {
       <span className="hidden md:block text-gray-400 text-xs font-mono">{wt}</span>
       <span className="hidden md:block text-gray-500 text-xs text-center">{officialRating ?? '—'}</span>
       <span className="hidden md:block text-gray-400 text-xs truncate">{trainer}</span>
+      <span className={`hidden md:block text-xs text-center font-mono font-semibold ${TC_COLOR[tc] ?? 'text-gray-600'}`}>{tc ?? '—'}</span>
       <span className="hidden md:block text-gray-300 text-xs truncate">{jockey}</span>
       <span className="hidden md:flex items-center"><RatingDots value={rating} /></span>
       <span className="hidden md:block text-right">
@@ -348,7 +385,7 @@ function RaceCard({ race }) {
       </div>
 
       {/* Column headers — desktop only, all sortable */}
-      <div className="hidden md:grid grid-cols-[2rem_1fr_3rem_5rem_3rem_4rem_4rem_1fr_1fr_auto_6rem] gap-x-3 px-4 py-2 bg-gray-850 border-b border-gray-800 text-xs">
+      <div className="hidden md:grid grid-cols-[2rem_1fr_3rem_5rem_3rem_4rem_4rem_1fr_3rem_1fr_auto_6rem] gap-x-3 px-4 py-2 bg-gray-850 border-b border-gray-800 text-xs">
         <SortBtn col="no" label="#" className="justify-end" />
         <SortBtn col="horse" label="Horse" />
         <SortBtn col="country" label="Ctry" className="justify-center" />
@@ -357,6 +394,7 @@ function RaceCard({ race }) {
         <span className="text-gray-600 uppercase tracking-wide">Weight</span>
         <SortBtn col="or" label="OR" className="justify-center" />
         <span className="text-gray-600 uppercase tracking-wide">Trainer</span>
+        <SortBtn col="trainerCountry" label="TC" className="justify-center" />
         <span className="text-gray-600 uppercase tracking-wide">Jockey</span>
         <SortBtn col="rating" label="Rating" />
         <SortBtn col="odds" label="Odds" className="justify-end" />
