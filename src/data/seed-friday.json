@@ -46,7 +46,7 @@
       { "gatePosition": 13, "horseName": "Williethebuilder (IRE)",   "decimalOdds": 41.0  },
       { "gatePosition": 15, "horseName": "Cracking Rhapsody (IRE)",  "decimalOdds": 67.0  },
       { "gatePosition": 17, "horseName": "Gibbs Island",             "decimalOdds": 67.0  },
-      { "gatePosition": 19, "horseName": "Balko D'\''ange (FR)",     "decimalOdds": 81.0  },
+      { "gatePosition": 19, "horseName": "Balko D'ange (FR)",     "decimalOdds": 81.0  },
       { "gatePosition": 20, "horseName": "Bowmore (IRE)",            "decimalOdds": 101.0 }
     ]
   },
@@ -68,16 +68,16 @@
       { "gatePosition": 2,  "horseName": "Doctor Steinberg (IRE)",      "decimalOdds": 3.5   },
       { "gatePosition": 18, "horseName": "Thedeviluno (IRE)",           "decimalOdds": 7.5   },
       { "gatePosition": 19, "horseName": "The Passing Wife",            "decimalOdds": 10.0  },
-      { "gatePosition": 12, "horseName": "Mondoui'\''boy (FR)",         "decimalOdds": 15.0  },
+      { "gatePosition": 12, "horseName": "Mondoui'boy (FR)",         "decimalOdds": 15.0  },
       { "gatePosition": 13, "horseName": "Moneygarrow (IRE)",           "decimalOdds": 15.0  },
       { "gatePosition": 15, "horseName": "Spinningayarn (IRE)",         "decimalOdds": 15.0  },
       { "gatePosition": 3,  "horseName": "Espresso Milan (IRE)",        "decimalOdds": 17.0  },
-      { "gatePosition": 6,  "horseName": "Jalon D'\''oudairies (FR)",   "decimalOdds": 17.0  },
-      { "gatePosition": 10, "horseName": "King'\''s Bucks (FR)",        "decimalOdds": 17.0  },
+      { "gatePosition": 6,  "horseName": "Jalon D'oudairies (FR)",   "decimalOdds": 17.0  },
+      { "gatePosition": 10, "horseName": "King's Bucks (FR)",        "decimalOdds": 17.0  },
       { "gatePosition": 8,  "horseName": "Kazansky (IRE)",              "decimalOdds": 19.0  },
       { "gatePosition": 11, "horseName": "Kripticjim (FR)",             "decimalOdds": 23.0  },
       { "gatePosition": 5,  "horseName": "Hipop De Loire (FR)",         "decimalOdds": 26.0  },
-      { "gatePosition": 7,  "horseName": "Johnny'\''s Jury (IRE)",      "decimalOdds": 29.0  },
+      { "gatePosition": 7,  "horseName": "Johnny's Jury (IRE)",      "decimalOdds": 29.0  },
       { "gatePosition": 21, "horseName": "Ubatuba (IRE)",               "decimalOdds": 29.0  },
       { "gatePosition": 1,  "horseName": "Doctor Du Mesnil (FR)",       "decimalOdds": 34.0  },
       { "gatePosition": 4,  "horseName": "Fruit De Mer (IRE)",          "decimalOdds": 34.0  },
@@ -97,18 +97,18 @@
       { "gatePosition": 6,  "horseName": "Haiti Couleurs (FR)",          "decimalOdds": 7.0   },
       { "gatePosition": 7,  "horseName": "Inothewayurthinkin (IRE)",     "decimalOdds": 9.0   },
       { "gatePosition": 5,  "horseName": "Grey Dawning (IRE)",           "decimalOdds": 15.0  },
-      { "gatePosition": 10, "horseName": "Spillane'\''s Tower (IRE)",    "decimalOdds": 17.0  },
+      { "gatePosition": 10, "horseName": "Spillane's Tower (IRE)",    "decimalOdds": 17.0  },
       { "gatePosition": 1,  "horseName": "Envoi Allen (FR)",             "decimalOdds": 26.0  },
       { "gatePosition": 2,  "horseName": "Firefox (IRE)",                "decimalOdds": 26.0  },
-      { "gatePosition": 9,  "horseName": "L'\''Homme Presse (FR)",       "decimalOdds": 51.0  },
+      { "gatePosition": 9,  "horseName": "L'Homme Presse (FR)",       "decimalOdds": 51.0  },
       { "gatePosition": 4,  "horseName": "Gold Tweet (FR)",              "decimalOdds": 81.0  }
     ]
   },
-  "St James'\''s Place Hunters'\'' Chase": {
+  "St James's Place Hunters' Chase": {
     "runners": [
       { "gatePosition": 7,  "horseName": "Its On The Line (IRE)",        "decimalOdds": 5.5   },
       { "gatePosition": 13, "horseName": "Panda Boy (IRE)",              "decimalOdds": 6.0   },
-      { "gatePosition": 4,  "horseName": "Con'\''s Roc (IRE)",           "decimalOdds": 7.0   },
+      { "gatePosition": 4,  "horseName": "Con's Roc (IRE)",           "decimalOdds": 7.0   },
       { "gatePosition": 23, "horseName": "Wonderwall (IRE)",             "decimalOdds": 9.0   },
       { "gatePosition": 1,  "horseName": "Barton Snow (IRE)",            "decimalOdds": 11.0  },
       { "gatePosition": 5,  "horseName": "Golden Son (FR)",              "decimalOdds": 15.0  },
