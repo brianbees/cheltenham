@@ -15,6 +15,7 @@ import { FESTIVAL_DAYS }     from '../data/schedule';
 import SEED_TUESDAY         from '../data/seed-tuesday.json';
 import SEED_WEDNESDAY        from '../data/seed-wednesday.json';
 import SEED_THURSDAY         from '../data/seed-thursday.json';
+import SEED_FRIDAY           from '../data/seed-friday.json';
 
 // ── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -488,6 +489,7 @@ const DAY_SEEDS = {
   Tuesday:   SEED_TUESDAY,
   Wednesday: SEED_WEDNESDAY,
   Thursday:  SEED_THURSDAY,
+  Friday:    SEED_FRIDAY,
 };
 
 export default function RaceDayPanel() {
