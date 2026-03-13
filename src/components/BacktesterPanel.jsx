@@ -15,6 +15,7 @@
 import { useState } from 'react';
 import { analyseRace, analyseYear, analyseAll, RACE_CATEGORY } from '../engine/backtester';
 import { historicalData } from '../data/historicalData';
+import { FESTIVAL_DAYS } from '../data/schedule';
 
 // ── Race category styles ─────────────────────────────────────────────────────
 const CAT_STYLES = {
@@ -436,10 +437,29 @@ const CATEGORY_ORDER = [
   'Historical',
 ];
 
+// ── Day styles ────────────────────────────────────────────────────────────────
+const DAY_STYLES = {
+  Tuesday:   'bg-sky-100 text-sky-700 border border-sky-300',
+  Wednesday: 'bg-orange-100 text-orange-700 border border-orange-300',
+  Thursday:  'bg-emerald-100 text-emerald-700 border border-emerald-300',
+  Friday:    'bg-yellow-100 text-yellow-700 border border-yellow-500',
+};
+
+// ── Day → race mapping (from schedule) ───────────────────────────────────────
+const ALL_DAYS = ['Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+const DAY_FOR_RACE = {};
+for (const [day, races] of Object.entries(FESTIVAL_DAYS)) {
+  for (const r of races) {
+    DAY_FOR_RACE[r.dataName || r.name] = day;
+    if (r.aliases) r.aliases.forEach(a => { DAY_FOR_RACE[a] = day; });
+  }
+}
+
 export default function BacktesterPanel() {
   const { summary } = analyseAll();
-  const [view, setView]         = useState('by-race');   // 'by-race' | 'by-year'
+  const [view, setView]         = useState('by-race');   // 'by-race' | 'by-year' | 'by-day'
   const [activeCategory, setActiveCategory] = useState('All');
+  const [activeDayFilter, setActiveDayFilter] = useState('All');
 
   const allCategories = ['All', ...CATEGORY_ORDER];
 
@@ -487,6 +507,36 @@ export default function BacktesterPanel() {
         >
           By Year
         </button>
+        <button
+          onClick={() => setView('by-day')}
+          className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+            view === 'by-day' ? 'bg-gray-100 text-emerald-700' : 'text-gray-500 hover:text-gray-700'
+          }`}
+        >
+          By Day
+        </button>
+
+        {/* Day filter — only shown in by-day view */}
+        {view === 'by-day' && (
+          <>
+            <div className="w-px h-6 bg-gray-200 mx-1" />
+            {['All', ...ALL_DAYS].map(day => (
+              <button
+                key={day}
+                onClick={() => setActiveDayFilter(day)}
+                className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-colors ${
+                  activeDayFilter === day
+                    ? day === 'All'
+                      ? 'bg-gray-200 text-gray-900'
+                      : (DAY_STYLES[day] || 'bg-gray-200 text-gray-900')
+                    : 'text-gray-500 hover:text-gray-700 border border-gray-200'
+                }`}
+              >
+                {day}
+              </button>
+            ))}
+          </>
+        )}
 
         {/* Category filter — only shown in by-race view */}
         {view === 'by-race' && (
@@ -515,6 +565,47 @@ export default function BacktesterPanel() {
       <div className="max-w-5xl mx-auto">
         {view === 'by-year' ? (
           <YearOverviewTable />
+        ) : view === 'by-day' ? (
+          <>
+            {(activeDayFilter === 'All' ? ALL_DAYS : ALL_DAYS.filter(d => d === activeDayFilter))
+              .map(day => {
+                const races = RACE_NAMES.filter(n => DAY_FOR_RACE[n] === day);
+                if (races.length === 0) return null;
+                return (
+                  <div key={day} className="mb-8">
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className={`text-xs font-bold px-3 py-1 rounded-full ${DAY_STYLES[day]}`}>
+                        {day}
+                      </span>
+                      <span className="text-gray-500 text-xs">{races.length} race{races.length !== 1 ? 's' : ''}</span>
+                      <div className="flex-1 border-t border-gray-200" />
+                    </div>
+                    {races.map(name => (
+                      <RaceBacktestCard key={name} raceName={name} />
+                    ))}
+                  </div>
+                );
+              })
+            }
+            {activeDayFilter === 'All' && (() => {
+              const unmapped = RACE_NAMES.filter(n => !DAY_FOR_RACE[n]);
+              if (unmapped.length === 0) return null;
+              return (
+                <div className="mb-8">
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className="text-xs font-bold px-3 py-1 rounded-full bg-gray-100 text-gray-500 border border-gray-300">
+                      Historical / Other
+                    </span>
+                    <span className="text-gray-500 text-xs">{unmapped.length} race{unmapped.length !== 1 ? 's' : ''}</span>
+                    <div className="flex-1 border-t border-gray-200" />
+                  </div>
+                  {unmapped.map(name => (
+                    <RaceBacktestCard key={name} raceName={name} />
+                  ))}
+                </div>
+              );
+            })()}
+          </>
         ) : activeCategory !== 'All' ? (
           // Filtered: flat list of matching races
           filteredRaces.map(name => (
