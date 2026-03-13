@@ -61,23 +61,38 @@ Each race is classified based on its **average SP total** (sum of the three plac
 
 ```
 src/
-  App.jsx                  # Root component, routing, nav bar
-  main.jsx                 # React entry point
-  index.css                # Tailwind base styles
+  App.jsx                        # Root component, routing, nav bar
+  main.jsx                       # React entry point
+  index.css                      # Tailwind base styles
 
   data/
-    historicalData.js      # All Gold Cup Day results (2010–present)
-                           # + helper functions: spToPoints, getRaceHistory,
-                           #   getPerfectScore, getAllYearSummaries
+    historicalData.js            # All Gold Cup Day results (2002–present)
+                                 # + helpers: spToPoints, getRaceHistory,
+                                 #   getPerfectScore, getAllYearSummaries
+    schedule.js                  # Race schedule metadata (times, names, gates)
+    seed-tuesday.json            # Race Day seed: Tuesday (Day 1) odds + runners
+    seed-wednesday.json          # Race Day seed: Wednesday (Day 2)
+    seed-thursday.json           # Race Day seed: Thursday (Day 3)
+    seed-friday.json             # Race Day seed: Friday (Day 4 — Gold Cup Day)
 
   components/
-    HistoricalDisplay.jsx  # Route /          — raw data verification view
-    RaceHistoryPanel.jsx   # Route /race-history — per-race character analysis
+    HistoricalDisplay.jsx        # Route /                  — raw data verification
+    RaceHistoryPanel.jsx         # Route /race-history      — per-race character analysis
+    OptimiserPanel.jsx           # Route /optimiser         — Harville best-combo picker
+                                 # Route /optimiser/henery  — Henery variant
+    BacktesterPanel.jsx          # Route /backtester        — simulate picks vs. history
+    RaceCoveragePanel.jsx        # Route /race-coverage     — field/gate coverage view
+    ResultsTablePanel.jsx        # Route /results-table     — live results entry table
+    RaceDayPanel.jsx             # Route /race-day          — seed loader + EV combos
+    AddResultsPanel.jsx          # Route /add-results       — manual result entry
+    FridayRacecardPanel.jsx      # Route /friday-racecard   — Friday odds display
+    FridaySPCompositionPanel.jsx # Route /friday-sp-composition — SP band analysis table
+    HelpPanel.jsx                # Route /help              — competition rules + help
 
-  engine/                  # Maths engine (Phase 2 — not yet implemented)
-    probability.js         # Overround removal + Harville formula for P(top-3)
-    optimiser.js           # Enumerate C(N,3) combinations, rank by EV
-    scorer.js              # Live scorer: picks vs. result → points
+  engine/
+    probability.js               # Overround removal · Harville · Henery pWin
+    optimiser.js                 # Enumerate C(N,3) combinations, rank by EV
+    scorer.js                    # Live scorer: picks vs. result → points
 ```
 
 ---
@@ -101,19 +116,28 @@ The parse scripts skip any leading empty blocks, so both formats work without mo
 
 | Script | Day | Source data | Usage |
 |---|---|---|---|
-| `_parse_thursday_csv.py` | **Thursday (Day 3)** | William Hill CSV (single or all-races) | `python _scripts/_parse_thursday_csv.py "_data/<filename>.csv"` |
-| `_parse_wednesday_csv.py` | **Wednesday (Day 2)** | William Hill CSV → converts to racecard text | `python _scripts/_parse_wednesday_csv.py` (path hardcoded) |
-| `_parse_williamhill_csv.py` | **Tuesday (Day 1)** | William Hill all-races CSV | `python _scripts/_parse_williamhill_csv.py "_data/<filename>.csv"` |
-| `_save_wednesday_races.py` | Wednesday | Reads `src/data/seed-wednesday.json` seed | `python _scripts/_save_wednesday_races.py` |
-| `_gen_wednesday_seed.py` | Wednesday | Converts parsed racecard text → seed JSON | `python _scripts/_gen_wednesday_seed.py` |
+| `_parse_williamhill_csv.py` | **Tuesday (Day 1)** | WH all-races CSV | `python _scripts/_parse_williamhill_csv.py "_data/<file>.csv"` |
+| `_parse_wednesday_csv.py` | **Wednesday (Day 2)** | WH CSV → racecard text | `python _scripts/_parse_wednesday_csv.py` (path hardcoded) |
+| `_parse_thursday_csv.py` | **Thursday (Day 3)** | WH CSV (single or all-races) | `python _scripts/_parse_thursday_csv.py "_data/<file>.csv"` |
+| `_parse_friday_odds.py` | **Friday (Day 4)** | WH CSV → ODDS constant | `python _scripts/_parse_friday_odds.py "_data/<file>.csv"` |
+| `_gen_wednesday_seed.py` | Wednesday | Converts `_wednesday_racecard.txt` → seed JSON | `python _scripts/_gen_wednesday_seed.py` |
+| `_save_wednesday_races.py` | Wednesday | Reads `seed-wednesday.json` → POSTs to API | `python _scripts/_save_wednesday_races.py` |
 
 ### Day-by-Day Workflow
 
-**Thursday (today's standard flow):**
+**Thursday:**
 ```bash
-# Drop the latest WH CSV export into _data/, then:
 python _scripts/_parse_thursday_csv.py "_data/<filename>.csv"
 # Then click ↩ Restore saved in the app
+```
+
+**Friday (Gold Cup Day):**
+```bash
+# Update ODDS constant in FridayRacecardPanel.jsx:
+python _scripts/_parse_friday_odds.py "_data/<filename>.csv"
+# Update Race Day seed (edit src/data/seed-friday.json with latest prices, or use 🌱 Load seed & save)
+# Get Harville/Henery best-combo picks for all 7 races:
+node _scripts/_combos_friday.mjs
 ```
 
 **Wednesday:**
@@ -127,6 +151,26 @@ python _scripts/_save_wednesday_races.py      # → POSTs to API
 ```bash
 python _scripts/_parse_williamhill_csv.py "_data/<filename>.csv"
 ```
+
+### Utility / Analysis Scripts
+
+| Script | Purpose |
+|---|---|
+| `_combos_friday.mjs` | Runs Harville + Henery engine against `seed-friday.json`, prints best 3-gate combo per race — `node _scripts/_combos_friday.mjs` |
+| `_check_combos.py` | Validates combo picks against historical results |
+| `_check_csv.py` / `_check_csv_jt.py` | Sanity-checks parsed CSV output |
+| `_compare_csvs.py` | Diffs two CSV exports to spot odds movement |
+| `_csv_top3_fixes.py` / `_csv_top3_lookup.py` | Top-3 correction helpers for historical data |
+| `_export_races.mjs` | Exports historical race objects as JSON |
+| `_final_audit.mjs` | End-to-end data integrity audit |
+| `_gaps_audit.mjs` | Finds missing years/races in historical data |
+| `_inspect.mjs` | One-off data inspector |
+| `_winner_detail.mjs` | Prints winner details from historical data |
+| `_winner_fix_prep.mjs` | Prepares winner fix payloads |
+| `_fix_all.py` / `_fix_epatante.py` etc. | One-off historical data corrections |
+| `_merge_mildmay_plate.py` | Fixes 2002–2005 duplicate Plate/Mildmay Chase entries |
+| `_apply_jockey_trainer.py` | Bulk-applies jockey/trainer data from `_jockey_trainer_fixes.json` |
+| `_delete_bad_timestamps.py` | Removes malformed timestamp entries from results store |
 
 ### CSV Column Reference (William Hill format)
 
@@ -148,4 +192,6 @@ Tell Copilot: *"new CSV in `_data/` — Thursday format"* (or Wednesday/Tuesday)
 - [x] **Phase 1** — Historical data + UI (HistoricalDisplay, RaceHistoryPanel)
 - [x] **Phase 2** — Maths engine (Harville, Henery, optimiser, scorer)
 - [x] **Phase 3** — Live race input + optimal pick recommender (RaceDayPanel)
-- [ ] **Phase 4** — Live leaderboard / scoring during Gold Cup Day
+- [x] **Phase 4** — Friday racecard page with live WH odds (FridayRacecardPanel)
+- [x] **Phase 5** — SP composition analysis page (FridaySPCompositionPanel)
+- [ ] **Phase 6** — Live leaderboard / scoring during Gold Cup Day
