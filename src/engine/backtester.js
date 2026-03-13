@@ -104,7 +104,6 @@ export const RACE_CATEGORY = {
   'Champion Bumper':              'Specialist',
   // Historical
   'Cathcart Challenge Cup':       'Historical',
-  'Mildmay Chase':                'Historical',
   'Novice Handicap Chase':        'Historical',
 };
 
